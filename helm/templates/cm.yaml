@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "{{ include "csdp-installer.fullname" . }}-cm"
+data:
+  csdp.url: {{ .Values.csdp.url }}
+  csdp.token: {{ .Values.csdp.token }}
+  runtime.name: {{ .Values.csdp.runtime.name }}
+  runtime.repo: {{ .Values.csdp.runtime.repo }}
+  runtime.gitToken: {{ .Values.csdp.runtime.gitToken }}
+  runtime.ingressURL: {{ .Values.csdp.runtime.ingressURL }}
+  runtime.cluster: {{ .Values.csdp.runtime.cluster }}
