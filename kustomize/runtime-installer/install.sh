@@ -23,7 +23,6 @@ RUNTIME_DEF_URL="https://github.com/codefresh-io/cli-v2/releases/VERSION/downloa
 
 # Params:
 check_required_param "namespace" "${NAMESPACE}"
-check_required_param "csdp url" "${CSDP_URL}"
 check_required_param "csdp token" "${CSDP_TOKEN}"
 check_required_param "runtime repo" "${CSDP_RUNTIME_REPO}"
 check_required_param "git token" "${CSDP_RUNTIME_GIT_TOKEN}"
@@ -32,6 +31,7 @@ check_required_param "runtime ingress url" "${CSDP_RUNTIME_INGRESS_URL}"
 check_required_param "runtime name" "${CSDP_RUNTIME_NAME}"
 
 # Defaults:
+CSDP_URL="${CSDP_URL:-https://g.codefresh.io}"
 CSDP_RUNTIME_VERSION="${CSDP_RUNTIME_VERSION:-latest}"
 CSDP_GIT_INTEGRATION_PROVIDER="${CSDP_GIT_INTEGRATION_PROVIDER:-GITHUB}"
 CSDP_GIT_INTEGRATION_API_URL="${CSDP_GIT_INTEGRATION_API_URL:-https://api.github.com}"
