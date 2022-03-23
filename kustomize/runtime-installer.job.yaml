@@ -1,0 +1,93 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: csdp-installation-job
+spec:
+  ttlSecondsAfterFinished: 600 # stick around for 10m
+  backoffLimit: 20
+  template:
+    metadata:
+      name: csdp-installation-job
+    spec:
+      serviceAccount: argocd-server
+      restartPolicy: Never
+      containers:
+        - name: csdp-installer
+          image: csdp-installer
+          imagePullPolicy: IfNotPresent
+          command:
+            - bash
+          args:
+            - ./install.sh
+          env:
+            - name: NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: CSDP_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: csdp-installer-cm
+                  key: csdp.url
+            - name: CSDP_TOKEN
+              valueFrom:
+                configMapKeyRef:
+                  name: csdp-installer-cm
+                  key: csdp.token
+            - name: CSDP_RUNTIME_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: csdp-installer-cm
+                  key: runtime.name
+            - name: CSDP_RUNTIME_VERSION
+              valueFrom:
+                configMapKeyRef:
+                  name: csdp-installer-cm
+                  key: runtime.version
+                  optional: true
+            - name: CSDP_RUNTIME_REPO
+              valueFrom:
+                configMapKeyRef:
+                  name: csdp-installer-cm
+                  key: runtime.repo
+            - name: CSDP_RUNTIME_GIT_TOKEN
+              valueFrom:
+                configMapKeyRef:
+                  name: csdp-installer-cm
+                  key: runtime.gitToken
+            - name: CSDP_RUNTIME_CLUSTER
+              valueFrom:
+                configMapKeyRef:
+                  name: csdp-installer-cm
+                  key: runtime.cluster
+            - name: CSDP_RUNTIME_INGRESS_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: csdp-installer-cm
+                  key: runtime.ingressURL
+            - name: CSDP_GIT_INTEGRATION_PROVIDER
+              valueFrom:
+                configMapKeyRef:
+                  name: csdp-installer-cm
+                  key: gitIntegration.provider
+                  optional: true
+            - name: CSDP_GIT_INTEGRATION_API_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: csdp-installer-cm
+                  key: gitIntegration.apiURL
+                  optional: true
+            - name: CSDP_GIT_INTEGRATION_TOKEN
+              valueFrom:
+                configMapKeyRef:
+                  name: csdp-installer-cm
+                  key: gitIntegration.token
+                  optional: true
+
+          resources:
+            limits:
+              memory: 256Mi
+              cpu: "1"
+            requests:
+              memory: 128Mi
+              cpu: "0.2"

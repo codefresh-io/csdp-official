@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: csdp-installer-cm
+data:
+  csdp.url: <CSDP_URL>
+  csdp.token: <CSDP_TOKEN>
+  runtime.name: <RUNTIME_NAME>
+  runtime.repo: <RUNTIME_REPO>
+  runtime.gitToken: <RUNTIME_GIT_TOKEN>
+  runtime.ingressURL: <RUNTIME_INGRESS_URL>
+  runtime.cluster: <RUNTIME_CLUSTER>
