@@ -3,16 +3,16 @@ kind: Kustomization
 resources:
   - https://raw.githubusercontent.com/codefresh-io/csdp-official-poc/main/kustomize/kustomization.yaml
 
-namespace: codefresh4
+namespace: csdp-runtime
 
 configMapGenerator:
   - name: csdp-installer-cm
     behavior: merge
     literals:
-      - "csdp.url=http://roi-codefresh-platform.ngrok.io"
-      - "csdp.token=621e201a3e95624241432246.49976b16d89e9ba50b8393896223cf1a"
-      - "runtime.name=codefresh4"
-      - "runtime.repo=https://github.com/roi-codefresh/demo-installation13.git"
-      - "runtime.gitToken=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"
-      - "runtime.ingressURL=https://roi-codefresh-ingresshost.ngrok.io"
-      - "runtime.cluster=https://kubernetes.docker.internal:6443"
+      - "csdp.url=<CSDP_URL>"
+      - "csdp.token=<CSDP_TOKEN>"
+      - "runtime.name=<RUNTIME_NAME>"
+      - "runtime.repo=<RUNTIME_REPO>"
+      - "runtime.gitToken=<RUNTIME_GIT_TOKEN>"
+      - "runtime.ingressURL=<RUNTIME_INGRESS_URL>"
+      - "runtime.cluster=<RUNTIME_CLUSTER>"
