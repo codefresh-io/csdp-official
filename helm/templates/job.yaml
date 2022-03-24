@@ -30,60 +30,60 @@ spec:
             - name: CSDP_URL
               valueFrom:
                 configMapKeyRef:
-                  name: "{{ include "csdp-installer.fullname" . }}-cm"
+                  name: csdp-installer-cm
                   key: csdp.url
             - name: CSDP_TOKEN
               valueFrom:
                 configMapKeyRef:
-                  name: "{{ include "csdp-installer.fullname" . }}-cm"
+                  name: csdp-installer-cm
                   key: csdp.token
             - name: CSDP_RUNTIME_NAME
               valueFrom:
                 configMapKeyRef:
-                  name: "{{ include "csdp-installer.fullname" . }}-cm"
+                  name: csdp-installer-cm
                   key: runtime.name
             - name: CSDP_RUNTIME_VERSION
               valueFrom:
                 configMapKeyRef:
-                  name: "{{ include "csdp-installer.fullname" . }}-cm"
+                  name: csdp-installer-cm
                   key: runtime.version
                   optional: true
             - name: CSDP_RUNTIME_REPO
               valueFrom:
                 configMapKeyRef:
-                  name: "{{ include "csdp-installer.fullname" . }}-cm"
+                  name: csdp-installer-cm
                   key: runtime.repo
             - name: CSDP_RUNTIME_GIT_TOKEN
               valueFrom:
                 configMapKeyRef:
-                  name: "{{ include "csdp-installer.fullname" . }}-cm"
+                  name: csdp-installer-cm
                   key: runtime.gitToken
             - name: CSDP_RUNTIME_CLUSTER
               valueFrom:
                 configMapKeyRef:
-                  name: "{{ include "csdp-installer.fullname" . }}-cm"
+                  name: csdp-installer-cm
                   key: runtime.cluster
             - name: CSDP_RUNTIME_INGRESS_URL
               valueFrom:
                 configMapKeyRef:
-                  name: "{{ include "csdp-installer.fullname" . }}-cm"
+                  name: csdp-installer-cm
                   key: runtime.ingressURL
             - name: CSDP_GIT_INTEGRATION_PROVIDER
               valueFrom:
                 configMapKeyRef:
-                  name: "{{ include "csdp-installer.fullname" . }}-cm"
+                  name: csdp-installer-cm
                   key: gitIntegration.provider
                   optional: true
             - name: CSDP_GIT_INTEGRATION_API_URL
               valueFrom:
                 configMapKeyRef:
-                  name: "{{ include "csdp-installer.fullname" . }}-cm"
+                  name: csdp-installer-cm
                   key: gitIntegration.apiURL
                   optional: true
             - name: CSDP_GIT_INTEGRATION_TOKEN
               valueFrom:
                 configMapKeyRef:
-                  name: "{{ include "csdp-installer.fullname" . }}-cm"
+                  name: csdp-installer-cm
                   key: gitIntegration.token
                   optional: true
           resources:
