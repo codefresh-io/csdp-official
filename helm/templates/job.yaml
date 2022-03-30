@@ -1,3 +1,4 @@
+{{- if .Values.csdp-installer.enabled }}
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -5,19 +6,19 @@ metadata:
   labels:
     {{- include "csdp-installer.labels" . | nindent 4 }}
 spec:
-  ttlSecondsAfterFinished: {{ .Values.csdp.installer.ttlSecondsAfterFinished }}
-  backoffLimit: {{ .Values.csdp.installer.backoffLimit }}
+  ttlSecondsAfterFinished: {{ .Values.csdp-installer.installer.ttlSecondsAfterFinished }}
+  backoffLimit: {{ .Values.csdp-installer.installer.backoffLimit }}
   template:
     metadata:
       labels:
         {{- include "csdp-installer.selectorLabels" . | nindent 8 }}
     spec:
-      serviceAccount: {{ .Values.csdp.installer.serviceAccount }}
+      serviceAccount: {{ .Values.csdp-installer.installer.serviceAccount }}
       restartPolicy: Never
       containers:
         - name: csdp-installer
-          image: "{{ .Values.csdp.installer.image.repository }}:{{ .Values.csdp.installer.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.csdp.installer.imagePullPolicy }}
+          image: "{{ .Values.csdp-installer.installer.image.repository }}:{{ .Values.csdp-installer.installer.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.csdp-installer.installer.imagePullPolicy }}
           command:
             - bash
           args:
@@ -29,62 +30,63 @@ spec:
                   fieldPath: metadata.namespace
             - name: CSDP_URL
               valueFrom:
-                configMapKeyRef:
-                  name: csdp-installer-cm
+                secretKeyRef:
+                  name: csdp-installer
                   key: csdp.url
             - name: CSDP_TOKEN
               valueFrom:
-                configMapKeyRef:
-                  name: csdp-installer-cm
+                secretKeyRef:
+                  name: csdp-installer
                   key: csdp.token
             - name: CSDP_RUNTIME_NAME
               valueFrom:
-                configMapKeyRef:
-                  name: csdp-installer-cm
+                secretKeyRef:
+                  name: csdp-installer
                   key: runtime.name
             - name: CSDP_RUNTIME_VERSION
               valueFrom:
-                configMapKeyRef:
-                  name: csdp-installer-cm
+                secretKeyRef:
+                  name: csdp-installer
                   key: runtime.version
                   optional: true
             - name: CSDP_RUNTIME_REPO
               valueFrom:
-                configMapKeyRef:
-                  name: csdp-installer-cm
+                secretKeyRef:
+                  name: csdp-installer
                   key: runtime.repo
             - name: CSDP_RUNTIME_GIT_TOKEN
               valueFrom:
-                configMapKeyRef:
-                  name: csdp-installer-cm
+                secretKeyRef:
+                  name: csdp-installer
                   key: runtime.gitToken
             - name: CSDP_RUNTIME_CLUSTER
               valueFrom:
-                configMapKeyRef:
-                  name: csdp-installer-cm
+                secretKeyRef:
+                  name: csdp-installer
                   key: runtime.cluster
             - name: CSDP_RUNTIME_INGRESS_URL
               valueFrom:
-                configMapKeyRef:
-                  name: csdp-installer-cm
+                secretKeyRef:
+                  name: csdp-installer
                   key: runtime.ingressURL
             - name: CSDP_GIT_INTEGRATION_PROVIDER
               valueFrom:
-                configMapKeyRef:
-                  name: csdp-installer-cm
+                secretKeyRef:
+                  name: csdp-installer
                   key: gitIntegration.provider
                   optional: true
             - name: CSDP_GIT_INTEGRATION_API_URL
               valueFrom:
-                configMapKeyRef:
-                  name: csdp-installer-cm
+                secretKeyRef:
+                  name: csdp-installer
                   key: gitIntegration.apiURL
                   optional: true
             - name: CSDP_GIT_INTEGRATION_TOKEN
               valueFrom:
-                configMapKeyRef:
-                  name: csdp-installer-cm
+                secretKeyRef:
+                  name: csdp-installer
                   key: gitIntegration.token
                   optional: true
           resources:
-            {{- toYaml .Values.csdp.installer.resources | nindent 12 }}
+            {{- toYaml .Values.csdp-installer.installer.resources | nindent 12 }}
+{{ end }}

@@ -26,61 +26,61 @@ spec:
                   fieldPath: metadata.namespace
             - name: CSDP_URL
               valueFrom:
-                configMapKeyRef:
-                  name: csdp-installer-cm
+                secretKeyRef:
+                  name: csdp-installer
                   key: csdp.url
             - name: CSDP_TOKEN
               valueFrom:
-                configMapKeyRef:
-                  name: csdp-installer-cm
+                secretKeyRef:
+                  name: csdp-installer
                   key: csdp.token
             - name: CSDP_RUNTIME_NAME
               valueFrom:
-                configMapKeyRef:
-                  name: csdp-installer-cm
+                secretKeyRef:
+                  name: csdp-installer
                   key: runtime.name
             - name: CSDP_RUNTIME_VERSION
               valueFrom:
-                configMapKeyRef:
-                  name: csdp-installer-cm
+                secretKeyRef:
+                  name: csdp-installer
                   key: runtime.version
                   optional: true
             - name: CSDP_RUNTIME_REPO
               valueFrom:
-                configMapKeyRef:
-                  name: csdp-installer-cm
+                secretKeyRef:
+                  name: csdp-installer
                   key: runtime.repo
             - name: CSDP_RUNTIME_GIT_TOKEN
               valueFrom:
-                configMapKeyRef:
-                  name: csdp-installer-cm
+                secretKeyRef:
+                  name: csdp-installer
                   key: runtime.gitToken
             - name: CSDP_RUNTIME_CLUSTER
               valueFrom:
-                configMapKeyRef:
-                  name: csdp-installer-cm
+                secretKeyRef:
+                  name: csdp-installer
                   key: runtime.cluster
             - name: CSDP_RUNTIME_INGRESS_URL
               valueFrom:
-                configMapKeyRef:
-                  name: csdp-installer-cm
+                secretKeyRef:
+                  name: csdp-installer
                   key: runtime.ingressURL
             - name: CSDP_GIT_INTEGRATION_PROVIDER
               valueFrom:
-                configMapKeyRef:
-                  name: csdp-installer-cm
+                secretKeyRef:
+                  name: csdp-installer
                   key: gitIntegration.provider
                   optional: true
             - name: CSDP_GIT_INTEGRATION_API_URL
               valueFrom:
-                configMapKeyRef:
-                  name: csdp-installer-cm
+                secretKeyRef:
+                  name: csdp-installer
                   key: gitIntegration.apiURL
                   optional: true
             - name: CSDP_GIT_INTEGRATION_TOKEN
               valueFrom:
-                configMapKeyRef:
-                  name: csdp-installer-cm
+                secretKeyRef:
+                  name: csdp-installer
                   key: gitIntegration.token
                   optional: true
 

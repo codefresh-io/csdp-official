@@ -5,8 +5,8 @@ resources:
 
 namespace: csdp-runtime
 
-configMapGenerator:
-  - name: csdp-installer-cm
+secretGenerator:
+  - name: csdp-installer
     behavior: merge
     literals:
       - "csdp.url=<CSDP_URL>"
