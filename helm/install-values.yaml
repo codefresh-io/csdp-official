@@ -1,4 +1,4 @@
-csdp-installer:
+csdpInstaller:
   enabled: true
 
   # CSDP platform details:
