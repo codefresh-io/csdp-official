@@ -1,4 +1,4 @@
-{{- if .Values.csdp-installer.enabled }}
+{{- if .Values.csdpInstaller.enabled }}
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -6,19 +6,19 @@ metadata:
   labels:
     {{- include "csdp-installer.labels" . | nindent 4 }}
 spec:
-  ttlSecondsAfterFinished: {{ .Values.csdp-installer.installer.ttlSecondsAfterFinished }}
-  backoffLimit: {{ .Values.csdp-installer.installer.backoffLimit }}
+  ttlSecondsAfterFinished: {{ .Values.csdpInstaller.installer.ttlSecondsAfterFinished }}
+  backoffLimit: {{ .Values.csdpInstaller.installer.backoffLimit }}
   template:
     metadata:
       labels:
         {{- include "csdp-installer.selectorLabels" . | nindent 8 }}
     spec:
-      serviceAccount: {{ .Values.csdp-installer.installer.serviceAccount }}
+      serviceAccount: {{ .Values.csdpInstaller.installer.serviceAccount }}
       restartPolicy: Never
       containers:
         - name: csdp-installer
-          image: "{{ .Values.csdp-installer.installer.image.repository }}:{{ .Values.csdp-installer.installer.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.csdp-installer.installer.imagePullPolicy }}
+          image: "{{ .Values.csdpInstaller.installer.image.repository }}:{{ .Values.csdpInstaller.installer.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.csdpInstaller.installer.imagePullPolicy }}
           command:
             - bash
           args:
@@ -88,5 +88,5 @@ spec:
                   key: gitIntegration.token
                   optional: true
           resources:
-            {{- toYaml .Values.csdp-installer.installer.resources | nindent 12 }}
+            {{- toYaml .Values.csdpInstaller.installer.resources | nindent 12 }}
 {{ end }}
