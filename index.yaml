@@ -33,6 +33,20 @@ entries:
   csdp-installer:
   - apiVersion: v2
     appVersion: v0.0.4
+    created: "2022-03-30T12:56:07.02074+03:00"
+    dependencies:
+    - name: argo-cd
+      repository: https://argoproj.github.io/argo-helm
+      version: 4.2.2
+    description: A Helm chart used for installing a CSDP runtime
+    digest: 34c7bbfd012f6d7656d5804c1688534debd0b68f61810c636baf157aac8e9d64
+    name: csdp-installer
+    type: application
+    urls:
+    - https://github.com/codefresh-io/csdp-official-poc/releases/download/csdp-installer-0.1.4/csdp-installer-0.1.4.tgz
+    version: 0.1.4
+  - apiVersion: v2
+    appVersion: v0.0.4
     created: "2022-03-24T11:33:24.765099+02:00"
     dependencies:
     - name: argo-cd
@@ -87,4 +101,4 @@ entries:
     urls:
     - https://github.com/codefresh-io/csdp-official-poc/releases/download/csdp-installer-0.1.0/csdp-installer-0.1.0.tgz
     version: 0.1.0
-generated: "2022-03-24T11:33:24.765148+02:00"
+generated: "2022-03-30T12:56:07.020788+03:00"
