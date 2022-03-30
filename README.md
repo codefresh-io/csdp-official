@@ -21,5 +21,5 @@
 
    cr index -i ./index.yaml
 
-  git add . && git commit -am "updated index" && git push
+  git commit -am "updated index" && git push
 ```
