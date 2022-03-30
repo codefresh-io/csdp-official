@@ -1,0 +1,39 @@
+csdp-installer:
+  enabled: true
+
+  # CSDP platform details:
+  platform:
+    # The Codefresh platform URL
+    url: <PLATFORM_URL> # if not https://g.codefresh.io, otherwise, leave empty
+    # Codefresh API Key
+    token: <PLATFORM_API_KEY>
+
+  runtime:
+    # CSDP runtime name
+    name: <RUNTIME_NAME>
+    # CSDP runtime installation repo url
+    repo: <INSTALLATION_REPO>
+    # Git authentication token
+    gitToken: <GIT_TOKEN>
+    # Ingress URL that will be used to reach to services inside of the cluster
+    ingressURL: <INGRESS_URL>
+    # Kubernetes cluster address or name that will be used to identify this cluster
+    cluster: https://kubernetes.docker.internal:6443
+
+  # Controlls the spec of the csdp installer job
+  installer:
+    image:
+      repository: quay.io/codefresh/csdp-installer
+      pullPolicy: IfNotPresent
+      # Default tag is the chart appVersion
+      tag: ""
+    serviceAccount: argocd-server
+    ttlSecondsAfterFinished: 600
+    backoffLimit: 20
+    resources:
+      limits:
+        memory: 256Mi
+        cpu: "1"
+      requests:
+        memory: 128Mi
+        cpu: "0.2"
