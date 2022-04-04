@@ -72,7 +72,7 @@ spec:
       source:
         path: csdp/components/{{path.basenameNormalized}}
         repoURL: https://github.com/codefresh-io/csdp-official-poc.git
-        targetRevision: HEAD # replace with runtime version
+        targetRevision: v0.0.305 # replace with runtime version
       syncPolicy:
         automated:
           allowEmpty: true
