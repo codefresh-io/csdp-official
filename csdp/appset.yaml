@@ -34,7 +34,7 @@ spec:
   generators:
     - git:
         repoURL: https://github.com/codefresh-io/csdp-official-poc.git
-        revision: ""
+        revision: v0.0.306
         directories:
           - path: csdp/components/*
         requeueAfterSeconds: 15
@@ -43,7 +43,7 @@ spec:
           - path: csdp/components/**/config_dir.json
         repoURL: https://github.com/codefresh-io/csdp-official-poc.git
         requeueAfterSeconds: 15
-        revision: ""
+        revision: v0.0.306
         template:
           spec:
             source:
@@ -72,7 +72,7 @@ spec:
       source:
         path: csdp/components/{{path.basenameNormalized}}
         repoURL: https://github.com/codefresh-io/csdp-official-poc.git
-        targetRevision: v0.0.305 # replace with runtime version
+        targetRevision: v0.0.306 # replace with runtime version
       syncPolicy:
         automated:
           allowEmpty: true
