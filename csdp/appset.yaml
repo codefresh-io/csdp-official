@@ -38,6 +38,13 @@ spec:
         directories:
           - path: csdp/components/*
         requeueAfterSeconds: 15
+        template:
+        metadata: {}
+        spec:
+          destination: {}
+          project: ""
+          source:
+            repoURL: ""
     - git:
         files:
           - path: csdp/components/**/config_dir.json
@@ -45,8 +52,12 @@ spec:
         requeueAfterSeconds: 15
         revision: v0.0.306
         template:
+          metadata: {}
           spec:
+            destination: {}
+            project: ""
             source:
+              repoURL:
               directory:
                 exclude: "{{exclude}}"
                 include: "{{include}}"
