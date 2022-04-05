@@ -19,12 +19,12 @@ configMapGenerator:
       - "accounts.admin=apiKey,login" # need to be able to generate apikey for generic eventsource
       - |
         repository.credentials=- passwordSecret:
-          key: git_token
-          name: autopilot-secret
-        url: https://github.com/
-        usernameSecret:
-          key: git_username
-          name: autopilot-secret"
+            key: git_token
+            name: autopilot-secret
+          url: https://github.com/
+          usernameSecret:
+            key: git_username
+            name: autopilot-secret
   - name: argocd-cmd-params-cm
     behavior: merge
     literals:
