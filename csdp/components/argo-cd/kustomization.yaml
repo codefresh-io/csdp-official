@@ -1,9 +1,10 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-namespace: argocd
+namespace:
+  argocd
+  #- https://raw.githubusercontent.com/argoproj-labs/applicationset/master/manifests/install.yaml?ref=2c62537a8e5a # TODO: switch to the next release when available
 resources:
   - https://raw.githubusercontent.com/codefresh-io/argo-cd/kustomize-components/manifests/install.yaml
-  #- https://raw.githubusercontent.com/argoproj-labs/applicationset/master/manifests/install.yaml?ref=2c62537a8e5a # TODO: switch to the next release when available
   - default-rbac.yaml
 images:
   - name: quay.io/argoproj/argocd
@@ -12,11 +13,10 @@ images:
 
 # will be effective on argo-cd 2.1
 configMapGenerator:
-  - name: argocd-cm
-    behavior: merge
+  - behavior: merge
     literals:
-      - "timeout.reconciliation=20s"
-      - "accounts.admin=apiKey,login" # need to be able to generate apikey for generic eventsource
+      - timeout.reconciliation=20s
+      - accounts.admin=apiKey,login
       - |
         repository.credentials=- passwordSecret:
             key: git_token
@@ -25,18 +25,19 @@ configMapGenerator:
           usernameSecret:
             key: git_username
             name: autopilot-secret
-  - name: argocd-cmd-params-cm
-    behavior: merge
+    name: argocd-cm
+  - behavior: merge
     literals:
-      - "server.insecure=true"
+      - server.insecure=true
+    name: argocd-cmd-params-cm
 
+    # reset the crbs to `subject.namespace: default`, so that argo-cd will later change them to the actual ns
 patches:
-  # reset the crbs to `subject.namespace: default`, so that argo-cd will later change them to the actual ns
-  - target:
-      group: rbac.authorization.k8s.io
-      version: v1
-      kind: ClusterRoleBinding
-    patch: |-
+  - patch: |-
       - op: replace
         path: /subjects/0/namespace
         value: default
+    target:
+      group: rbac.authorization.k8s.io
+      kind: ClusterRoleBinding
+      version: v1
