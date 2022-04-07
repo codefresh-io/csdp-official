@@ -17,14 +17,6 @@ configMapGenerator:
     literals:
       - timeout.reconciliation=20s
       - accounts.admin=apiKey,login
-      - |
-        repository.credentials=- passwordSecret:
-            key: git_token
-            name: autopilot-secret
-          url: https://github.com/
-          usernameSecret:
-            key: git_username
-            name: autopilot-secret
     name: argocd-cm
   - behavior: merge
     literals:
