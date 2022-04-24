@@ -20,7 +20,6 @@ spec:
       kind: "*"
   sourceRepos:
     - "*"
-status: {}
 
 ---
 apiVersion: argoproj.io/v1alpha1
@@ -34,7 +33,22 @@ spec:
   generators:
     - git:
         repoURL: https://github.com/codefresh-io/csdp-official-poc.git
-        revision: v0.0.308
+        revision: v0.0.309
+        directories:
+          - path: csdp/argo-cd
+        requeueAfterSeconds: 15
+        template:
+          metadata: {}
+          spec:
+            destination: {}
+            project: ""
+            syncPolicy:
+              preserveResourcesOnDeletion: true
+            source:
+              repoURL: ""
+    - git:
+        repoURL: https://github.com/codefresh-io/csdp-official-poc.git
+        revision: v0.0.309
         directories:
           - path: csdp/components/*
         requeueAfterSeconds: 15
@@ -50,7 +64,7 @@ spec:
           - path: csdp/components/**/config_dir.json
         repoURL: https://github.com/codefresh-io/csdp-official-poc.git
         requeueAfterSeconds: 15
-        revision: v0.0.308
+        revision: v0.0.309
         template:
           metadata: {}
           spec:
@@ -83,7 +97,7 @@ spec:
       source:
         path: csdp/components/{{path.basenameNormalized}}
         repoURL: https://github.com/codefresh-io/csdp-official-poc.git
-        targetRevision: v0.0.308 # replace with runtime version
+        targetRevision: v0.0.309 # replace with runtime version
       syncPolicy:
         automated:
           allowEmpty: true
