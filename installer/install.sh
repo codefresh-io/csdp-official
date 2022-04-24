@@ -17,9 +17,9 @@ CODEFRESH_SECRET_NAME="codefresh-token"
 REPO_CREDS_SECRET_NAME="autopilot-secret"
 ARGOCD_TOKEN_SECRET_NAME="argocd-token"
 ARGOCD_INITIAL_TOKEN_SECRET_NAME="argocd-initial-admin-secret"
-BOOTSTRAP_APP_NAME="autopilot-bootstrap"
+BOOTSTRAP_APP_NAME="csdp-bootstrap"
 ADDITIONAL_COMPONENTS="\nevents-reporter\nrollout-reporter\nworkflow-reporter"
-RUNTIME_DEF_URL="https://github.com/codefresh-io/cli-v2/releases/VERSION/download/runtime.yaml"
+RUNTIME_DEF_URL="https://github.com/codefresh-io/csdp-official-poc/releases/VERSION/download/runtime.yaml"
 
 # Params:
 check_required_param "namespace" "${NAMESPACE}"
@@ -36,7 +36,7 @@ CSDP_RUNTIME_VERSION="${CSDP_RUNTIME_VERSION:-latest}"
 CSDP_GIT_INTEGRATION_PROVIDER="${CSDP_GIT_INTEGRATION_PROVIDER:-GITHUB}"
 CSDP_GIT_INTEGRATION_API_URL="${CSDP_GIT_INTEGRATION_API_URL:-https://api.github.com}"
 CSDP_GIT_INTEGRATION_TOKEN="${CSDP_GIT_INTEGRATION_TOKEN:-${CSDP_RUNTIME_GIT_TOKEN}}"
-CSDP_RUNTIME_REPO_CREDS_PATTERN=`echo ${CSDP_RUNTIME_REPO} | sed "s/\/[a-zA-Z0-9\?\._\-]*$//g"`
+CSDP_RUNTIME_REPO_CREDS_PATTERN=`echo ${CSDP_RUNTIME_REPO} | grep --color=never -E -o '^http[s]?:\/\/([a-zA-Z0-9\.]*)'`
 
 create_codefresh_secret() {
     # Download runtime definition
@@ -65,6 +65,8 @@ create_codefresh_secret() {
         \"runtimeName\":\"${CSDP_RUNTIME_NAME}\",
         \"cluster\":\"${CSDP_RUNTIME_CLUSTER}\",
         \"ingressHost\":\"${CSDP_RUNTIME_INGRESS_URL}\",
+        \"ingressClass\":\"${CSDP_INGRESS_CLASS_NAME}\",
+        \"ingressController\":\"${CSDP_INGRESS_CONTROLLER}\",
         \"componentNames\":${COMPONENTS},
         \"runtimeVersion\":\"${RESOLVED_RUNTIME_VERSION}\"
     }"
@@ -113,7 +115,6 @@ create_bootstrap_application() {
     kind: Application
     metadata:
         labels:
-            app.kubernetes.io/managed-by: argocd-autopilot
             app.kubernetes.io/name: ${BOOTSTRAP_APP_NAME}
             codefresh.io/internal: \"true\"
         name: ${BOOTSTRAP_APP_NAME}
@@ -121,6 +122,7 @@ create_bootstrap_application() {
         finalizers:
           - 'resources-finalizer.argocd.argoproj.io'
     spec:
+        project: default
         destination:
             namespace: ${NAMESPACE}
             server: https://kubernetes.default.svc
@@ -129,10 +131,10 @@ create_bootstrap_application() {
               kind: Application
               jsonPointers:
                 - /status
-        project: default
         source:
-            path: bootstrap
+            path: base/bootstrap
             repoURL: ${CSDP_RUNTIME_REPO}
+            targetRevision: HEAD
         syncPolicy:
             automated:
                 allowEmpty: true
@@ -251,9 +253,11 @@ echo "  runtime repo: ${CSDP_RUNTIME_REPO}"
 echo "  runtime repo creds pattern: ${CSDP_RUNTIME_REPO_CREDS_PATTERN}"
 echo "  runtime git-token: ****"
 echo "  runtime cluster: ${CSDP_RUNTIME_CLUSTER}"
-echo "  runtime ingress: ${CSDP_RUNTIME_INGRESS_URL}"
 echo "  runtime name: ${CSDP_RUNTIME_NAME}"
 echo "  runtime version: ${CSDP_RUNTIME_VERSION}"
+echo "  runtime ingress: ${CSDP_RUNTIME_INGRESS_URL}"
+echo "  ingress class name: ${CSDP_INGRESS_CLASS_NAME}"
+echo "  ingress controller: ${CSDP_INGRESS_CONTROLLER}"
 echo "#######################################"
 echo ""
 

@@ -2,7 +2,7 @@ global:
   # Controlls argo-cd image
   image:
     repository: quay.io/codefresh/argocd
-    tag: v2.1.14-cap-CR-10462
+    tag: v2.3.3-cap-CR-kustomize-components
 
 argo-cd:
   fullnameOverride: "argocd"
@@ -22,14 +22,14 @@ argo-cd:
     enable: true
     image:
       # -- Repository to use for the application set controller
-      repository: quay.io/argoproj/argocd-applicationset
+      repository: quay.io/codefresh/applicationset
       # -- Image pull policy for the application set controller
-      pullPolicy: IfNotPresent
+      pullPolicy: Always
       # -- Tag to use for the application set controller
-      tag: "v0.4.1"
+      tag: "v0.4.2"
 
 csdpInstaller:
-  enabled: false
+  enabled: true
 
   # CSDP platform details:
   platform:
@@ -47,6 +47,10 @@ csdpInstaller:
     gitToken: <GIT_TOKEN>
     # Ingress URL that will be used to reach to services inside of the cluster
     ingressURL: <INGRESS_URL>
+    # Ingress class is the name of the ingress class
+    ingressClass: ""
+    # Ingress Controller is the type of ingress controller you are using
+    ingressController: ""
     # Kubernetes cluster address or name that will be used to identify this cluster
     cluster: https://kubernetes.docker.internal:6443
 
