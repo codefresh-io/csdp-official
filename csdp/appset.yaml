@@ -35,21 +35,6 @@ spec:
         repoURL: https://github.com/codefresh-io/csdp-official-poc.git
         revision: v0.0.309
         directories:
-          - path: csdp/argo-cd
-        requeueAfterSeconds: 15
-        template:
-          metadata: {}
-          spec:
-            destination: {}
-            project: ""
-            syncPolicy:
-              preserveResourcesOnDeletion: true
-            source:
-              repoURL: ""
-    - git:
-        repoURL: https://github.com/codefresh-io/csdp-official-poc.git
-        revision: v0.0.309
-        directories:
           - path: csdp/components/*
         requeueAfterSeconds: 15
         template:
