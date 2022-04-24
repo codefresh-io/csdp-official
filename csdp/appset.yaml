@@ -35,7 +35,7 @@ spec:
   generators:
     - git:
         repoURL: https://github.com/codefresh-io/csdp-official-poc.git
-        revision: v0.0.309
+        revision: RUNTIME_VERSION
         directories:
           - path: csdp/components/*
         requeueAfterSeconds: 15
@@ -50,7 +50,7 @@ spec:
               repoURL: ""
     - git:
         repoURL: https://github.com/codefresh-io/csdp-official-poc.git
-        revision: v0.0.309
+        revision: RUNTIME_VERSION
         directories:
           - path: csdp/components/argo-cd
         requeueAfterSeconds: 15
@@ -66,7 +66,7 @@ spec:
           - path: csdp/components/**/config_dir.json
         repoURL: https://github.com/codefresh-io/csdp-official-poc.git
         requeueAfterSeconds: 15
-        revision: v0.0.309
+        revision: RUNTIME_VERSION
         template:
           metadata:
             finalizers:
@@ -101,7 +101,7 @@ spec:
       source:
         path: csdp/components/{{path.basenameNormalized}}
         repoURL: https://github.com/codefresh-io/csdp-official-poc.git
-        targetRevision: v0.0.309 # replace with runtime version
+        targetRevision: RUNTIME_VERSION # replace with runtime version
       syncPolicy:
         automated:
           allowEmpty: true
