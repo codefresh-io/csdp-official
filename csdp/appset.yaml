@@ -30,6 +30,8 @@ metadata:
   name: csdp
   namespace: default # replace
 spec:
+  syncPolicy:
+    preserveResourcesOnDeletion: true
   generators:
     - git:
         repoURL: https://github.com/codefresh-io/csdp-official-poc.git
@@ -39,6 +41,19 @@ spec:
         requeueAfterSeconds: 15
         template:
           metadata: {}
+          spec:
+            destination: {}
+            project: ""
+            source:
+              repoURL: ""
+    - git:
+        repoURL: https://github.com/codefresh-io/csdp-official-poc.git
+        revision: v0.0.309
+        directories:
+          - path: csdp/argo-cd
+        requeueAfterSeconds: 15
+        template:
+          metadata: { finalizers: [] }
           spec:
             destination: {}
             project: ""
@@ -69,6 +84,8 @@ spec:
         codefresh.io/internal: "true"
       name: csdp-{{path.basenameNormalized}}
       namespace: default # replace
+      finalizers:
+        - resources-finalizer.argocd.argoproj.io
     spec:
       destination:
         namespace: default # replace
