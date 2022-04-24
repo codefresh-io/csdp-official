@@ -40,7 +40,9 @@ spec:
           - path: csdp/components/*
         requeueAfterSeconds: 15
         template:
-          metadata: {}
+          metadata:
+            finalizers:
+              - resources-finalizer.argocd.argoproj.io
           spec:
             destination: {}
             project: ""
@@ -53,7 +55,7 @@ spec:
           - path: csdp/components/argo-cd
         requeueAfterSeconds: 15
         template:
-          metadata: { finalizers: [] }
+          metadata: {}
           spec:
             destination: {}
             project: ""
@@ -66,7 +68,9 @@ spec:
         requeueAfterSeconds: 15
         revision: v0.0.309
         template:
-          metadata: {}
+          metadata:
+            finalizers:
+              - resources-finalizer.argocd.argoproj.io
           spec:
             destination: {}
             project: ""
@@ -84,8 +88,6 @@ spec:
         codefresh.io/internal: "true"
       name: csdp-{{path.basenameNormalized}}
       namespace: default # replace
-      finalizers:
-        - resources-finalizer.argocd.argoproj.io
     spec:
       destination:
         namespace: default # replace
