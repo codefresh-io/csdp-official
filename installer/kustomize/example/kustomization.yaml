@@ -17,6 +17,7 @@ secretGenerator:
       - "runtime.repo=<RUNTIME_REPO>"
       - "runtime.gitToken=<RUNTIME_GIT_TOKEN>"
       - "runtime.cluster=<RUNTIME_CLUSTER>"
+      - "runtime.managed=<IS_MANAGED>"
       - "runtime.ingressURL=<RUNTIME_INGRESS_URL>"
       - "runtime.ingressClass=<RUNTIME_INGRESS_CLASS>"
       - "runtime.ingressController=<RUNTIME_INGRESS_CONTROLLER>"

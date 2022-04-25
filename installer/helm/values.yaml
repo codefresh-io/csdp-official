@@ -53,6 +53,8 @@ csdpInstaller:
     ingressController: ""
     # Kubernetes cluster address or name that will be used to identify this cluster
     cluster: https://kubernetes.docker.internal:6443
+    # Is managed runtime
+    managed: false
 
   # Controlls the spec of the csdp installer job
   installer:
