@@ -2,8 +2,8 @@ apiVersion: v2
 name: csdp-installer
 description: A Helm chart used for installing a CSDP runtime
 type: application
-version: 0.1.7
-appVersion: v0.0.4
+version: 0.1.8
+appVersion: v0.0.5
 
 dependencies:
   - name: argo-cd
