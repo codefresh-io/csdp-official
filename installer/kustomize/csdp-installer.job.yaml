@@ -13,7 +13,7 @@ spec:
       restartPolicy: Never
       containers:
         - name: csdp-installer
-          image: csdp-installer
+          image: quay.io/codefresh/csdp-installer
           imagePullPolicy: IfNotPresent
           command:
             - bash
