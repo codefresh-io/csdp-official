@@ -13,7 +13,7 @@
 ```
 4. run:
 ```bash
-  cr package ./helm
+  cr package ./installer/helm
 
   cr upload --skip-existing
 

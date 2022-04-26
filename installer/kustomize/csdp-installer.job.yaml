@@ -65,6 +65,22 @@ spec:
                 secretKeyRef:
                   name: csdp-installer
                   key: runtime.ingressURL
+            - name: CSDP_INGRESS_CLASS_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: csdp-installer
+                  key: runtime.ingressClass
+            - name: CSDP_INGRESS_CONTROLLER
+              valueFrom:
+                secretKeyRef:
+                  name: csdp-installer
+                  key: runtime.ingressController
+            - name: CSDP_MANAGED_RUNTIME
+              valueFrom:
+                secretKeyRef:
+                  name: csdp-installer
+                  key: runtime.managed
+                  optional: true
             - name: CSDP_GIT_INTEGRATION_PROVIDER
               valueFrom:
                 secretKeyRef:
