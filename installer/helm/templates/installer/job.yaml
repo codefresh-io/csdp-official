@@ -29,80 +29,44 @@ spec:
                 fieldRef:
                   fieldPath: metadata.namespace
             - name: CSDP_URL
-              valueFrom:
-                secretKeyRef:
-                  name: csdp-installer
-                  key: csdp.url
+              value: {{ .Values.csdpInstaller.platform.url | quote }}
             - name: CSDP_TOKEN
               valueFrom:
                 secretKeyRef:
-                  name: csdp-installer
-                  key: csdp.token
+{{ .Values.csdpInstaller.platform.token.secretKeyRef | toYaml | indent 18 }}
             - name: CSDP_RUNTIME_NAME
-              valueFrom:
-                secretKeyRef:
-                  name: csdp-installer
-                  key: runtime.name
-            - name: CSDP_RUNTIME_VERSION
-              valueFrom:
-                secretKeyRef:
-                  name: csdp-installer
-                  key: runtime.version
-                  optional: true
+              value: {{ .Values.csdpInstaller.runtime.name | quote }}
             - name: CSDP_RUNTIME_REPO
-              valueFrom:
-                secretKeyRef:
-                  name: csdp-installer
-                  key: runtime.repo
+              value: {{ .Values.csdpInstaller.runtime.repo | quote }}
             - name: CSDP_RUNTIME_GIT_TOKEN
               valueFrom:
                 secretKeyRef:
-                  name: csdp-installer
-                  key: runtime.gitToken
+{{ .Values.csdpInstaller.runtime.gitToken.secretKeyRef | toYaml | indent 18 }}
             - name: CSDP_RUNTIME_CLUSTER
-              valueFrom:
-                secretKeyRef:
-                  name: csdp-installer
-                  key: runtime.cluster
+              value: {{ .Values.csdpInstaller.runtime.cluster | quote }}
             - name: CSDP_RUNTIME_INGRESS_URL
-              valueFrom:
-                secretKeyRef:
-                  name: csdp-installer
-                  key: runtime.ingressURL
+              value: {{ .Values.csdpInstaller.runtime.ingressURL | quote }}
             - name: CSDP_INGRESS_CLASS_NAME
-              valueFrom:
-                secretKeyRef:
-                  name: csdp-installer
-                  key: runtime.ingressClass
+              value: {{ .Values.csdpInstaller.runtime.ingressClass | quote }}
             - name: CSDP_INGRESS_CONTROLLER
-              valueFrom:
-                secretKeyRef:
-                  name: csdp-installer
-                  key: runtime.ingressController
+              value: {{ .Values.csdpInstaller.runtime.ingressController | quote }}
             - name: CSDP_MANAGED_RUNTIME
-              valueFrom:
-                secretKeyRef:
-                  name: csdp-installer
-                  key: runtime.managed
-                  optional: true
+              value: {{ .Values.csdpInstaller.runtime.managed | quote }}
+            {{- if .Values.csdpInstaller.runtime.gitIntegration }}
+            {{- if eq .Values.csdpInstaller.runtime.managed true }}
+            {{ fail "git integration parameters are not allowed when 'runtime.managed' is true!"}}
+            {{- end }}
             - name: CSDP_GIT_INTEGRATION_PROVIDER
-              valueFrom:
-                secretKeyRef:
-                  name: csdp-installer
-                  key: gitIntegration.provider
-                  optional: true
+              value: {{ .Values.csdpInstaller.runtime.gitIntegration.provider }}
             - name: CSDP_GIT_INTEGRATION_API_URL
-              valueFrom:
-                secretKeyRef:
-                  name: csdp-installer
-                  key: gitIntegration.apiURL
-                  optional: true
+              value: {{ .Values.csdpInstaller.runtime.gitIntegration.apiURL }}
+            {{- if .Values.csdpInstaller.runtime.gitIntegration.token }}
             - name: CSDP_GIT_INTEGRATION_TOKEN
               valueFrom:
                 secretKeyRef:
-                  name: csdp-installer
-                  key: gitIntegration.token
-                  optional: true
+{{ .Values.csdpInstaller.runtime.gitIntegration.token.secretKeyRef | toYaml | indent 18 }}
+            {{- end}}
+            {{- end}}
           resources:
             {{- toYaml .Values.csdpInstaller.installer.resources | nindent 12 }}
 {{ end }}

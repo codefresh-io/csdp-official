@@ -1,30 +1,55 @@
 csdpInstaller:
   enabled: true
 
+  secrets:
+    create: false
+
+    platform:
+      token: my-token
+
+    runtime:
+      gitToken: foobar
+
   # CSDP platform details:
   platform:
     # The Codefresh platform URL
-    url: <PLATFORM_URL> # if not https://g.codefresh.io, otherwise, leave empty
-    # Codefresh API Key
-    token: <PLATFORM_API_KEY>
+    url: https://g.codefresh.io
+    # Codefresh API Key of the account you want to install the runtime for
+    token:
+      secretKeyRef:
+        name: csdp-installer
+        key: platformToken
 
   runtime:
     # CSDP runtime name
-    name: <RUNTIME_NAME>
+    name: some-runtime
     # CSDP runtime installation repo url
-    repo: <INSTALLATION_REPO>
+    repoURL: https://github.com/some/user-repo
     # Git authentication token
-    gitToken: <GIT_TOKEN>
+    gitToken:
+      secretKeyRef:
+        name: csdp-installer
+        key: runtimeGitToken
     # Ingress URL that will be used to reach to services inside of the cluster
-    ingressURL: <INGRESS_URL>
+    ingressURL: https://example.com
     # Ingress class is the name of the ingress class
-    ingressClass: ""
+    ingressClass: nginx
     # Ingress Controller is the type of ingress controller you are using
-    ingressController: ""
+    ingressController: k8s.io/ingress-nginx
     # Kubernetes cluster address or name that will be used to identify this cluster
     cluster: https://kubernetes.docker.internal:6443
     # Is managed runtime
     managed: false
+
+    # Git integration creation parameters (not used in managed runtimes)
+    # gitIntegration:
+    #   provider: GITHUB # GITHUB | GITLAB
+    #   apiURL: https://api.github.com
+    #   # leave empty to use the runtime git token
+    #   token:
+    #     # secretKeyRef:
+    #     #   name: csdp-git-token-secret
+    #     #   key: integrationToken
 
   # Controlls the spec of the csdp installer job
   installer:
