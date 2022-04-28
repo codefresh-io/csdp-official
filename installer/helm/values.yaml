@@ -25,6 +25,8 @@ csdpInstaller:
     name: some-runtime
     # CSDP runtime installation repo url
     repoURL: https://github.com/some/user-repo
+    # CSDP runtime installation repo path to the bootstrap directory
+    repoPath: ""
     # Git authentication token
     gitToken:
       secretKeyRef:
