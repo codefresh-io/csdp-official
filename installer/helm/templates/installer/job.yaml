@@ -37,7 +37,11 @@ spec:
             - name: CSDP_RUNTIME_NAME
               value: {{ .Values.csdpInstaller.runtime.name | quote }}
             - name: CSDP_RUNTIME_REPO
-              value: {{ .Values.csdpInstaller.runtime.repo | quote }}
+              value: {{ .Values.csdpInstaller.runtime.repoURL }}
+            {{- if .Values.csdpInstaller.runtime.repoPath }}
+            - name: CSDP_RUNTIME_REPO_PATH
+              value: {{ .Values.csdpInstaller.runtime.repoPath }}
+            {{- end }}
             - name: CSDP_RUNTIME_GIT_TOKEN
               valueFrom:
                 secretKeyRef:

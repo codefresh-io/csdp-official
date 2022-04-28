@@ -38,6 +38,7 @@ CSDP_RUNTIME_VERSION="${CSDP_RUNTIME_VERSION:-latest}"
 CSDP_GIT_INTEGRATION_PROVIDER="${CSDP_GIT_INTEGRATION_PROVIDER:-GITHUB}"
 CSDP_GIT_INTEGRATION_API_URL="${CSDP_GIT_INTEGRATION_API_URL:-https://api.github.com}"
 CSDP_GIT_INTEGRATION_TOKEN="${CSDP_GIT_INTEGRATION_TOKEN:-${CSDP_RUNTIME_GIT_TOKEN}}"
+CSDP_RUNTIME_REPO_PATH="${CSDP_RUNTIME_REPO_PATH:-runtimes/${CSDP_RUNTIME_NAME}/bootstrap}"
 CSDP_RUNTIME_REPO_CREDS_PATTERN=`echo ${CSDP_RUNTIME_REPO} | grep --color=never -E -o '^http[s]?:\/\/([a-zA-Z0-9\.]*)'`
 CSDP_MANAGED_RUNTIME="${CSDP_MANAGED_RUNTIME:-false}"
 
@@ -146,7 +147,7 @@ create_bootstrap_application() {
               jsonPointers:
                 - /status
         source:
-            path: base/bootstrap
+            path: ${CSDP_RUNTIME_REPO_PATH}
             repoURL: ${CSDP_RUNTIME_REPO}
             targetRevision: HEAD
         syncPolicy:
@@ -290,6 +291,7 @@ echo "  namespace: ${NAMESPACE}"
 echo "  csdp url: ${CSDP_URL}"
 echo "  csdp token: ****"
 echo "  runtime repo: ${CSDP_RUNTIME_REPO}"
+echo "  runtime repo path: ${CSDP_RUNTIME_REPO_PATH}"
 echo "  runtime repo creds pattern: ${CSDP_RUNTIME_REPO_CREDS_PATTERN}"
 echo "  runtime git-token: ****"
 echo "  runtime cluster: ${CSDP_RUNTIME_CLUSTER}"
