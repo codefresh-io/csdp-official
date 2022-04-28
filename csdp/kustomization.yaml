@@ -10,7 +10,7 @@ configMapGenerator:
   - name: csdp-runtime-version
     behavior: create
     literals:
-      - version=v0.0.310
+      - version=v0.0.312
 
 replacements:
   - source:
