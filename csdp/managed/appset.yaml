@@ -37,7 +37,7 @@ spec:
         repoURL: https://github.com/codefresh-io/csdp-official-poc.git
         revision: RUNTIME_VERSION
         directories:
-          - path: csdp/components/*
+          - path: csdp/managed/*
         requeueAfterSeconds: 15
         template:
           metadata:
@@ -52,7 +52,7 @@ spec:
         repoURL: https://github.com/codefresh-io/csdp-official-poc.git
         revision: RUNTIME_VERSION
         directories:
-          - path: csdp/components/argo-cd
+          - path: csdp/managed/argo-cd
         requeueAfterSeconds: 15
         template:
           metadata: {}
@@ -63,7 +63,7 @@ spec:
               repoURL: ""
     - git:
         files:
-          - path: csdp/components/**/config_dir.json
+          - path: csdp/managed/**/config_dir.json
         repoURL: https://github.com/codefresh-io/csdp-official-poc.git
         requeueAfterSeconds: 15
         revision: RUNTIME_VERSION
@@ -99,7 +99,7 @@ spec:
           kind: Application
       project: csdp
       source:
-        path: csdp/components/{{path.basenameNormalized}}
+        path: csdp/managed/{{path.basenameNormalized}}
         repoURL: https://github.com/codefresh-io/csdp-official-poc.git
         targetRevision: RUNTIME_VERSION # replace with runtime version
       syncPolicy:
