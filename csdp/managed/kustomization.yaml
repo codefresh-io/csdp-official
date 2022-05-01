@@ -7,10 +7,14 @@ generatorOptions:
   disableNameSuffixHash: true
 
 configMapGenerator:
-  - name: csdp-runtime-version
+  - name: codefresh-cm
     behavior: create
+    options:
+      labels:
+        app.kubernetes.io/managed-by: codefresh
+        codefresh.io/entity: runtimeDef
     literals:
-      - version=v0.0.312
+      - version=v0.0.313
 
 replacements:
   - source:
