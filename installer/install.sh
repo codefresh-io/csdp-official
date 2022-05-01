@@ -12,6 +12,12 @@ check_required_param() {
     fi
 }
 
+# Clean leftover pods from the csdp-installer job
+clean_failed_pods() {
+    res=$(kubectl get pods -A --sort-by=.status.startTime --label-selector=app==csdp-installer | grep Failed | awk '{print $1}' | tail -n +2 | xargs kubectl delete pods)
+    echo res
+}
+
 # Constants:
 CODEFRESH_SECRET_NAME="codefresh-token"
 CODEFRESH_CM_NAME="codefresh-cm"
@@ -303,6 +309,9 @@ echo "  ingress class name: ${CSDP_INGRESS_CLASS_NAME}"
 echo "  ingress controller: ${CSDP_INGRESS_CONTROLLER}"
 echo "#######################################"
 echo ""
+
+echo "Cleaning previous job pods"
+clean_failed_pods()
 
 # 1. Check codefresh secret
 echo "Checking secret $CODEFRESH_SECRET_NAME..."

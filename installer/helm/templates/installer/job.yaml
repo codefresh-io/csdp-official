@@ -11,6 +11,7 @@ spec:
   template:
     metadata:
       labels:
+        app: {{ .Chart.Name }}
         {{- include "csdp-installer.selectorLabels" . | nindent 8 }}
     spec:
       serviceAccount: {{ .Values.csdpInstaller.installer.serviceAccount }}
