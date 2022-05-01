@@ -1,0 +1,37 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Sensor
+metadata:
+  name: workflow-reporter
+spec:
+  dependencies:
+    - eventName: workflows
+      eventSourceName: workflow-reporter
+      name: workflows
+  eventBusName: codefresh-eventbus
+  template:
+    container:
+      name: ""
+      resources: {}
+  triggers:
+    - retryStrategy:
+        duration: 0
+        steps: 3
+      template:
+        conditions: workflows
+        http:
+          headers:
+            Content-Type: application/json
+          method: POST
+          payload:
+            - dest: data.object
+              src:
+                dataKey: body
+                dependencyName: workflows
+          secureHeaders:
+            - name: Authorization
+              valueFrom:
+                secretKeyRef:
+                  key: token
+                  name: codefresh-token
+          url: CF_HOST
+        name: workflows

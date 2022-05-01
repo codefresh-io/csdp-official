@@ -1,0 +1,12 @@
+{
+    "appName": "marketplace-git-source",
+    "srcPath": ".",
+    "srcRepoURL": "https://github.com/codefresh-io/argo-hub.git",
+    "srcTargetRevision": "",
+    "labels": {
+        "codefresh_io_entity": "git-source",
+        "codefresh_io_internal": "true"
+    },
+    "exclude": "**/images/**/*",
+    "include": "workflows/**/*.yaml"
+}

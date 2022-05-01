@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    ingress.kubernetes.io/protocol: https
+    ingress.kubernetes.io/rewrite-target: /$2
+    nginx.ingress.kubernetes.io/backend-protocol: https
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+  name: argo-workflows
+spec:
+  ingressClassName: REPLACE_ME
+  rules:
+    - host: REPLACE_ME
+      http:
+        paths:
+          - backend:
+              service:
+                name: argo-server
+                port:
+                  number: 2746
+            path: /workflows(/|$)(.*)
+            pathType: ImplementationSpecific
