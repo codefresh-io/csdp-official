@@ -60,7 +60,7 @@ csdpInstaller:
       pullPolicy: IfNotPresent
       # Default tag is the chart appVersion
       tag: ""
-    serviceAccount: argocd-server
+    serviceAccount: argocd-application-controller
     ttlSecondsAfterFinished: 600
     backoffLimit: 40
     resources:

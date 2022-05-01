@@ -11,7 +11,7 @@ spec:
         app: csdp-installer
       name: csdp-installation-job
     spec:
-      serviceAccount: argocd-server
+      serviceAccount: argocd-application-controller
       restartPolicy: Never
       containers:
         - name: csdp-installer

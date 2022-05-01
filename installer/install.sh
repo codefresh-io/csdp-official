@@ -14,8 +14,8 @@ check_required_param() {
 
 # Clean leftover pods from the csdp-installer job
 clean_failed_pods() {
-    res=$(kubectl get pods -A --sort-by=.status.startTime --label-selector=app==csdp-installer | grep Failed | awk '{print $1}' | tail -n +2 | xargs kubectl delete pods)
-    echo res
+    res=$(kubectl get pods -n ${NAMESPACE} --sort-by=.status.startTime -l app=csdp-installer --field-selector status.phase!=Running | awk '{print $2}' | tail -n +2 | xargs kubectl delete pods)
+    echo "${res}"
 }
 
 # Constants:
@@ -311,7 +311,7 @@ echo "#######################################"
 echo ""
 
 echo "Cleaning previous job pods"
-clean_failed_pods()
+clean_failed_pods
 
 # 1. Check codefresh secret
 echo "Checking secret $CODEFRESH_SECRET_NAME..."
