@@ -62,7 +62,7 @@ csdpInstaller:
       tag: ""
     serviceAccount: argocd-server
     ttlSecondsAfterFinished: 600
-    backoffLimit: 20
+    backoffLimit: 40
     resources:
       limits:
         memory: 256Mi
