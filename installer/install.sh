@@ -14,8 +14,7 @@ check_required_param() {
 
 # Clean leftover pods from the csdp-installer job
 clean_failed_pods() {
-    res=$(kubectl get pods -n ${NAMESPACE} --sort-by=.status.startTime -l app=csdp-installer --field-selector status.phase!=Running | awk '{print $2}' | tail -n +2 | xargs kubectl delete pods)
-    echo "${res}"
+    kubectl get pods -n ${NAMESPACE} --sort-by=.metadata.creationTimestamp -l app=csdp-installer --field-selector status.phase!=Running -o name | tac | tail -n +2 | xargs kubectl delete || true
 }
 
 # Constants:
