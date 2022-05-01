@@ -26,6 +26,7 @@ ARGOCD_INITIAL_TOKEN_SECRET_NAME="argocd-initial-admin-secret"
 BOOTSTRAP_APP_NAME="csdp-bootstrap"
 COMPONENTS_MANAGED="argo-events,app-proxy,argo-cd,events-reporter"
 COMPONENTS="argo-events,app-proxy,argo-cd,events-reporter,rollout-reporter,workflow-reporter"
+DEFAULT_GIT_SOURCE_NAME="default-git-source"
 
 # Params:
 check_required_param "namespace" "${NAMESPACE}"
@@ -45,6 +46,11 @@ CSDP_GIT_INTEGRATION_TOKEN="${CSDP_GIT_INTEGRATION_TOKEN:-${CSDP_RUNTIME_GIT_TOK
 CSDP_RUNTIME_REPO_PATH="${CSDP_RUNTIME_REPO_PATH:-runtimes/${CSDP_RUNTIME_NAME}/bootstrap}"
 CSDP_RUNTIME_REPO_CREDS_PATTERN=`echo ${CSDP_RUNTIME_REPO} | grep --color=never -E -o '^http[s]?:\/\/([a-zA-Z0-9\.]*)'`
 CSDP_MANAGED_RUNTIME="${CSDP_MANAGED_RUNTIME:-false}"
+DEFAULT_DEST_SERVER="https://kubernetes.default.svc"
+CSDP_CREATE_DEFAULT_GIT_SOURCE="${CSDP_CREATE_DEFAULT_GIT_SOURCE:-true}"
+CSDP_CREATE_DEFAULT_GIT_SOURCE_APP_SPECIFIER="`echo ${CSDP_RUNTIME_REPO} | sed s/\.git$//`_git-source.git/resources_${CSDP_RUNTIME_NAME}"
+
+
 
 create_codefresh_secret() {
     if [[ "$CSDP_MANAGED_RUNTIME" == "true" ]] ; then
@@ -132,7 +138,7 @@ create_bootstrap_application() {
         project: default
         destination:
             namespace: ${NAMESPACE}
-            server: https://kubernetes.default.svc
+            server: ${DEFAULT_DEST_SERVER}
         ignoreDifferences:
             - group: argoproj.io
               kind: Application
@@ -271,6 +277,38 @@ register_to_git_integration() {
     echo "" 
 }
 
+create_default_git_source() {
+    echo "  --> Creating default git source"
+
+    GIT_SOURCE_CREATE_ARGS="{
+        \"appName\": \"${DEFAULT_GIT_SOURCE_NAME}\",
+        \"appSpecifier\": \"${CSDP_CREATE_DEFAULT_GIT_SOURCE_APP_SPECIFIER}\",
+        \"destServer\": \"${DEFAULT_DEST_SERVER}\",
+        \"destNamespace\": \"${CSDP_RUNTIME_NAME}\"
+    }"
+
+    GIT_SOURCE_CREATE_DATA="{\"operationName\":\"CreateGitSource\",\"variables\":{\"args\":$GIT_SOURCE_CREATE_ARGS}"
+    GIT_SOURCE_CREATE_DATA+=$',"query":"mutation CreateGitSource($args: CreateGitSourceInput\u0021) {\\n  createGitSource(args: $args)\\n}\\n"}'
+
+    GIT_SOURCE_CREATE_RESPONSE=`curl "${CSDP_RUNTIME_INGRESS_URL}/app-proxy/api/graphql" \
+    -SsfL \
+    -H "Authorization: ${CSDP_TOKEN}" \
+    -H 'content-type: application/json' \
+    --compressed \
+    --insecure \
+    --data-raw "$GIT_SOURCE_CREATE_DATA"`
+
+    if `echo "$GIT_SOURCE_CREATE_RESPONSE" | jq -e 'has("errors")'`; then
+        echo "Failed to create default git source"
+        echo ${GIT_SOURCE_CREATE_RESPONSE}
+        exit 1
+    fi
+
+    echo "  --> Created default git source:"
+    echo "${GIT_SOURCE_CREATE_RESPONSE}"
+    echo "" 
+}
+
 #
 # Start here:
 #
@@ -295,6 +333,9 @@ echo "  ingress class name: ${CSDP_INGRESS_CLASS_NAME}"
 echo "  ingress controller: ${CSDP_INGRESS_CONTROLLER}"
 echo "#######################################"
 echo ""
+
+create_default_git_source
+exit 0
 
 echo "Cleaning previous job pods"
 clean_failed_pods
@@ -355,8 +396,17 @@ else
 fi
 
 # 6. Register to git integration
-if [[ "$CSDP_MANAGED_RUNTIME" == "true" ]] ; then
+if [[ "$CSDP_MANAGED_RUNTIME" -ne "true" ]] ; then
     register_to_git_integration
+
+    if [[ "$CSDP_CREATE_DEFAULT_GIT_SOURCE" == "true" ]]; then
+        echo "Checking application $DEFAULT_GIT_SOURCE_NAME..."
+        if kubectl -n "$NAMESPACE" get application -l app.kubernetes.io/name="$DEFAULT_GIT_SOURCE_NAME" 2>&1 | grep "No resources found"; then
+            create_default_git_source
+        else
+            echo "  --> Application $DEFAULT_GIT_SOURCE_NAME exists"
+        fi
+    fi
 fi
 echo ""
 
