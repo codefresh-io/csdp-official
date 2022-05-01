@@ -19,7 +19,7 @@ configMapGenerator:
 replacements:
   - source:
       kind: ConfigMap
-      name: csdp-runtime-version
+      name: codefresh-cm
       fieldPath: data.version
     targets:
       - select:
