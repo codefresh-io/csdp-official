@@ -7,6 +7,8 @@ spec:
   backoffLimit: 20
   template:
     metadata:
+      labels:
+        app: csdp-installer
       name: csdp-installation-job
     spec:
       serviceAccount: argocd-server
