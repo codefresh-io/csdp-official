@@ -323,6 +323,7 @@ echo "  csdp token: ****"
 echo "  runtime repo: ${CSDP_RUNTIME_REPO}"
 echo "  runtime repo path: ${CSDP_RUNTIME_REPO_PATH}"
 echo "  runtime repo creds pattern: ${CSDP_RUNTIME_REPO_CREDS_PATTERN}"
+echo "  default git-source repo: ${CSDP_CREATE_DEFAULT_GIT_SOURCE_APP_SPECIFIER}"
 echo "  runtime git-token: ****"
 echo "  runtime cluster: ${CSDP_RUNTIME_CLUSTER}"
 echo "  runtime name: ${CSDP_RUNTIME_NAME}"
@@ -333,9 +334,6 @@ echo "  ingress class name: ${CSDP_INGRESS_CLASS_NAME}"
 echo "  ingress controller: ${CSDP_INGRESS_CONTROLLER}"
 echo "#######################################"
 echo ""
-
-create_default_git_source
-exit 0
 
 echo "Cleaning previous job pods"
 clean_failed_pods
