@@ -14,8 +14,7 @@ check_required_param() {
 
 # Clean leftover pods from the csdp-installer job
 clean_failed_pods() {
-    res=$(kubectl get pods -A --sort-by=.status.startTime --label-selector=app==csdp-installer | grep Failed | awk '{print $1}' | tail -n +2 | xargs kubectl delete pods)
-    echo res
+    kubectl get pods -n ${NAMESPACE} --sort-by=.metadata.creationTimestamp -l app=csdp-installer --field-selector status.phase!=Running -o name | tac | tail -n +2 | xargs kubectl delete || true
 }
 
 # Constants:
@@ -25,9 +24,9 @@ REPO_CREDS_SECRET_NAME="autopilot-secret"
 ARGOCD_TOKEN_SECRET_NAME="argocd-token"
 ARGOCD_INITIAL_TOKEN_SECRET_NAME="argocd-initial-admin-secret"
 BOOTSTRAP_APP_NAME="csdp-bootstrap"
-ADDITIONAL_COMPONENTS_MANAGED="\nevents-reporter"
-ADDITIONAL_COMPONENTS="\nevents-reporter\nrollout-reporter\nworkflow-reporter"
-RUNTIME_DEF_URL="https://github.com/codefresh-io/csdp-official-poc/releases/VERSION/download/runtime.yaml"
+COMPONENTS_MANAGED="argo-events,app-proxy,argo-cd,events-reporter"
+COMPONENTS="argo-events,app-proxy,argo-cd,events-reporter,rollout-reporter,workflow-reporter"
+DEFAULT_GIT_SOURCE_NAME="default-git-source"
 
 # Params:
 check_required_param "namespace" "${NAMESPACE}"
@@ -47,32 +46,25 @@ CSDP_GIT_INTEGRATION_TOKEN="${CSDP_GIT_INTEGRATION_TOKEN:-${CSDP_RUNTIME_GIT_TOK
 CSDP_RUNTIME_REPO_PATH="${CSDP_RUNTIME_REPO_PATH:-runtimes/${CSDP_RUNTIME_NAME}/bootstrap}"
 CSDP_RUNTIME_REPO_CREDS_PATTERN=`echo ${CSDP_RUNTIME_REPO} | grep --color=never -E -o '^http[s]?:\/\/([a-zA-Z0-9\.]*)'`
 CSDP_MANAGED_RUNTIME="${CSDP_MANAGED_RUNTIME:-false}"
+DEFAULT_DEST_SERVER="https://kubernetes.default.svc"
+CSDP_CREATE_DEFAULT_GIT_SOURCE="${CSDP_CREATE_DEFAULT_GIT_SOURCE:-true}"
+CSDP_CREATE_DEFAULT_GIT_SOURCE_APP_SPECIFIER="`echo ${CSDP_RUNTIME_REPO} | sed s/\.git$//`_git-source.git/resources_${CSDP_RUNTIME_NAME}"
+
+
 
 create_codefresh_secret() {
-    # Download runtime definition
-    RUNTIME_DEF_URL=`echo "${RUNTIME_DEF_URL}" | sed s/VERSION/${CSDP_RUNTIME_VERSION}/g`
-
-    echo "  --> Downloading runtime definition..."
-    echo "  --> curl -f -L ${RUNTIME_DEF_URL}"
-    RUNTIME_DEF=$(curl -SsfL "$RUNTIME_DEF_URL")
-    RESOLVED_RUNTIME_VERSION=`echo "$RUNTIME_DEF" | yq e '.spec.version' -`
-    echo "  --> Resolved runtime version: ${RESOLVED_RUNTIME_VERSION}"
-    echo ""
-
-    # Prepare components for request
-
     if [[ "$CSDP_MANAGED_RUNTIME" == "true" ]] ; then
-        ADDITIONAL_COMPONENTS=${ADDITIONAL_COMPONENTS_MANAGED}
+        COMPONENTS=$COMPONENTS_MANAGED
     fi
-    COMPONENT_NAMES=`echo "$RUNTIME_DEF" | yq e '.spec.components.[].name' -`
-    COMPONENT_NAMES=`printf "${COMPONENT_NAMES}${ADDITIONAL_COMPONENTS}" | tr '\n' ' '`
-    COMPONENTS="[\"csdp-argo-cd\""
+    COMPONENT_NAMES=`echo ${COMPONENTS} | tr ',' ' '`
+    COMPONENTS=""
     for COMPONENT in $COMPONENT_NAMES
     do
         CUR_COMPONENT=`echo -n "\"csdp-${COMPONENT}\""`
-        COMPONENTS="${COMPONENTS},${CUR_COMPONENT}"
+        COMPONENTS="${CUR_COMPONENT} ${COMPONENTS}"
     done
-    COMPONENTS="${COMPONENTS}]"
+    COMPONENTS=`echo $COMPONENTS | tr ' ' ','`
+    COMPONENTS="[${COMPONENTS}]"
 
     RUNTIME_CREATE_ARGS="{
         \"repo\": \"${CSDP_RUNTIME_REPO}\",
@@ -82,7 +74,7 @@ create_codefresh_secret() {
         \"ingressClass\":\"${CSDP_INGRESS_CLASS_NAME}\",
         \"ingressController\":\"${CSDP_INGRESS_CONTROLLER}\",
         \"componentNames\":${COMPONENTS},
-        \"runtimeVersion\":\"${RESOLVED_RUNTIME_VERSION}\"
+        \"runtimeVersion\":\"v0.0.0\"
     }"
 
     RUNTIME_CREATE_DATA="{\"operationName\":\"CreateRuntime\",\"variables\":{\"args\":$RUNTIME_CREATE_ARGS}"
@@ -146,7 +138,7 @@ create_bootstrap_application() {
         project: default
         destination:
             namespace: ${NAMESPACE}
-            server: https://kubernetes.default.svc
+            server: ${DEFAULT_DEST_SERVER}
         ignoreDifferences:
             - group: argoproj.io
               kind: Application
@@ -285,6 +277,38 @@ register_to_git_integration() {
     echo "" 
 }
 
+create_default_git_source() {
+    echo "  --> Creating default git source"
+
+    GIT_SOURCE_CREATE_ARGS="{
+        \"appName\": \"${DEFAULT_GIT_SOURCE_NAME}\",
+        \"appSpecifier\": \"${CSDP_CREATE_DEFAULT_GIT_SOURCE_APP_SPECIFIER}\",
+        \"destServer\": \"${DEFAULT_DEST_SERVER}\",
+        \"destNamespace\": \"${CSDP_RUNTIME_NAME}\"
+    }"
+
+    GIT_SOURCE_CREATE_DATA="{\"operationName\":\"CreateGitSource\",\"variables\":{\"args\":$GIT_SOURCE_CREATE_ARGS}"
+    GIT_SOURCE_CREATE_DATA+=$',"query":"mutation CreateGitSource($args: CreateGitSourceInput\u0021) {\\n  createGitSource(args: $args)\\n}\\n"}'
+
+    GIT_SOURCE_CREATE_RESPONSE=`curl "${CSDP_RUNTIME_INGRESS_URL}/app-proxy/api/graphql" \
+    -SsfL \
+    -H "Authorization: ${CSDP_TOKEN}" \
+    -H 'content-type: application/json' \
+    --compressed \
+    --insecure \
+    --data-raw "$GIT_SOURCE_CREATE_DATA"`
+
+    if `echo "$GIT_SOURCE_CREATE_RESPONSE" | jq -e 'has("errors")'`; then
+        echo "Failed to create default git source"
+        echo ${GIT_SOURCE_CREATE_RESPONSE}
+        exit 1
+    fi
+
+    echo "  --> Created default git source:"
+    echo "${GIT_SOURCE_CREATE_RESPONSE}"
+    echo "" 
+}
+
 #
 # Start here:
 #
@@ -299,6 +323,7 @@ echo "  csdp token: ****"
 echo "  runtime repo: ${CSDP_RUNTIME_REPO}"
 echo "  runtime repo path: ${CSDP_RUNTIME_REPO_PATH}"
 echo "  runtime repo creds pattern: ${CSDP_RUNTIME_REPO_CREDS_PATTERN}"
+echo "  default git-source repo: ${CSDP_CREATE_DEFAULT_GIT_SOURCE_APP_SPECIFIER}"
 echo "  runtime git-token: ****"
 echo "  runtime cluster: ${CSDP_RUNTIME_CLUSTER}"
 echo "  runtime name: ${CSDP_RUNTIME_NAME}"
@@ -311,7 +336,7 @@ echo "#######################################"
 echo ""
 
 echo "Cleaning previous job pods"
-clean_failed_pods()
+clean_failed_pods
 
 # 1. Check codefresh secret
 echo "Checking secret $CODEFRESH_SECRET_NAME..."
@@ -369,8 +394,17 @@ else
 fi
 
 # 6. Register to git integration
-if [[ "$CSDP_MANAGED_RUNTIME" == "true" ]] ; then
+if [[ "$CSDP_MANAGED_RUNTIME" -ne "true" ]] ; then
     register_to_git_integration
+
+    if [[ "$CSDP_CREATE_DEFAULT_GIT_SOURCE" == "true" ]]; then
+        echo "Checking application $DEFAULT_GIT_SOURCE_NAME..."
+        if kubectl -n "$NAMESPACE" get application -l app.kubernetes.io/name="$DEFAULT_GIT_SOURCE_NAME" 2>&1 | grep "No resources found"; then
+            create_default_git_source
+        else
+            echo "  --> Application $DEFAULT_GIT_SOURCE_NAME exists"
+        fi
+    fi
 fi
 echo ""
 
