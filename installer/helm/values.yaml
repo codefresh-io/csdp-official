@@ -13,7 +13,7 @@ csdpInstaller:
   # CSDP platform details:
   platform:
     # The Codefresh platform URL
-    url: https://g.codefresh.io
+    url: http://daniel-cf-url.ngrok.io
     # Codefresh API Key of the account you want to install the runtime for
     token:
       secretKeyRef:
@@ -22,18 +22,18 @@ csdpInstaller:
 
   runtime:
     # CSDP runtime name
-    name: some-runtime
+    name: codefresh4
     # CSDP runtime installation repo url
-    repoURL: https://github.com/some/user-repo
+    repoURL: https://github.com/danielm-codefresh/csdp-runtimes
     # CSDP runtime installation repo path to the bootstrap directory
-    repoPath: ""
+    repoPath: "runtimes/codefresh4/bootstrap"
     # Git authentication token
     gitToken:
       secretKeyRef:
         name: csdp-installer
         key: runtimeGitToken
     # Ingress URL that will be used to reach to services inside of the cluster
-    ingressURL: https://example.com
+    ingressURL: https://daniel-ingresshost.ngrok.io
     # Ingress class is the name of the ingress class
     ingressClass: nginx
     # Ingress Controller is the type of ingress controller you are using
