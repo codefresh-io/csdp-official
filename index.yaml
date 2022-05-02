@@ -2,10 +2,20 @@ apiVersion: v1
 entries:
   csdp-installer:
   - apiVersion: v2
-    appVersion: v0.0.7
-    created: "2022-05-01T12:37:24.552997+03:00"
+    appVersion: v0.0.8
+    created: "2022-05-02T11:25:18.790711+03:00"
     description: A Helm chart used for installing a CSDP runtime
-    digest: bb29c26c194ae2296639f07269fe90f4ce185b6691ed1133cb3ac83724ea1916
+    digest: 548d5b1798aedcd8bc206cd8daf458d13de8580638f1c76b872185066bf073e1
+    name: csdp-installer
+    type: application
+    urls:
+    - https://github.com/codefresh-io/csdp-official-poc/releases/download/csdp-installer-0.1.14/csdp-installer-0.1.14.tgz
+    version: 0.1.14
+  - apiVersion: v2
+    appVersion: v0.0.7
+    created: "2022-05-01T14:33:11.266368+03:00"
+    description: A Helm chart used for installing a CSDP runtime
+    digest: 51fde21c4e4becc4e7428e5cc3342eb122465c477e7753236fc221c3da5623b2
     name: csdp-installer
     type: application
     urls:
@@ -13,7 +23,7 @@ entries:
     version: 0.1.13
   - apiVersion: v2
     appVersion: v0.0.6
-    created: "2022-05-01T12:37:24.326571+03:00"
+    created: "2022-05-01T14:25:36.898294+03:00"
     description: A Helm chart used for installing a CSDP runtime
     digest: 8e06bea675231e7f71b52c7355446e72869a8d37f4718192aa24f05d7fd4ec1a
     name: csdp-installer
@@ -23,7 +33,7 @@ entries:
     version: 0.1.12
   - apiVersion: v2
     appVersion: v0.0.5
-    created: "2022-05-01T12:37:24.107547+03:00"
+    created: "2022-05-01T14:25:36.681357+03:00"
     description: A Helm chart used for installing a CSDP runtime
     digest: cb73a5fa18f8b19a8f5ca9ab576e3fd5e4ed6fffe1fe287e5e0d8723fe0fe1e7
     name: csdp-installer
@@ -33,7 +43,7 @@ entries:
     version: 0.1.11
   - apiVersion: v2
     appVersion: v0.0.5
-    created: "2022-05-01T12:37:23.886091+03:00"
+    created: "2022-05-01T14:25:36.459975+03:00"
     description: A Helm chart used for installing a CSDP runtime
     digest: 5bd73d88ffbb5bd507d623b5e545d32528aa68e7a6964dc865c02f902ee3af16
     name: csdp-installer
@@ -41,4 +51,4 @@ entries:
     urls:
     - https://github.com/codefresh-io/csdp-official-poc/releases/download/csdp-installer-0.1.10/csdp-installer-0.1.10.tgz
     version: 0.1.10
-generated: "2022-05-01T12:37:24.553042+03:00"
+generated: "2022-05-02T11:25:18.790753+03:00"
