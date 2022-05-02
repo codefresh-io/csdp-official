@@ -24,9 +24,8 @@ REPO_CREDS_SECRET_NAME="autopilot-secret"
 ARGOCD_TOKEN_SECRET_NAME="argocd-token"
 ARGOCD_INITIAL_TOKEN_SECRET_NAME="argocd-initial-admin-secret"
 BOOTSTRAP_APP_NAME="csdp-bootstrap"
-ADDITIONAL_COMPONENTS_MANAGED="\nevents-reporter"
-ADDITIONAL_COMPONENTS="\nevents-reporter\nrollout-reporter\nworkflow-reporter"
-RUNTIME_DEF_URL="https://github.com/codefresh-io/csdp-official-poc/releases/VERSION/download/runtime.yaml"
+COMPONENTS_MANAGED="argo-events,app-proxy,argo-cd,events-reporter"
+COMPONENTS="argo-events,app-proxy,argo-cd,events-reporter,rollout-reporter,workflow-reporter"
 
 # Params:
 check_required_param "namespace" "${NAMESPACE}"
@@ -48,30 +47,18 @@ CSDP_RUNTIME_REPO_CREDS_PATTERN=`echo ${CSDP_RUNTIME_REPO} | grep --color=never 
 CSDP_MANAGED_RUNTIME="${CSDP_MANAGED_RUNTIME:-false}"
 
 create_codefresh_secret() {
-    # Download runtime definition
-    RUNTIME_DEF_URL=`echo "${RUNTIME_DEF_URL}" | sed s/VERSION/${CSDP_RUNTIME_VERSION}/g`
-
-    echo "  --> Downloading runtime definition..."
-    echo "  --> curl -f -L ${RUNTIME_DEF_URL}"
-    RUNTIME_DEF=$(curl -SsfL "$RUNTIME_DEF_URL")
-    RESOLVED_RUNTIME_VERSION=`echo "$RUNTIME_DEF" | yq e '.spec.version' -`
-    echo "  --> Resolved runtime version: ${RESOLVED_RUNTIME_VERSION}"
-    echo ""
-
-    # Prepare components for request
-
     if [[ "$CSDP_MANAGED_RUNTIME" == "true" ]] ; then
-        ADDITIONAL_COMPONENTS=${ADDITIONAL_COMPONENTS_MANAGED}
+        COMPONENTS=$COMPONENTS_MANAGED
     fi
-    COMPONENT_NAMES=`echo "$RUNTIME_DEF" | yq e '.spec.components.[].name' -`
-    COMPONENT_NAMES=`printf "${COMPONENT_NAMES}${ADDITIONAL_COMPONENTS}" | tr '\n' ' '`
-    COMPONENTS="[\"csdp-argo-cd\""
+    COMPONENT_NAMES=`echo ${COMPONENTS} | tr ',' ' '`
+    COMPONENTS=""
     for COMPONENT in $COMPONENT_NAMES
     do
         CUR_COMPONENT=`echo -n "\"csdp-${COMPONENT}\""`
-        COMPONENTS="${COMPONENTS},${CUR_COMPONENT}"
+        COMPONENTS="${CUR_COMPONENT} ${COMPONENTS}"
     done
-    COMPONENTS="${COMPONENTS}]"
+    COMPONENTS=`echo $COMPONENTS | tr ' ' ','`
+    COMPONENTS="[${COMPONENTS}]"
 
     RUNTIME_CREATE_ARGS="{
         \"repo\": \"${CSDP_RUNTIME_REPO}\",
@@ -81,7 +68,7 @@ create_codefresh_secret() {
         \"ingressClass\":\"${CSDP_INGRESS_CLASS_NAME}\",
         \"ingressController\":\"${CSDP_INGRESS_CONTROLLER}\",
         \"componentNames\":${COMPONENTS},
-        \"runtimeVersion\":\"${RESOLVED_RUNTIME_VERSION}\"
+        \"runtimeVersion\":\"0.0\"
     }"
 
     RUNTIME_CREATE_DATA="{\"operationName\":\"CreateRuntime\",\"variables\":{\"args\":$RUNTIME_CREATE_ARGS}"
