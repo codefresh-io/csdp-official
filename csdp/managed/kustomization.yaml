@@ -1,32 +1,14 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - appset.yaml
+  - ../base
 
-generatorOptions:
-  disableNameSuffixHash: true
-
-configMapGenerator:
-  - name: codefresh-cm
-    behavior: create
-    options:
-      labels:
-        app.kubernetes.io/managed-by: codefresh
-        codefresh.io/entity: runtimeDef
-    literals:
-      - version=v0.0.313
-
-replacements:
-  - source:
-      kind: ConfigMap
-      name: codefresh-cm
-      fieldPath: data.version
-    targets:
-      - select:
-          kind: ApplicationSet
-          name: csdp
-        fieldPaths:
-          - spec.generators.0.git.revision
-          - spec.generators.1.git.revision
-          - spec.generators.2.git.revision
-          - spec.template.spec.source.targetRevision
+patches:
+  - target:
+      version: v1alpha1
+      group: argoproj.io
+      kind: ApplicationSet
+    patch: |-
+      - op: replace
+        path: /spec/template/spec/source/path
+        value: csdp/managed/{{path.basenameNormalized}}
