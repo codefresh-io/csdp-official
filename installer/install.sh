@@ -25,7 +25,7 @@ ARGOCD_TOKEN_SECRET_NAME="argocd-token"
 ARGOCD_INITIAL_TOKEN_SECRET_NAME="argocd-initial-admin-secret"
 BOOTSTRAP_APP_NAME="csdp-bootstrap"
 COMPONENTS_MANAGED="argo-events,app-proxy,argo-cd,events-reporter"
-COMPONENTS="argo-events,app-proxy,argo-cd,events-reporter,rollout-reporter,workflow-reporter"
+COMPONENTS="argo-events,app-proxy,argo-cd,events-reporter,argo-rollouts,rollout-reporter,argo-workflows,workflow-reporter"
 DEFAULT_GIT_SOURCE_NAME="default-git-source"
 
 # Params:
