@@ -19,7 +19,7 @@ spec:
       containers:
         - name: csdp-installer
           image: "{{ .Values.csdpInstaller.installer.image.repository }}:{{ .Values.csdpInstaller.installer.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.csdpInstaller.installer.imagePullPolicy }}
+          imagePullPolicy: {{ .Values.csdpInstaller.installer.image.pullPolicy }}
           command:
             - bash
           args:

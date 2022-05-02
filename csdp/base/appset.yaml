@@ -79,7 +79,7 @@ spec:
             project: ""
             source:
               repoURL: "{{srcRepoURL}}"
-              path: "{{srcRepoPath}}"
+              path: "{{srcPath}}"
               targetRevision: "{{srcTargetRevision}}"
               directory:
                 exclude: "{{exclude}}"
