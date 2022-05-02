@@ -10,7 +10,7 @@ configMapGenerator:
   - name: codefresh-cm
     behavior: create
     literals:
-      - version=v0.0.315
+      - version=v0.0.316
 
 replacements:
   - source:
