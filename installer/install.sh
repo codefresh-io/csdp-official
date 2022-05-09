@@ -20,7 +20,7 @@ clean_failed_pods() {
 # Constants:
 CODEFRESH_SECRET_NAME="codefresh-token"
 CODEFRESH_CM_NAME="codefresh-cm"
-REPO_CREDS_SECRET_NAME="autopilot-secret"
+REPO_CREDS_SECRET_NAME="repo-creds-secret"
 ARGOCD_TOKEN_SECRET_NAME="argocd-token"
 ARGOCD_INITIAL_TOKEN_SECRET_NAME="argocd-initial-admin-secret"
 BOOTSTRAP_APP_NAME="csdp-bootstrap"
@@ -183,12 +183,12 @@ create_managed_repo_creds_secret() {
     kind: Secret
     metadata:
         labels:
-            argocd.argoproj.io/secret-type: repository
+            argocd.argoproj.io/secret-type: repo-creds
         name: $REPO_CREDS_SECRET_NAME
         namespace: $NAMESPACE
     stringData:
         type: git
-        url: $CSDP_RUNTIME_REPO
+        url: https://github.com/codefresh-io/
         password: $CSDP_RUNTIME_GIT_TOKEN
         username: username
     " | kubectl apply -f -
@@ -306,7 +306,7 @@ create_default_git_source() {
 
     echo "  --> Created default git source:"
     echo "${GIT_SOURCE_CREATE_RESPONSE}"
-    echo "" 
+    echo ""
 }
 
 #
