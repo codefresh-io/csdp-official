@@ -13,3 +13,18 @@ patches:
       - op: replace
         path: /spec/template/spec/source/path
         value: csdp/managed/{{path.basenameNormalized}}
+
+replacements:
+  - source:
+      kind: ConfigMap
+      name: codefresh-cm
+      fieldPath: data.version
+    targets:
+      - select:
+          kind: ApplicationSet
+          name: csdp
+        fieldPaths:
+          - spec.generators.0.git.revision
+          - spec.generators.1.git.revision
+          - spec.generators.2.git.revision
+          - spec.template.spec.source.targetRevision
