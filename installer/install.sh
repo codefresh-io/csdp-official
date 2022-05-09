@@ -394,7 +394,7 @@ else
 fi
 
 # 6. Register to git integration
-if [[ "$CSDP_MANAGED_RUNTIME" != "true" ]] ; then
+if [[ "$CSDP_MANAGED_RUNTIME" -ne "true" ]] ; then
     register_to_git_integration
 
     if [[ "$CSDP_CREATE_DEFAULT_GIT_SOURCE" == "true" ]]; then
