@@ -57,7 +57,7 @@ csdpInstaller:
   installer:
     image:
       repository: quay.io/codefresh/csdp-installer
-      pullPolicy: IfNotPresent
+      pullPolicy: Always
       # Default tag is the chart appVersion
       tag: ""
     serviceAccount: argocd-application-controller
