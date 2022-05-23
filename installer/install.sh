@@ -84,7 +84,7 @@ create_codefresh_secret() {
 
     RUNTIME_CREATE_RESPONSE=`curl "${CSDP_URL}/2.0/api/graphql" \
     -SsfL \
-    -H "Authorization: ${CSDP_TOKEN}" \
+    -H "x-access-token: ${CSDP_TOKEN}" \
     -H 'content-type: application/json' \
     --compressed \
     --insecure \
