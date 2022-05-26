@@ -54,7 +54,7 @@ spec:
             - name: CORS
               valueFrom:
                 configMapKeyRef:
-                  name: codefresh-cm
+                  name: cap-app-proxy-cm
                   key: cors
                   optional: true
             - name: ENV
