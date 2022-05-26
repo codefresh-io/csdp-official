@@ -55,7 +55,7 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   name: codefresh-cm
-                  key: base-url
+                  key: cors
                   optional: true
             - name: ENV
               valueFrom:
