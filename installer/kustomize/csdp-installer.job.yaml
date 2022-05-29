@@ -4,7 +4,7 @@ metadata:
   name: csdp-installation-job
 spec:
   ttlSecondsAfterFinished: 600 # stick around for 10m
-  backoffLimit: 40
+  backoffLimit: 100
   template:
     metadata:
       labels:

@@ -6,7 +6,7 @@ resources:
   - default-rbac.yaml
 images:
   - name: quay.io/codefresh/argocd
-    newTag: v2.3.3-cap-CR-kustomize-components
+    newTag: CR-11890-sync-v2.3.4
   - name: quay.io/codefresh/applicationset
     newTag: v0.4.2
 
@@ -24,7 +24,6 @@ configMapGenerator:
 
     # reset the crbs to `subject.namespace: default`, so that argo-cd will later change them to the actual ns
 patches:
-
   - target:
       group: rbac.authorization.k8s.io
       kind: ClusterRoleBinding
