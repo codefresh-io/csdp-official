@@ -2,6 +2,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: argocd
 resources:
+  # change to specific release once release 2.3 is merged
   - https://raw.githubusercontent.com/codefresh-io/argo-cd/231fc56b0894ba622b7234f5523d615c67bf23a1/manifests/install.yaml
   - default-rbac.yaml
 images:
@@ -10,19 +11,18 @@ images:
   - name: quay.io/codefresh/applicationset
     newTag: v0.4.2
 
-# will be effective on argo-cd 2.1
 configMapGenerator:
   - behavior: merge
+    name: argocd-cm
     literals:
       - timeout.reconciliation=20s
       - accounts.admin=apiKey,login
-    name: argocd-cm
   - behavior: merge
+    name: argocd-cmd-params-cm
     literals:
       - server.insecure=true
-    name: argocd-cmd-params-cm
 
-    # reset the crbs to `subject.namespace: default`, so that argo-cd will later change them to the actual ns
+# reset the crbs to `subject.namespace: default`, so that argo-cd will later change them to the actual ns
 patches:
   - target:
       group: rbac.authorization.k8s.io
