@@ -62,7 +62,7 @@ csdpInstaller:
       tag: ""
     serviceAccount: argocd-application-controller
     ttlSecondsAfterFinished: 600
-    backoffLimit: 40
+    backoffLimit: 100
     resources:
       limits:
         memory: 256Mi
