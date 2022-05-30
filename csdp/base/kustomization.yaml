@@ -8,4 +8,4 @@ configMapGenerator:
   - name: codefresh-cm
     behavior: create
     literals:
-      - version=v0.0.318
+      - version=v0.0.319
