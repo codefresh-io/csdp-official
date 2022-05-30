@@ -107,6 +107,8 @@ spec:
         path: csdp/managed/{{path.basenameNormalized}}
         repoURL: https://github.com/codefresh-io/csdp-official-poc.git
         targetRevision: RUNTIME_VERSION # replace with runtime version
+        kustomize:
+          forceNamespace: true
       syncPolicy:
         automated:
           allowEmpty: true
