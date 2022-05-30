@@ -1,4 +1,4 @@
-# File generated with 'kustomize build ./csdp/components/argo-cd > installer/helm/templates/argo-cd/install.yaml'
+# File generated with 'kustomize build csdp/base/argo-cd > installer/helm/templates/argo-cd/install.yaml'
 # Then remove all '' and replace namespace in crb with '{{ .Release.Namespace }}'
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
@@ -342,6 +342,10 @@ spec:
                           forceCommonLabels:
                             description: ForceCommonLabels specifies whether to force
                               applying common labels to resources for Kustomize apps
+                            type: boolean
+                          forceNamespace:
+                            description: ForceNamespace if true, will use the application's
+                              destination namespace as a kustomization file namespace
                             type: boolean
                           images:
                             description: Images is a list of Kustomize image override
@@ -719,6 +723,10 @@ spec:
                       forceCommonLabels:
                         description: ForceCommonLabels specifies whether to force
                           applying common labels to resources for Kustomize apps
+                        type: boolean
+                      forceNamespace:
+                        description: ForceNamespace if true, will use the application's
+                          destination namespace as a kustomization file namespace
                         type: boolean
                       images:
                         description: Images is a list of Kustomize image override
@@ -1107,6 +1115,10 @@ spec:
                               description: ForceCommonLabels specifies whether to
                                 force applying common labels to resources for Kustomize
                                 apps
+                              type: boolean
+                            forceNamespace:
+                              description: ForceNamespace if true, will use the application's
+                                destination namespace as a kustomization file namespace
                               type: boolean
                             images:
                               description: Images is a list of Kustomize image override
@@ -1512,6 +1524,11 @@ spec:
                                       to force applying common labels to resources
                                       for Kustomize apps
                                     type: boolean
+                                  forceNamespace:
+                                    description: ForceNamespace if true, will use
+                                      the application's destination namespace as a
+                                      kustomization file namespace
+                                    type: boolean
                                   images:
                                     description: Images is a list of Kustomize image
                                       override specifications
@@ -1889,6 +1906,11 @@ spec:
                                   force applying common labels to resources for Kustomize
                                   apps
                                 type: boolean
+                              forceNamespace:
+                                description: ForceNamespace if true, will use the
+                                  application's destination namespace as a kustomization
+                                  file namespace
+                                type: boolean
                               images:
                                 description: Images is a list of Kustomize image override
                                   specifications
@@ -2255,6 +2277,11 @@ spec:
                                   force applying common labels to resources for Kustomize
                                   apps
                                 type: boolean
+                              forceNamespace:
+                                description: ForceNamespace if true, will use the
+                                  application's destination namespace as a kustomization
+                                  file namespace
+                                type: boolean
                               images:
                                 description: Images is a list of Kustomize image override
                                   specifications
@@ -2609,6 +2636,8 @@ spec:
                                           type: boolean
                                         forceCommonLabels:
                                           type: boolean
+                                        forceNamespace:
+                                          type: boolean
                                         images:
                                           items:
                                             type: string
@@ -2918,6 +2947,8 @@ spec:
                                         forceCommonAnnotations:
                                           type: boolean
                                         forceCommonLabels:
+                                          type: boolean
+                                        forceNamespace:
                                           type: boolean
                                         images:
                                           items:
@@ -3231,6 +3262,8 @@ spec:
                                           type: boolean
                                         forceCommonLabels:
                                           type: boolean
+                                        forceNamespace:
+                                          type: boolean
                                         images:
                                           items:
                                             type: string
@@ -3518,6 +3551,8 @@ spec:
                                         forceCommonAnnotations:
                                           type: boolean
                                         forceCommonLabels:
+                                          type: boolean
+                                        forceNamespace:
                                           type: boolean
                                         images:
                                           items:
@@ -3837,6 +3872,8 @@ spec:
                                                     type: boolean
                                                   forceCommonLabels:
                                                     type: boolean
+                                                  forceNamespace:
+                                                    type: boolean
                                                   images:
                                                     items:
                                                       type: string
@@ -4146,6 +4183,8 @@ spec:
                                                   forceCommonAnnotations:
                                                     type: boolean
                                                   forceCommonLabels:
+                                                    type: boolean
+                                                  forceNamespace:
                                                     type: boolean
                                                   images:
                                                     items:
@@ -4459,6 +4498,8 @@ spec:
                                                     type: boolean
                                                   forceCommonLabels:
                                                     type: boolean
+                                                  forceNamespace:
+                                                    type: boolean
                                                   images:
                                                     items:
                                                       type: string
@@ -4746,6 +4787,8 @@ spec:
                                                   forceCommonAnnotations:
                                                     type: boolean
                                                   forceCommonLabels:
+                                                    type: boolean
+                                                  forceNamespace:
                                                     type: boolean
                                                   images:
                                                     items:
@@ -5062,6 +5105,8 @@ spec:
                                                   forceCommonAnnotations:
                                                     type: boolean
                                                   forceCommonLabels:
+                                                    type: boolean
+                                                  forceNamespace:
                                                     type: boolean
                                                   images:
                                                     items:
@@ -5431,6 +5476,8 @@ spec:
                                                     type: boolean
                                                   forceCommonLabels:
                                                     type: boolean
+                                                  forceNamespace:
+                                                    type: boolean
                                                   images:
                                                     items:
                                                       type: string
@@ -5711,6 +5758,8 @@ spec:
                                         forceCommonAnnotations:
                                           type: boolean
                                         forceCommonLabels:
+                                          type: boolean
+                                        forceNamespace:
                                           type: boolean
                                         images:
                                           items:
@@ -6030,6 +6079,8 @@ spec:
                                                     type: boolean
                                                   forceCommonLabels:
                                                     type: boolean
+                                                  forceNamespace:
+                                                    type: boolean
                                                   images:
                                                     items:
                                                       type: string
@@ -6339,6 +6390,8 @@ spec:
                                                   forceCommonAnnotations:
                                                     type: boolean
                                                   forceCommonLabels:
+                                                    type: boolean
+                                                  forceNamespace:
                                                     type: boolean
                                                   images:
                                                     items:
@@ -6652,6 +6705,8 @@ spec:
                                                     type: boolean
                                                   forceCommonLabels:
                                                     type: boolean
+                                                  forceNamespace:
+                                                    type: boolean
                                                   images:
                                                     items:
                                                       type: string
@@ -6939,6 +6994,8 @@ spec:
                                                   forceCommonAnnotations:
                                                     type: boolean
                                                   forceCommonLabels:
+                                                    type: boolean
+                                                  forceNamespace:
                                                     type: boolean
                                                   images:
                                                     items:
@@ -7255,6 +7312,8 @@ spec:
                                                   forceCommonAnnotations:
                                                     type: boolean
                                                   forceCommonLabels:
+                                                    type: boolean
+                                                  forceNamespace:
                                                     type: boolean
                                                   images:
                                                     items:
@@ -7624,6 +7683,8 @@ spec:
                                                     type: boolean
                                                   forceCommonLabels:
                                                     type: boolean
+                                                  forceNamespace:
+                                                    type: boolean
                                                   images:
                                                     items:
                                                       type: string
@@ -7908,6 +7969,8 @@ spec:
                                         forceCommonAnnotations:
                                           type: boolean
                                         forceCommonLabels:
+                                          type: boolean
+                                        forceNamespace:
                                           type: boolean
                                         images:
                                           items:
@@ -8221,6 +8284,8 @@ spec:
                                         forceCommonAnnotations:
                                           type: boolean
                                         forceCommonLabels:
+                                          type: boolean
+                                        forceNamespace:
                                           type: boolean
                                         images:
                                           items:
@@ -8590,6 +8655,8 @@ spec:
                                           type: boolean
                                         forceCommonLabels:
                                           type: boolean
+                                        forceNamespace:
+                                          type: boolean
                                         images:
                                           items:
                                             type: string
@@ -8875,6 +8942,8 @@ spec:
                               forceCommonAnnotations:
                                 type: boolean
                               forceCommonLabels:
+                                type: boolean
+                              forceNamespace:
                                 type: boolean
                               images:
                                 items:
@@ -9318,7 +9387,6 @@ metadata:
     app.kubernetes.io/name: argocd-application-controller
     app.kubernetes.io/part-of: argocd
   name: argocd-application-controller
-  
 ---
 apiVersion: v1
 kind: ServiceAccount
@@ -9328,7 +9396,6 @@ metadata:
     app.kubernetes.io/name: argocd-applicationset-controller
     app.kubernetes.io/part-of: argocd-applicationset
   name: argocd-applicationset-controller
-  
 ---
 apiVersion: v1
 kind: ServiceAccount
@@ -9338,13 +9405,11 @@ metadata:
     app.kubernetes.io/name: argocd-dex-server
     app.kubernetes.io/part-of: argocd
   name: argocd-dex-server
-  
 ---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: argocd-notifications-controller
-  
 ---
 apiVersion: v1
 kind: ServiceAccount
@@ -9354,7 +9419,6 @@ metadata:
     app.kubernetes.io/name: argocd-redis
     app.kubernetes.io/part-of: argocd
   name: argocd-redis
-  
 ---
 apiVersion: v1
 kind: ServiceAccount
@@ -9364,7 +9428,6 @@ metadata:
     app.kubernetes.io/name: argocd-server
     app.kubernetes.io/part-of: argocd
   name: argocd-server
-  
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
@@ -9374,7 +9437,6 @@ metadata:
     app.kubernetes.io/name: argocd-application-controller
     app.kubernetes.io/part-of: argocd
   name: argocd-application-controller
-  
 rules:
 - apiGroups:
   - ""
@@ -9414,7 +9476,6 @@ metadata:
     app.kubernetes.io/name: argocd-applicationset-controller
     app.kubernetes.io/part-of: argocd-applicationset
   name: argocd-applicationset-controller
-  
 rules:
 - apiGroups:
   - argoproj.io
@@ -9476,7 +9537,6 @@ metadata:
     app.kubernetes.io/name: argocd-dex-server
     app.kubernetes.io/part-of: argocd
   name: argocd-dex-server
-  
 rules:
 - apiGroups:
   - ""
@@ -9492,7 +9552,6 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   name: argocd-notifications-controller
-  
 rules:
 - apiGroups:
   - argoproj.io
@@ -9538,7 +9597,6 @@ metadata:
     app.kubernetes.io/name: argocd-server
     app.kubernetes.io/part-of: argocd
   name: argocd-server
-  
 rules:
 - apiGroups:
   - ""
@@ -9578,7 +9636,6 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   name: codefresh-config-reader
-  
 rules:
 - apiGroups:
   - ""
@@ -9650,7 +9707,6 @@ metadata:
     app.kubernetes.io/name: argocd-application-controller
     app.kubernetes.io/part-of: argocd
   name: argocd-application-controller
-  
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
@@ -9658,7 +9714,6 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: argocd-application-controller
-  
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
@@ -9668,7 +9723,6 @@ metadata:
     app.kubernetes.io/name: argocd-applicationset-controller
     app.kubernetes.io/part-of: argocd-applicationset
   name: argocd-applicationset-controller
-  
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
@@ -9676,7 +9730,6 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: argocd-applicationset-controller
-  
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
@@ -9686,7 +9739,6 @@ metadata:
     app.kubernetes.io/name: argocd-dex-server
     app.kubernetes.io/part-of: argocd
   name: argocd-dex-server
-  
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
@@ -9694,13 +9746,11 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: argocd-dex-server
-  
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: argocd-notifications-controller
-  
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
@@ -9708,7 +9758,6 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: argocd-notifications-controller
-  
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
@@ -9718,7 +9767,6 @@ metadata:
     app.kubernetes.io/name: argocd-redis
     app.kubernetes.io/part-of: argocd
   name: argocd-redis
-  
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
@@ -9726,7 +9774,6 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: argocd-redis
-  
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
@@ -9736,7 +9783,6 @@ metadata:
     app.kubernetes.io/name: argocd-server
     app.kubernetes.io/part-of: argocd
   name: argocd-server
-  
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
@@ -9744,13 +9790,11 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: argocd-server
-  
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: codefresh-config-reader
-  
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
@@ -9758,7 +9802,6 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: default
-  
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
@@ -9804,7 +9847,6 @@ metadata:
     app.kubernetes.io/name: argocd-cm
     app.kubernetes.io/part-of: argocd
   name: argocd-cm
-  
 ---
 apiVersion: v1
 data:
@@ -9815,7 +9857,6 @@ metadata:
     app.kubernetes.io/name: argocd-cmd-params-cm
     app.kubernetes.io/part-of: argocd
   name: argocd-cmd-params-cm
-  
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -9824,14 +9865,12 @@ metadata:
     app.kubernetes.io/name: argocd-gpg-keys-cm
     app.kubernetes.io/part-of: argocd
   name: argocd-gpg-keys-cm
-  
 ---
 apiVersion: v1
 kind: ConfigMap
 metadata:
   creationTimestamp: null
   name: argocd-notifications-cm
-  
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -9840,7 +9879,6 @@ metadata:
     app.kubernetes.io/name: argocd-rbac-cm
     app.kubernetes.io/part-of: argocd
   name: argocd-rbac-cm
-  
 ---
 apiVersion: v1
 data:
@@ -9860,7 +9898,6 @@ metadata:
     app.kubernetes.io/name: argocd-ssh-known-hosts-cm
     app.kubernetes.io/part-of: argocd
   name: argocd-ssh-known-hosts-cm
-  
 ---
 apiVersion: v1
 data: null
@@ -9870,13 +9907,11 @@ metadata:
     app.kubernetes.io/name: argocd-tls-certs-cm
     app.kubernetes.io/part-of: argocd
   name: argocd-tls-certs-cm
-  
 ---
 apiVersion: v1
 kind: Secret
 metadata:
   name: argocd-notifications-secret
-  
 type: Opaque
 ---
 apiVersion: v1
@@ -9886,7 +9921,6 @@ metadata:
     app.kubernetes.io/name: argocd-secret
     app.kubernetes.io/part-of: argocd
   name: argocd-secret
-  
 type: Opaque
 ---
 apiVersion: v1
@@ -9897,7 +9931,6 @@ metadata:
     app.kubernetes.io/name: argocd-applicationset-controller
     app.kubernetes.io/part-of: argocd-applicationset
   name: argocd-applicationset-controller
-  
 spec:
   ports:
   - name: webhook
@@ -9915,7 +9948,6 @@ metadata:
     app.kubernetes.io/name: argocd-dex-server
     app.kubernetes.io/part-of: argocd
   name: argocd-dex-server
-  
 spec:
   ports:
   - name: http
@@ -9941,7 +9973,6 @@ metadata:
     app.kubernetes.io/name: argocd-metrics
     app.kubernetes.io/part-of: argocd
   name: argocd-metrics
-  
 spec:
   ports:
   - name: metrics
@@ -9957,7 +9988,6 @@ metadata:
   labels:
     app.kubernetes.io/name: argocd-notifications-controller-metrics
   name: argocd-notifications-controller-metrics
-  
 spec:
   ports:
   - name: metrics
@@ -9975,7 +10005,6 @@ metadata:
     app.kubernetes.io/name: argocd-redis
     app.kubernetes.io/part-of: argocd
   name: argocd-redis
-  
 spec:
   ports:
   - name: tcp-redis
@@ -9992,7 +10021,6 @@ metadata:
     app.kubernetes.io/name: argocd-repo-server
     app.kubernetes.io/part-of: argocd
   name: argocd-repo-server
-  
 spec:
   ports:
   - name: server
@@ -10014,14 +10042,15 @@ metadata:
     app.kubernetes.io/name: argocd-server
     app.kubernetes.io/part-of: argocd
   name: argocd-server
-  
 spec:
   ports:
-  - name: http
+  - appProtocol: grpc
+    name: http
     port: 80
     protocol: TCP
     targetPort: 8080
-  - name: https
+  - appProtocol: grpc
+    name: https
     port: 443
     protocol: TCP
     targetPort: 8080
@@ -10036,7 +10065,6 @@ metadata:
     app.kubernetes.io/name: argocd-server-metrics
     app.kubernetes.io/part-of: argocd
   name: argocd-server-metrics
-  
 spec:
   ports:
   - name: metrics
@@ -10054,7 +10082,6 @@ metadata:
     app.kubernetes.io/name: argocd-applicationset-controller
     app.kubernetes.io/part-of: argocd-applicationset
   name: argocd-applicationset-controller
-  
 spec:
   selector:
     matchLabels:
@@ -10110,7 +10137,6 @@ metadata:
     app.kubernetes.io/name: argocd-dex-server
     app.kubernetes.io/part-of: argocd
   name: argocd-dex-server
-  
 spec:
   selector:
     matchLabels:
@@ -10155,7 +10181,7 @@ spec:
         - -n
         - /usr/local/bin/argocd
         - /shared/argocd-dex
-        image: quay.io/codefresh/argocd:CR-11890-sync-v2.3.4
+        image: quay.io/codefresh/argocd:CR-11890-sync-v2.3.4-a
         imagePullPolicy: Always
         name: copyutil
         volumeMounts:
@@ -10174,7 +10200,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: argocd-notifications-controller
-  
 spec:
   selector:
     matchLabels:
@@ -10189,7 +10214,7 @@ spec:
       containers:
       - command:
         - argocd-notifications
-        image: quay.io/codefresh/argocd:CR-11890-sync-v2.3.4
+        image: quay.io/codefresh/argocd:CR-11890-sync-v2.3.4-a
         imagePullPolicy: Always
         livenessProbe:
           tcpSocket:
@@ -10228,7 +10253,6 @@ metadata:
     app.kubernetes.io/name: argocd-redis
     app.kubernetes.io/part-of: argocd
   name: argocd-redis
-  
 spec:
   selector:
     matchLabels:
@@ -10277,7 +10301,6 @@ metadata:
     app.kubernetes.io/name: argocd-repo-server
     app.kubernetes.io/part-of: argocd
   name: argocd-repo-server
-  
 spec:
   selector:
     matchLabels:
@@ -10388,7 +10411,7 @@ spec:
           value: /helm-working-dir
         - name: HELM_DATA_HOME
           value: /helm-working-dir
-        image: quay.io/codefresh/argocd:CR-11890-sync-v2.3.4
+        image: quay.io/codefresh/argocd:CR-11890-sync-v2.3.4-a
         imagePullPolicy: Always
         livenessProbe:
           failureThreshold: 3
@@ -10437,7 +10460,7 @@ spec:
         - -n
         - /usr/local/bin/argocd
         - /var/run/argocd/argocd-cmp-server
-        image: quay.io/codefresh/argocd:CR-11890-sync-v2.3.4
+        image: quay.io/codefresh/argocd:CR-11890-sync-v2.3.4-a
         name: copyutil
         volumeMounts:
         - mountPath: /var/run/argocd
@@ -10482,7 +10505,6 @@ metadata:
     app.kubernetes.io/name: argocd-server
     app.kubernetes.io/part-of: argocd
   name: argocd-server
-  
 spec:
   selector:
     matchLabels:
@@ -10661,7 +10683,7 @@ spec:
               key: server.http.cookie.maxnumber
               name: argocd-cmd-params-cm
               optional: true
-        image: quay.io/codefresh/argocd:CR-11890-sync-v2.3.4
+        image: quay.io/codefresh/argocd:CR-11890-sync-v2.3.4-a
         imagePullPolicy: Always
         livenessProbe:
           httpGet:
@@ -10731,7 +10753,6 @@ metadata:
     app.kubernetes.io/name: argocd-application-controller
     app.kubernetes.io/part-of: argocd
   name: argocd-application-controller
-  
 spec:
   replicas: 1
   selector:
@@ -10852,7 +10873,7 @@ spec:
               key: controller.default.cache.expiration
               name: argocd-cmd-params-cm
               optional: true
-        image: quay.io/codefresh/argocd:CR-11890-sync-v2.3.4
+        image: quay.io/codefresh/argocd:CR-11890-sync-v2.3.4-a
         imagePullPolicy: Always
         livenessProbe:
           httpGet:
@@ -10902,7 +10923,6 @@ apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
   name: argocd-application-controller-network-policy
-  
 spec:
   ingress:
   - from:
@@ -10919,7 +10939,6 @@ apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
   name: argocd-dex-server-network-policy
-  
 spec:
   ingress:
   - from:
@@ -10946,7 +10965,6 @@ apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
   name: argocd-redis-network-policy
-  
 spec:
   ingress:
   - from:
@@ -10972,7 +10990,6 @@ apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
   name: argocd-repo-server-network-policy
-  
 spec:
   ingress:
   - from:
@@ -11002,7 +11019,6 @@ apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
   name: argocd-server-network-policy
-  
 spec:
   ingress:
   - {}
