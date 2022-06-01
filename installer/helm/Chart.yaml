@@ -2,5 +2,5 @@ apiVersion: v2
 name: csdp-installer
 description: A Helm chart used for installing a CSDP runtime
 type: application
-version: 0.1.24
-appVersion: v0.0.11
+version: 0.1.25
+appVersion: v0.0.12
