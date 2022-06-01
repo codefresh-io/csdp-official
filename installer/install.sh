@@ -309,6 +309,20 @@ create_default_git_source() {
     echo ""
 }
 
+ping_app_proxy() {
+    echo "  --> Checking connection to app-proxy"
+    echo "Pinging ${CSDP_RUNTIME_INGRESS_URL}/app-proxy/api/health"
+    APP_PROXY_PING_RESPONSE=`curl "${CSDP_RUNTIME_INGRESS_URL}/app-proxy/api/readyz" -Ssfl --insecure`
+
+    if [[ "$APP_PROXY_PING_RESPONSE" -ne "OK" ]] ; then
+        echo "Failed to ping app-proxy address"
+        echo ${GIT_SOURCE_CREATE_RESPONSE}
+        exit 1
+    fi
+
+    echo "  --> App-proxy is ready!"
+}
+
 #
 # Start here:
 #
@@ -348,7 +362,6 @@ else
     create_codefresh_secret
 fi
 echo ""
-echo ""
 
 # 2. Check repo creds secret
 echo "Checking secret $REPO_CREDS_SECRET_NAME..."
@@ -365,13 +378,8 @@ else
     fi
 fi
 echo ""
-echo ""
 
-create_argocd_token_secret
-echo ""
-echo ""
-
-# 4. Check bootstrap application
+# 3. Create the bootstrap application
 echo "Checking application $BOOTSTRAP_APP_NAME..."
 if kubectl -n "$NAMESPACE" get application "$BOOTSTRAP_APP_NAME"; then
     echo "  --> Application $BOOTSTRAP_APP_NAME exists"
@@ -382,19 +390,30 @@ else
 fi
 echo ""
 
-# 5. Check git integration
-echo "Checking default git integration..."
-echo "Checking application $BOOTSTRAP_APP_NAME..."
-if kubectl -n "$NAMESPACE" get secret -l io.codefresh.integration-type=git -l io.codefresh.integration-name=default 2>&1 | grep "No resources found"; then
-    echo "  --> Default git integration doesn't exists."
-    echo ""
-    create_git_integration
-else
-    echo "  --> Default git integration exists"
-fi
+# 4. Create argo-cd jwt token for events-reporter event-source
+create_argocd_token_secret
+echo ""
 
-# 6. Register to git integration
+# 4.5. Ping app-proxy to check if it is reachable
+ping_app_proxy
+echo ""
+
+# Complete installation for non managed runtimes
+# a. create default git integration
+# b. register user to default git integration
 if [[ "$CSDP_MANAGED_RUNTIME" -ne "true" ]] ; then
+    # 5. Check git integration
+    echo "Checking default git integration..."
+    echo "Checking application $BOOTSTRAP_APP_NAME..."
+    if kubectl -n "$NAMESPACE" get secret -l io.codefresh.integration-type=git -l io.codefresh.integration-name=default 2>&1 | grep "No resources found"; then
+        echo "  --> Default git integration doesn't exists."
+        echo ""
+        create_git_integration
+    else
+        echo "  --> Default git integration exists"
+    fi
+
+    # 6. Register to git integration
     register_to_git_integration
 
     if [[ "$CSDP_CREATE_DEFAULT_GIT_SOURCE" == "true" ]]; then
