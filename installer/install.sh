@@ -75,7 +75,7 @@ create_codefresh_secret() {
         \"ingressController\":\"${CSDP_INGRESS_CONTROLLER}\",
         \"componentNames\":${COMPONENTS},
         \"runtimeVersion\":\"v0.0.0\",
-        \"managed\":\"${CSDP_MANAGED_RUNTIME}\"
+        \"managed\":${CSDP_MANAGED_RUNTIME}
     }"
 
     RUNTIME_CREATE_DATA="{\"operationName\":\"CreateRuntime\",\"variables\":{\"args\":$RUNTIME_CREATE_ARGS}"
