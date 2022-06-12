@@ -391,7 +391,6 @@ else
 fi
 echo ""
 
-<<<<<<< Updated upstream
 # 4. Create argo-cd jwt token for events-reporter event-source
 create_argocd_token_secret
 echo ""
@@ -403,9 +402,6 @@ echo ""
 # Complete installation for non managed runtimes
 # a. create default git integration
 # b. register user to default git integration
-=======
-
->>>>>>> Stashed changes
 if [[ "$CSDP_MANAGED_RUNTIME" -ne "true" ]] ; then
     # 5. Check git integration
     echo "Checking default git integration..."
