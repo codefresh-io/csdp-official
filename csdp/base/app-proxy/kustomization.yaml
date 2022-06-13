@@ -3,7 +3,7 @@ kind: Kustomization
 images:
   - name: quay.io/codefresh/cap-app-proxy
     newName: quay.io/codefresh/cap-app-proxy
-    newTag: managed
+    newTag: 1.1339.0-remove-ghost-character-ac14894
 resources:
   - app-proxy.deploy.yaml
   - app-proxy.svc.yaml
