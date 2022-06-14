@@ -35,7 +35,7 @@ spec:
   generators:
     - git:
         repoURL: https://github.com/codefresh-io/csdp-official-poc.git
-        revision: vRUNTIME_VERSION
+        revision: RUNTIME_VERSION
         directories:
           - path: csdp/hybrid/*
         requeueAfterSeconds: 15
@@ -50,7 +50,7 @@ spec:
               repoURL: ""
     - git:
         repoURL: https://github.com/codefresh-io/csdp-official-poc.git
-        revision: vRUNTIME_VERSION
+        revision: RUNTIME_VERSION
         directories:
           - path: csdp/hybrid/argo-cd
         requeueAfterSeconds: 15
@@ -66,7 +66,7 @@ spec:
           - path: csdp/hybrid/**/config_dir.json
         repoURL: https://github.com/codefresh-io/csdp-official-poc.git
         requeueAfterSeconds: 15
-        revision: vRUNTIME_VERSION
+        revision: RUNTIME_VERSION
         template:
           metadata:
             labels:
@@ -106,7 +106,7 @@ spec:
       source:
         path: csdp/hybrid/{{path.basenameNormalized}}
         repoURL: https://github.com/codefresh-io/csdp-official-poc.git
-        targetRevision: vRUNTIME_VERSION # replace with runtime version
+        targetRevision: RUNTIME_VERSION # replace with runtime version
         kustomize:
           forceNamespace: true
       syncPolicy:
