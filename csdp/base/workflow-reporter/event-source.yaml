@@ -12,6 +12,7 @@ spec:
         - DELETE
       filter:
         createdBy: null
+      namespace: REPLACE_ME
       group: argoproj.io
       resource: workflows
       version: v1alpha1
