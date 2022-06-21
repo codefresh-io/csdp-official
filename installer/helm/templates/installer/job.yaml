@@ -31,7 +31,7 @@ spec:
                   fieldPath: metadata.namespace
             - name: CSDP_URL
               value: {{ .Values.csdpInstaller.platform.url | quote }}
-            - name: CSDP_TOKEN
+            - name: CSDP_RUNTIME_TOKEN
               valueFrom:
                 secretKeyRef:
 {{ .Values.csdpInstaller.platform.token.secretKeyRef | toYaml | indent 18 }}
