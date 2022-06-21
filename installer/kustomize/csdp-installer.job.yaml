@@ -31,7 +31,7 @@ spec:
                 secretKeyRef:
                   name: csdp-installer
                   key: csdp.url
-            - name: CSDP_TOKEN
+            - name: CSDP_RUNTIME_TOKEN
               valueFrom:
                 secretKeyRef:
                   name: csdp-installer

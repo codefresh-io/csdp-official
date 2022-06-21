@@ -86,7 +86,7 @@ create_codefresh_secret() {
 
         RUNTIME_CREATE_RESPONSE=`curl "${CSDP_URL}/2.0/api/graphql" \
         -SsfL \
-        -H "Authorization: ${CSDP_TOKEN}" \
+        -H "Authorization: ${CSDP_RUNTIME_TOKEN}" \
         -H 'content-type: application/json' \
         --compressed \
         --insecure \
@@ -240,7 +240,7 @@ create_git_integration() {
 
     GIT_INTEGRATION_CREATE_RESPONSE=`curl "${CSDP_RUNTIME_INGRESS_URL}/app-proxy/api/graphql" \
     -SsfL \
-    -H "Authorization: ${CSDP_TOKEN}" \
+    -H "Authorization: ${CSDP_RUNTIME_TOKEN}" \
     -H 'content-type: application/json' \
     --compressed \
     --insecure \
@@ -264,7 +264,7 @@ register_to_git_integration() {
     
     GIT_INTEGRATION_REGISTER_RESPONSE=`curl "${CSDP_RUNTIME_INGRESS_URL}/app-proxy/api/graphql" \
     -SsfL \
-    -H "Authorization: ${CSDP_TOKEN}" \
+    -H "Authorization: ${CSDP_RUNTIME_TOKEN}" \
     -H 'content-type: application/json' \
     --compressed \
     --insecure \
@@ -296,7 +296,7 @@ create_default_git_source() {
 
     GIT_SOURCE_CREATE_RESPONSE=`curl "${CSDP_RUNTIME_INGRESS_URL}/app-proxy/api/graphql" \
     -SsfL \
-    -H "Authorization: ${CSDP_TOKEN}" \
+    -H "Authorization: ${CSDP_RUNTIME_TOKEN}" \
     -H 'content-type: application/json' \
     --compressed \
     --insecure \
