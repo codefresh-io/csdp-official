@@ -13,3 +13,12 @@ patches:
       - op: add
         path: /spec/template/spec/containers/0/args/-
         value: --key-renew-period=720h
+      - op: add
+        path: /spec/template/spec/containers/0/resources
+        value:
+          limits:
+            cpu: 500m
+            memory: 1Gi
+          requests:
+            cpu: 200m
+            memory: 512Mi
