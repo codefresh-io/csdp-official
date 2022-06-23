@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: git-sources
+  namespace: default # replace
+spec:
+  description: All of the git-sources will be in this project, destination is in-cluster and only applications resources may be deployed
+  clusterResourceWhitelist:
+    - group: "argoproj.io"
+      kind: "Application"
+  namespaceResourceWhitelist:
+    - group: "argoproj.io"
+      kind: "Application"
+  destinations:
+    - namespace: "*"
+      server: "https://kubernetes.default.svc"
+  sourceRepos:
+    - "*"

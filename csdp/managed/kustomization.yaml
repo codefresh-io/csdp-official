@@ -3,6 +3,7 @@ kind: Kustomization
 resources:
   - ../base
   - ./appset.yaml
+  - ./in-cluster-project.yaml
 
 patches:
   - target:
