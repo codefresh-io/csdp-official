@@ -1,6 +1,8 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
+  labels:
+    codefresh.io/internal: "true"
   annotations:
     argocd.argoproj.io/sync-wave: "0"
   name: csdp
