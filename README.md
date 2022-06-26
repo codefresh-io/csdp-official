@@ -1,4 +1,4 @@
-# csdp-official-poc
+# csdp-official
 
 # How to release a new chart version
 1. checkout the gh-pages
