@@ -1,4 +1,4 @@
-# csdp-official-poc
+# csdp-official
 
 # publish new chart using https://github.com/helm/chart-releaser
 
@@ -8,7 +8,7 @@
 ```
   export CR_PACKAGE_PATH=.
   export CR_OWNER=codefresh-io
-  export CR_GIT_REPO=csdp-official-poc
+  export CR_GIT_REPO=csdp-official
   export CR_TOKEN=<GIT_TOKEN>
 ```
 4. run:
