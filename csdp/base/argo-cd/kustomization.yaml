@@ -7,7 +7,7 @@ resources:
   - default-rbac.yaml
 images:
   - name: quay.io/codefresh/argocd
-    newTag: v2.3.4-cap-CR-12110-helm-resources-yaml
+    newTag: v2.3.4-cap-CR-empty-desired-state
   - name: quay.io/codefresh/applicationset
     newTag: v0.4.2
 
