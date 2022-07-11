@@ -4,13 +4,17 @@ metadata:
   name: git-sources
   namespace: default # replace
 spec:
-  description: All of the git-sources will be in this project, destination is in-cluster and only applications resources may be deployed
+  description: All of the git-sources will be in this project, destination is in-cluster and only Application and ApplicationSet resources may be deployed
   clusterResourceWhitelist:
     - group: "argoproj.io"
       kind: "Application"
+    - group: "argoproj.io"
+      kind: "ApplicationSet"
   namespaceResourceWhitelist:
     - group: "argoproj.io"
       kind: "Application"
+    - group: "argoproj.io"
+      kind: "ApplicationSet"
   destinations:
     - namespace: "*"
       server: "https://kubernetes.default.svc"
