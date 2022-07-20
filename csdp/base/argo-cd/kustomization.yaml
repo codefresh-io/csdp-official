@@ -9,7 +9,7 @@ images:
   - name: quay.io/codefresh/argocd
     newTag: v2.3.4-cap-CR-12256-fix-res-cache-key
   - name: quay.io/codefresh/applicationset
-    newTag: v0.4.2
+    newTag: v0.4.2-CR-13254-remove-private-logs
 
 configMapGenerator:
   - behavior: merge
