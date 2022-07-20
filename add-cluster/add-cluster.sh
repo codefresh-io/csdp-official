@@ -4,6 +4,8 @@
 # INGRESS_URL (cm)
 # CONTEXT_NAME (cm)
 # SERVER (cm)
+# LABELS (cm - optional)
+# ANNOTATIONS (cm - optional)
 # CSDP_TOKEN_SECRET
 
 echo "ServiceAccount: ${SERVICE_ACCOUNT_NAME}"
@@ -35,7 +37,7 @@ KUBE_CONFIG_B64=$(kubectl config view --minify --flatten --output json --context
 STATUS_CODE=$(curl -X POST ${INGRESS_URL}/app-proxy/api/clusters \
   -H 'Content-Type: application/json' \
   -H 'Authorization: '${CSDP_TOKEN}'' \
-  -d '{ "name": "'${CONTEXT_NAME}'", "kubeConfig": "'${KUBE_CONFIG_B64}'" }' \
+  -d '{ "name": "'${CONTEXT_NAME}'", "kubeConfig": "'${KUBE_CONFIG_B64}'" , "labels": "'${LABELS}'", "annotations": "'${ANNOTATIONS}'" }' \
   -skL -o response -w "%{http_code}")
 echo "STATUS_CODE: ${STATUS_CODE}"
 cat response
