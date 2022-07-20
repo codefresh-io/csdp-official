@@ -3,7 +3,7 @@ kind: Kustomization
 
 # Replace all variables with real values and run kustomize build on this file
 resources:
-  - https://github.com/codefresh-io/csdp-official.git/kustomize?ref=<RUNTIME_VERSION>
+  - https://github.com/codefresh-sandbox/csdp-official.git/kustomize?ref=<RUNTIME_VERSION>
 
 namespace: csdp-runtime
 
