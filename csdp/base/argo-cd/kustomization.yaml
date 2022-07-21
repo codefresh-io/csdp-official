@@ -3,7 +3,7 @@ kind: Kustomization
 namespace: argocd
 resources:
   # change to specific release once release 2.3 is merged
-  - https://raw.githubusercontent.com/codefresh-io/argo-cd/c143423592f517911b6e626d12022a5742992f39/manifests/ha/install.yaml
+  - https://raw.githubusercontent.com/codefresh-io/argo-cd/c143423592f517911b6e626d12022a5742992f39/manifests/install.yaml
   - default-rbac.yaml
 images:
   - name: quay.io/codefresh/argocd
