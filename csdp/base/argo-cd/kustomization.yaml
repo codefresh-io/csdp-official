@@ -58,7 +58,7 @@ patches:
         path: /spec/template/spec/containers/0/env/-
         value:
           name: ARGOCD_CONTROLLER_REPLICAS
-          value: 2
+          value: "2"
 
 # apiVersion: apps/v1
 # kind: StatefulSet
