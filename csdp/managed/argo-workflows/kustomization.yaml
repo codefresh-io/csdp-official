@@ -4,6 +4,8 @@ resources:
   - ../../base/argo-workflows
 
 configMapGenerator:
+  # Holds the weight for workflow semaphores to configure their concurrency.
+  # We restrict concurrency only for managed runtimes.
   - name: workflow-synchronization-semaphores
     behavior: create
     literals:
