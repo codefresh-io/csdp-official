@@ -11,4 +11,4 @@ configMapGenerator:
   - name: codefresh-cm
     behavior: create
     literals:
-      - version=main #Change this to the actual version
+      - version=ha #Change this to the actual version
