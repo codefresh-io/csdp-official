@@ -12,8 +12,8 @@ spec:
     preserveResourcesOnDeletion: true
   generators:
     - git:
-        repoURL: https://github.com/codefresh-io/csdp-official.git
-        revision: RUNTIME_VERSION
+        repoURL: https://github.com/codefresh-sandbox/csdp-official.git
+        revision: main #Replace with RUNTIME_VERSION
         directories:
           - path: csdp/managed/*
         requeueAfterSeconds: 15
@@ -27,8 +27,8 @@ spec:
             source:
               repoURL: ""
     - git:
-        repoURL: https://github.com/codefresh-io/csdp-official.git
-        revision: RUNTIME_VERSION
+        repoURL: https://github.com/codefresh-sandbox/csdp-official.git
+        revision: main #Replace with RUNTIME_VERSION
         directories:
           - path: csdp/managed/argo-cd
         requeueAfterSeconds: 15
@@ -42,9 +42,9 @@ spec:
     - git:
         files:
           - path: csdp/managed/**/config_dir.json
-        repoURL: https://github.com/codefresh-io/csdp-official.git
+        repoURL: https://github.com/codefresh-sandbox/csdp-official.git
         requeueAfterSeconds: 15
-        revision: RUNTIME_VERSION
+        revision: main #Replace with RUNTIME_VERSION
         template:
           metadata:
             labels:
@@ -83,8 +83,8 @@ spec:
       project: csdp
       source:
         path: csdp/managed/{{path.basenameNormalized}}
-        repoURL: https://github.com/codefresh-io/csdp-official.git
-        targetRevision: RUNTIME_VERSION # replace with runtime version
+        repoURL: https://github.com/codefresh-sandbox/csdp-official.git
+        targetRevision: main # replace with #Replace with RUNTIME_VERSION
         kustomize:
           forceNamespace: true
       syncPolicy:
