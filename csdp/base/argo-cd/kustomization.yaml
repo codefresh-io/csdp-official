@@ -54,4 +54,4 @@ patches:
         path: /spec/template/spec/containers/0/resources
         value:
           requests:
-            ephemeral-storage: 1Gi
+            ephemeral-storage: 2Gi
