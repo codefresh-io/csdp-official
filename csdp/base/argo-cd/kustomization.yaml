@@ -53,6 +53,5 @@ patches:
       - op: add
         path: /spec/template/spec/containers/0/resources
         value:
-          limits:
           requests:
             ephemeral-storage: 1Gi
