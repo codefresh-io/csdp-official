@@ -46,6 +46,7 @@ patches:
       - op: add
         path: /spec/ports/1/appProtocol
         value: grpc
+
 # Set high availability for application controller
   - target:
       group: apps
@@ -61,3 +62,42 @@ patches:
         value:
           name: ARGOCD_CONTROLLER_REPLICAS
           value: "2"
+
+# Ephemeral storage Requests for argocd-repo-server
+  - target:
+      name: argocd-repo-server
+      kind: Deployment
+      group: apps
+      version: v1
+    patch: |-
+      - op: add
+        path: /spec/template/spec/containers/0/resources
+        value:
+          requests:
+            ephemeral-storage: 1Gi
+
+# Set requests for Redis
+  - target:
+      name: argocd-redis-ha-server
+      kind: StatefulSet
+      group: apps
+      version: v1
+    patch: |-
+      - op: add
+        path: /spec/template/spec/containers/0/resources
+        value:
+          requests:
+            cpu: 100m
+            memory: 150Mi
+  - target:
+      name: argocd-redis-ha-haproxy
+      kind: StatefulSet
+      group: apps
+      version: v1
+    patch: |-
+      - op: add
+        path: /spec/template/spec/containers/0/resources
+        value:
+          requests:
+            cpu: 100m
+            memory: 180Mi
