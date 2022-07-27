@@ -3,6 +3,9 @@ kind: Kustomization
 resources:
   - ../../base/argo-workflows
 
+generatorOptions:
+  disableNameSuffixHash: true
+
 configMapGenerator:
   # Holds the weight for workflow semaphores to configure their concurrency.
   # We restrict concurrency only for managed runtimes.
