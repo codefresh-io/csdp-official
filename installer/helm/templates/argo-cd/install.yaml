@@ -10015,7 +10015,7 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: metadata.namespace
-        image: quay.io/codefresh/applicationset:v0.4.2
+        image: quay.io/codefresh/applicationset:v0.4.2-CR-13254-remove-private-logs
         imagePullPolicy: Always
         name: argocd-applicationset-controller
         ports:
@@ -10096,7 +10096,7 @@ spec:
         - -n
         - /usr/local/bin/argocd
         - /shared/argocd-dex
-        image: quay.io/codefresh/argocd:v2.3.4-cap-CR-12110-helm-resources-yaml
+        image: quay.io/codefresh/argocd:v2.3.4-cap-CR-12173-fix-child-apps-deletion
         imagePullPolicy: Always
         name: copyutil
         volumeMounts:
@@ -10149,7 +10149,7 @@ spec:
         - ""
         - --appendonly
         - "no"
-        image: redis:6.2.6-alpine
+        image: quay.io/codefresh/redis:6.2.6-alpine
         imagePullPolicy: Always
         name: redis
         ports:
@@ -10277,7 +10277,7 @@ spec:
           value: /helm-working-dir
         - name: HELM_DATA_HOME
           value: /helm-working-dir
-        image: quay.io/codefresh/argocd:v2.3.4-cap-CR-12110-helm-resources-yaml
+        image: quay.io/codefresh/argocd:v2.3.4-cap-CR-12173-fix-child-apps-deletion
         imagePullPolicy: Always
         livenessProbe:
           failureThreshold: 3
@@ -10326,7 +10326,7 @@ spec:
         - -n
         - /usr/local/bin/argocd
         - /var/run/argocd/argocd-cmp-server
-        image: quay.io/codefresh/argocd:v2.3.4-cap-CR-12110-helm-resources-yaml
+        image: quay.io/codefresh/argocd:v2.3.4-cap-CR-12173-fix-child-apps-deletion
         name: copyutil
         volumeMounts:
         - mountPath: /var/run/argocd
@@ -10549,7 +10549,7 @@ spec:
               key: server.http.cookie.maxnumber
               name: argocd-cmd-params-cm
               optional: true
-        image: quay.io/codefresh/argocd:v2.3.4-cap-CR-12110-helm-resources-yaml
+        image: quay.io/codefresh/argocd:v2.3.4-cap-CR-12173-fix-child-apps-deletion
         imagePullPolicy: Always
         livenessProbe:
           httpGet:
@@ -10739,7 +10739,7 @@ spec:
               key: controller.default.cache.expiration
               name: argocd-cmd-params-cm
               optional: true
-        image: quay.io/codefresh/argocd:v2.3.4-cap-CR-12110-helm-resources-yaml
+        image: quay.io/codefresh/argocd:v2.3.4-cap-CR-12173-fix-child-apps-deletion
         imagePullPolicy: Always
         livenessProbe:
           httpGet:
