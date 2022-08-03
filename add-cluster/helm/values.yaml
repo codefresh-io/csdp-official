@@ -17,3 +17,7 @@ contextName: <contextName>
 #   CLUSTER_NAME=$(kubectl config view --raw --flatten -o jsonpath='{.contexts[?(@.name == "'"${CONTEXT_NAME}"'")].context.cluster}')
 #   kubectl config view --raw --flatten -o jsonpath='{.clusters[?(@.name == "'"${CLUSTER_NAME}"'")].cluster.server}'
 server: <server>
+
+labels: <labels>
+
+annotations: <annotations>
