@@ -8,3 +8,13 @@ spec:
   selector:
     matchLabels:
       app: workflow-controller
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: argo-server
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app: argo-server
