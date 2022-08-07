@@ -27,5 +27,5 @@ labels: ''
 # annotations for cluster secret metadata
 # example
 # annotations: |
-#   some.annotation.keu/field: annotation value
+#   some.annotation.key/field: annotation value
 annotations: ''
