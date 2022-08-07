@@ -48,6 +48,9 @@ spec:
                   key: server
             - name: CSDP_TOKEN_SECRET
               value: {{ include "csdp-add-cluster.fullname" . }}-secret
+          volumeMounts:
+            - name: config-volume
+              mountPath: /etc/config
           resources:
             limits:
               memory: 512Mi
