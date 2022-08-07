@@ -3,7 +3,7 @@ kind: Job
 metadata:
   name: csdp-add-cluster-job
 spec:
-  backoffLimit: 0
+  backoffLimit: 0 # no retries at all, only make a single attempt
   ttlSecondsAfterFinished: 600 # stick around for 10m
   template:
     metadata:
