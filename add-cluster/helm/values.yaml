@@ -8,7 +8,7 @@ ingressUrl: <ingressUrl>
 # csdpToken is the user's Personal Access Token
 csdpToken: <csdpToken>
 
-# contextName is the what Argo-CD will call the new cluster
+# contextName is the name of the cluster in Argo-CD
 contextName: <contextName>
 
 # server is the k8s cluster API endpoint url
