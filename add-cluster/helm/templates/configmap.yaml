@@ -9,5 +9,5 @@ data:
   ingressUrl: {{ .Values.ingressUrl | quote }}
   contextName: {{ .Values.contextName | quote }}
   server: {{ .Values.server | quote }}
-  labels: {{ .Values.labels | base64 }}
-  annotations: {{ .Values.annotations | base64 }}
+  labels: {{ .Values.labels }}
+  annotations: {{ .Values.annotations }}

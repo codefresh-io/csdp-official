@@ -18,6 +18,6 @@ contextName: <contextName>
 #   kubectl config view --raw --flatten -o jsonpath='{.clusters[?(@.name == "'"${CLUSTER_NAME}"'")].cluster.server}'
 server: <server>
 
-labels: <labels>
+labels: ''
 
-annotations: <annotations>
+annotations: ''

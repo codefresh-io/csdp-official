@@ -7,5 +7,5 @@ data:
   ingressUrl: <ingressUrl>
   contextName: <contextName>
   server: <server>
-  annotations: <annotations>
-  labels: <labels>
+  annotations: ''
+  labels: ''
