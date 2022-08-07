@@ -8,7 +8,7 @@ ingressUrl: <ingressUrl>
 # csdpToken is the user's Personal Access Token
 csdpToken: <csdpToken>
 
-# contextName is the name of the kube context (in the local kubeconfig file) that connects to the target cluster
+# contextName is the what Argo-CD will call the new cluster
 contextName: <contextName>
 
 # server is the k8s cluster API endpoint url
@@ -18,6 +18,14 @@ contextName: <contextName>
 #   kubectl config view --raw --flatten -o jsonpath='{.clusters[?(@.name == "'"${CLUSTER_NAME}"'")].cluster.server}'
 server: <server>
 
+# labels for cluster secret metadata
+# example
+# labels: |
+#   some.label.key/field: label_value
 labels: ''
 
+# annotations for cluster secret metadata
+# example
+# annotations: |
+#   some.annotation.keu/field: annotation value
 annotations: ''
