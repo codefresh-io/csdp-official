@@ -4,6 +4,8 @@
 # INGRESS_URL (cm)
 # CONTEXT_NAME (cm)
 # SERVER (cm)
+# LABELS (cm - optional)
+# ANNOTATIONS (cm - optional)
 # CSDP_TOKEN_SECRET
 
 echo "ServiceAccount: ${SERVICE_ACCOUNT_NAME}"
@@ -32,10 +34,13 @@ kubectl config set-credentials "${SERVICE_ACCOUNT_NAME}" --token "${BEARER_TOKEN
 kubectl config set-context "${CONTEXT_NAME}" --cluster="${CLUSTER_NAME}" --user="${SERVICE_ACCOUNT_NAME}"
 KUBE_CONFIG_B64=$(kubectl config view --minify --flatten --output json --context="${CONTEXT_NAME}" | base64 -w 0)
 
-STATUS_CODE=$(curl -X POST ${INGRESS_URL}/app-proxy/api/clusters \
+ANNOTATIONS_B64=$(cat /etc/config/annotations.yaml | base64 -w 0)
+LABELS_B64=$(cat /etc/config/labels.yaml | base64 -w 0)
+
+STATUS_CODE=$(curl -X POST ${INGRESS_URL%/}/app-proxy/api/clusters \
   -H 'Content-Type: application/json' \
   -H 'Authorization: '${CSDP_TOKEN}'' \
-  -d '{ "name": "'${CONTEXT_NAME}'", "kubeConfig": "'${KUBE_CONFIG_B64}'" }' \
+  -d '{ "name": "'${CONTEXT_NAME}'", "kubeConfig": "'${KUBE_CONFIG_B64}'", "annotations": "'${ANNOTATIONS_B64}'", "labels": "'${LABELS_B64}'" }' \
   -skL -o response -w "%{http_code}")
 echo "STATUS_CODE: ${STATUS_CODE}"
 cat response

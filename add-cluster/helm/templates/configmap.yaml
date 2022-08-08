@@ -9,3 +9,5 @@ data:
   ingressUrl: {{ .Values.ingressUrl | quote }}
   contextName: {{ .Values.contextName | quote }}
   server: {{ .Values.server | quote }}
+  labels: {{ .Values.labels | quote }}
+  annotations: {{ .Values.annotations | quote }}
