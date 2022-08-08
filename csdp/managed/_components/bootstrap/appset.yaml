@@ -15,7 +15,7 @@ spec:
         repoURL: https://github.com/codefresh-io/csdp-official.git
         revision: main #Replace with RUNTIME_VERSION
         directories:
-          - path: csdp/managed/*
+          - path: REPLACE_ME
         requeueAfterSeconds: 15
         template:
           metadata:
@@ -30,7 +30,7 @@ spec:
         repoURL: https://github.com/codefresh-io/csdp-official.git
         revision: main #Replace with RUNTIME_VERSION
         directories:
-          - path: csdp/managed/argo-cd
+          - path: REPLACE_ME
         requeueAfterSeconds: 15
         template:
           metadata: {}
@@ -39,30 +39,6 @@ spec:
             project: ""
             source:
               repoURL: ""
-    - git:
-        files:
-          - path: csdp/managed/**/config_dir.json
-        repoURL: https://github.com/codefresh-io/csdp-official.git
-        requeueAfterSeconds: 15
-        revision: main #Replace with RUNTIME_VERSION
-        template:
-          metadata:
-            labels:
-              codefresh.io/entity: "{{labels.codefresh_io_entity}}"
-              codefresh.io/internal: "{{labels.codefresh_io_internal}}"
-            finalizers:
-              - resources-finalizer.argocd.argoproj.io
-          spec:
-            destination: {}
-            project: ""
-            source:
-              repoURL: "{{srcRepoURL}}"
-              path: "{{srcRepoPath}}"
-              targetRevision: "{{srcTargetRevision}}"
-              directory:
-                exclude: "{{exclude}}"
-                include: "{{include}}"
-                recurse: true
   template:
     metadata:
       labels:
@@ -82,7 +58,7 @@ spec:
           kind: Application
       project: csdp
       source:
-        path: csdp/managed/{{path.basenameNormalized}}
+        path: REPLACE_ME
         repoURL: https://github.com/codefresh-io/csdp-official.git
         targetRevision: main # replace with #Replace with RUNTIME_VERSION
         kustomize:
