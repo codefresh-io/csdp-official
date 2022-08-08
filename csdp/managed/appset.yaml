@@ -39,7 +39,7 @@ spec:
             project: ""
             source:
               repoURL: ""
-    - git:
+    - git: # Is this needed??  <----------------
         files:
           - path: csdp/managed/**/config_dir.json
         repoURL: https://github.com/codefresh-io/csdp-official.git
