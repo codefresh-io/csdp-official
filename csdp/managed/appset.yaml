@@ -1,0 +1,94 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  labels:
+    codefresh.io/internal: "true"
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+  name: csdp
+  namespace: default # replace
+spec:
+  syncPolicy:
+    preserveResourcesOnDeletion: true
+  generators:
+    - git:
+        repoURL: https://github.com/codefresh-io/csdp-official.git
+        revision: RUNTIME_VERSION
+        directories:
+          - path: csdp/managed/*
+        requeueAfterSeconds: 15
+        template:
+          metadata:
+            finalizers:
+              - resources-finalizer.argocd.argoproj.io
+          spec:
+            destination: {}
+            project: ""
+            source:
+              repoURL: ""
+    - git:
+        repoURL: https://github.com/codefresh-io/csdp-official.git
+        revision: RUNTIME_VERSION
+        directories:
+          - path: csdp/managed/argo-cd
+        requeueAfterSeconds: 15
+        template:
+          metadata: {}
+          spec:
+            destination: {}
+            project: ""
+            source:
+              repoURL: ""
+    - git:
+        files:
+          - path: csdp/managed/**/config_dir.json
+        repoURL: https://github.com/codefresh-io/csdp-official.git
+        requeueAfterSeconds: 15
+        revision: RUNTIME_VERSION
+        template:
+          metadata:
+            labels:
+              codefresh.io/entity: "{{labels.codefresh_io_entity}}"
+              codefresh.io/internal: "{{labels.codefresh_io_internal}}"
+            finalizers:
+              - resources-finalizer.argocd.argoproj.io
+          spec:
+            destination: {}
+            project: ""
+            source:
+              repoURL: "{{srcRepoURL}}"
+              path: "{{srcRepoPath}}"
+              targetRevision: "{{srcTargetRevision}}"
+              directory:
+                exclude: "{{exclude}}"
+                include: "{{include}}"
+                recurse: true
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: "{{path.basenameNormalized}}"
+        codefresh.io/entity: "component"
+        codefresh.io/internal: "true"
+      name: csdp-{{path.basenameNormalized}}
+      namespace: default # replace
+    spec:
+      destination:
+        namespace: default # replace
+        server: "https://kubernetes.default.svc"
+      ignoreDifferences:
+        - group: argoproj.io
+          jsonPointers:
+            - /status
+          kind: Application
+      project: csdp
+      source:
+        path: csdp/managed/{{path.basenameNormalized}}
+        repoURL: https://github.com/codefresh-io/csdp-official.git
+        targetRevision: RUNTIME_VERSION # replace with runtime version
+        kustomize:
+          forceNamespace: true
+      syncPolicy:
+        automated:
+          allowEmpty: true
+          prune: true
+          selfHeal: true
