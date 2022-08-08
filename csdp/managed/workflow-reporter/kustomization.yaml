@@ -1,4 +1,4 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-resources:
-  - ../../base/workflow-reporter
+components:
+- ../../_components/apps/workflow-reporter/_bundles/basic/
