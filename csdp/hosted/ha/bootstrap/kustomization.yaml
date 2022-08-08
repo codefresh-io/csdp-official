@@ -15,11 +15,11 @@ patches:
     - op: replace
       path: /spec/generators/0/git/directories/0
       value:
-        path: csdp/managed/ha/apps/*
+        path: csdp/hosted/ha/apps/*
     - op: replace
       path: /spec/generators/1/git/directories/0
       value:
-        path: csdp/managed/ha/apps/argocd
+        path: csdp/hosted/ha/apps/argocd
     - op: replace
       path: /spec/template/spec/source/path
-      value: csdp/managed/ha/apps/{{path.basenameNormalized}}
+      value: csdp/hosted/ha/apps/{{path.basenameNormalized}}
