@@ -1,0 +1,87 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Sensor
+metadata:
+  name: rollout-reporter
+spec:
+  dependencies:
+    - eventName: rollouts
+      eventSourceName: rollout-reporter
+      name: rollouts
+    - eventName: replicasets
+      eventSourceName: rollout-reporter
+      name: replicasets
+    - eventName: analysisruns
+      eventSourceName: rollout-reporter
+      name: analysisruns
+  eventBusName: codefresh-eventbus
+  template:
+    container:
+      name: ""
+      resources: {}
+  triggers:
+    - retryStrategy:
+        duration: 0
+        steps: 3
+      template:
+        conditions: rollouts
+        http:
+          headers:
+            Content-Type: application/json
+          method: POST
+          payload:
+            - dest: data.object
+              src:
+                dataKey: body
+                dependencyName: rollouts
+          secureHeaders:
+            - name: Authorization
+              valueFrom:
+                secretKeyRef:
+                  key: token
+                  name: codefresh-token
+          url: CF_HOST
+        name: rollouts
+    - retryStrategy:
+        duration: 0
+        steps: 3
+      template:
+        conditions: replicasets
+        http:
+          headers:
+            Content-Type: application/json
+          method: POST
+          payload:
+            - dest: data.object
+              src:
+                dataKey: body
+                dependencyName: replicasets
+          secureHeaders:
+            - name: Authorization
+              valueFrom:
+                secretKeyRef:
+                  key: token
+                  name: codefresh-token
+          url: CF_HOST
+        name: replicasets
+    - retryStrategy:
+        duration: 0
+        steps: 3
+      template:
+        conditions: analysisruns
+        http:
+          headers:
+            Content-Type: application/json
+          method: POST
+          payload:
+            - dest: data.object
+              src:
+                dataKey: body
+                dependencyName: analysisruns
+          secureHeaders:
+            - name: Authorization
+              valueFrom:
+                secretKeyRef:
+                  key: token
+                  name: codefresh-token
+          url: CF_HOST
+        name: analysisruns
