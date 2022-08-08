@@ -1,0 +1,42 @@
+apiVersion: argoproj.io/v1alpha1
+kind: EventSource
+metadata:
+  name: rollout-reporter
+spec:
+  eventBusName: codefresh-eventbus
+  resource:
+    analysisruns:
+      eventTypes:
+        - ADD
+        - UPDATE
+        - DELETE
+      filter:
+        createdBy: null
+      group: argoproj.io
+      resource: analysisruns
+      version: v1alpha1
+    replicasets:
+      eventTypes:
+        - ADD
+        - UPDATE
+        - DELETE
+      filter:
+        createdBy: null
+      group: apps
+      resource: replicasets
+      version: v1
+    rollouts:
+      eventTypes:
+        - ADD
+        - UPDATE
+        - DELETE
+      filter:
+        createdBy: null
+      group: argoproj.io
+      resource: rollouts
+      version: v1alpha1
+  template:
+    container:
+      name: ""
+      resources: {}
+    serviceAccountName: rollout-reporter-sa
