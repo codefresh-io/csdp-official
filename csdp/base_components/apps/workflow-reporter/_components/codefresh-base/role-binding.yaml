@@ -1,0 +1,11 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: codefresh-sa
+roleRef:
+  apiGroup: ""
+  kind: Role
+  name: codefresh-sa
+subjects:
+  - kind: ServiceAccount
+    name: codefresh-sa

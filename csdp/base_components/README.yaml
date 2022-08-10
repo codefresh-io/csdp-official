@@ -1,0 +1,9 @@
+All resources are defined using Kustomize components in this folder in the following structure:
+
+_components:
+  apps: 
+    <runtime application>: For example app-proxy, argo-cd, etc.
+      _components: Abstract building blocks of the applcation Kustomization
+      _bundles: Composite components (components of components) built from the building blocks defined in _components.
+                this allows us to create configuration bundles - for example HA and non HA configurations.
+  bootstrap: This is the bootstrap component

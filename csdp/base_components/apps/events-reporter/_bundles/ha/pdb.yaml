@@ -1,0 +1,19 @@
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: events-reporter-sensor
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      sensor-name: events-reporter
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: events-reporter-eventsource
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      eventsource-name: events-reporter
