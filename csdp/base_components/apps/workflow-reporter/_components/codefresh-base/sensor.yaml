@@ -11,6 +11,8 @@ spec:
   template:
     metadata:
       labels:
+        # This is added here because of commonLabels in 
+        # Kustomization yaml that break pdb if this label is not present on the pod.
         app.kubernetes.io/managed-by: cf
     container:
       name: ""
