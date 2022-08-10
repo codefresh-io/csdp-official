@@ -1,7 +1,57 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: argocd
+resources:
+  # change to specific release once release 2.3 is merged
+  - https://raw.githubusercontent.com/codefresh-io/argo-cd/release-2.3/manifests/install.yaml
+  - default-rbac.yaml
+images:
+  - name: quay.io/codefresh/argocd
+    newTag: v2.3.4-cap-CR-namespace-labels
+  - name: quay.io/codefresh/applicationset
+    newTag: v0.4.2-CR-13254-remove-private-logs
 
-components:
-- components/base-manifests
-- components/codefresh-base
+configMapGenerator:
+  - behavior: merge
+    name: argocd-cm
+    literals:
+      - timeout.reconciliation=20s
+      - accounts.admin=apiKey,login
+  - behavior: merge
+    name: argocd-cmd-params-cm
+    literals:
+      - server.insecure=true
+
+# reset the crbs to `subject.namespace: default`, so that argo-cd will later change them to the actual ns
+patches:
+  - target:
+      group: rbac.authorization.k8s.io
+      kind: ClusterRoleBinding
+      version: v1
+    patch: |-
+      - op: replace
+        path: /subjects/0/namespace
+        value: default
+  - target:
+      version: v1
+      kind: Service
+      name: argocd-server
+    patch: |
+      - op: add
+        path: /spec/ports/0/appProtocol
+        value: grpc
+      - op: add
+        path: /spec/ports/1/appProtocol
+        value: grpc
+
+  - target:
+      name: argocd-repo-server
+      kind: Deployment
+      group: apps
+      version: v1
+    patch: |-
+      - op: add
+        path: /spec/template/spec/containers/0/resources
+        value:
+          requests:
+            ephemeral-storage: 2Gi
