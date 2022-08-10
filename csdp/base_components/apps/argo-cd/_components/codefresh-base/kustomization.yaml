@@ -22,34 +22,34 @@ configMapGenerator:
 
 # reset the crbs to `subject.namespace: default`, so that argo-cd will later change them to the actual ns
 patches:
-- target:
-    group: rbac.authorization.k8s.io
-    kind: ClusterRoleBinding
-    version: v1
-  patch: |-
-    - op: replace
-      path: /subjects/0/namespace
-      value: default
-- target:
-    version: v1
-    kind: Service
-    name: argocd-server
-  patch: |
-    - op: add
-      path: /spec/ports/0/appProtocol
-      value: grpc
-    - op: add
-      path: /spec/ports/1/appProtocol
-      value: grpc
+  - target:
+      group: rbac.authorization.k8s.io
+      kind: ClusterRoleBinding
+      version: v1
+    patch: |-
+      - op: replace
+        path: /subjects/0/namespace
+        value: default
+  - target:
+      version: v1
+      kind: Service
+      name: argocd-server
+    patch: |
+      - op: add
+        path: /spec/ports/0/appProtocol
+        value: grpc
+      - op: add
+        path: /spec/ports/1/appProtocol
+        value: grpc
 
-- target:
-    name: argocd-repo-server
-    kind: Deployment
-    group: apps
-    version: v1
-  patch: |-
-    - op: add
-      path: /spec/template/spec/containers/0/resources
-      value:
-        requests:
-          ephemeral-storage: 2Gi
+  - target:
+      name: argocd-repo-server
+      kind: Deployment
+      group: apps
+      version: v1
+    patch: |-
+      - op: add
+        path: /spec/template/spec/containers/0/resources
+        value:
+          requests:
+            ephemeral-storage: 2Gi
