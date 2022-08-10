@@ -43,7 +43,8 @@ kind: PodDisruptionBudget
 metadata:
   name: argocd-redis-ha
 spec:
-  minAvailable: 1
+  # Redis Sentinel needs at least 2 pods for majority cluster
+  minAvailable: 2
   selector:
     matchLabels:
       app.kubernetes.io/name: argocd-redis-ha
