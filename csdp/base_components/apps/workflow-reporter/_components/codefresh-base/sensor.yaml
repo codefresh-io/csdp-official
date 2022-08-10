@@ -9,6 +9,9 @@ spec:
       name: workflows
   eventBusName: codefresh-eventbus
   template:
+    metadata:
+      labels:
+        app.kubernetes.io/managed-by: cf
     container:
       name: ""
       resources: {}
