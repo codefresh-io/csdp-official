@@ -14,3 +14,12 @@ patches:
     - op: add
       path: /spec/replicas
       value: 2
+- target:
+    group: argoproj.io
+    version:  v1alpha1
+    kind: Sensor
+    name: events-reporter
+  patch: |-
+    - op: add
+      path: /spec/replicas
+      value: 2
