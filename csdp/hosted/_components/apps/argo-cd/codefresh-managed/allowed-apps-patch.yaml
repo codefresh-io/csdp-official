@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-cm
+data:
+  application.allowedDeliverToIncluster: |
+    - csdp-bootstrap
+    - csdp-argo-cd
+    - csdp-app-proxy
+    - csdp-argo-workflows
+    - csdp-sealed-secrets
+    - csdp-argo-events
+    - csdp-events-reporter
+    - csdp-workflow-reporter
+    - isc
+    - in-cluster
