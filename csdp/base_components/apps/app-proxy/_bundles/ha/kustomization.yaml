@@ -4,8 +4,7 @@ kind: Component
 components:
   - ../../_components/codefresh-base
   - ../../_components/ha-manifests
-
 # remove once app-proxy is merged
 images:
   - name: quay.io/codefresh/cap-app-proxy
-    newTag: 1.1700.0-CR-13336-app-proxy-ha-14de83b
+    newTag: 1.1715.0-CR-13336-app-proxy-ha-a8f6db1
