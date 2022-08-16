@@ -8,4 +8,4 @@ components:
 # remove once app-proxy is merged
 images:
   - name: quay.io/codefresh/cap-app-proxy
-    newTag: 1.1689.0-CR-13336-app-proxy-ha-3fe8fb7
+    newTag: 1.1700.0-CR-13336-app-proxy-ha-14de83b
