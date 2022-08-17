@@ -1,0 +1,28 @@
+apiVersion: argoproj.io/v1alpha1
+kind: EventSource
+metadata:
+  name: workflow-reporter
+spec:
+  eventBusName: codefresh-eventbus
+  resource:
+    workflows:
+      eventTypes:
+        - ADD
+        - UPDATE
+        - DELETE
+      filter:
+        createdBy: null
+      namespace: REPLACE_ME
+      group: argoproj.io
+      resource: workflows
+      version: v1alpha1
+  template:
+    metadata:
+      labels:
+        # This is added here because of commonLabels in 
+        # Kustomization yaml that break pdb if this label is not present on the pod.
+        app.kubernetes.io/managed-by: cf 
+    container:
+      name: ""
+      resources: {}
+    serviceAccountName: codefresh-sa
