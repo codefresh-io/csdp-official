@@ -3,4 +3,4 @@ kind: Kustomization
 namespace: argocd
 
 components:
-- ../../../../base_components/apps/argo-cd/_bundles/basic/
+  - ../../../../base_components/apps/argo-cd/_bundles/basic

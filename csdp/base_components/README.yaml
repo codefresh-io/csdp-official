@@ -1,9 +1,13 @@
 All resources are defined using Kustomize components in this folder in the following structure:
 
-_components:
+base_components:
   apps: 
     <runtime application>: For example app-proxy, argo-cd, etc.
-      _components: Abstract building blocks of the applcation Kustomization
+      _components: Abstract building blocks of the applcation Kustomization. Should contain patches and manifests.
+                   Try to keep `images` patches in `codefresh-base` kustomization, unless you need one `bundle` to have
+                   a different image, then you should override the image inside that specific bundle.
       _bundles: Composite components (components of components) built from the building blocks defined in _components.
                 this allows us to create configuration bundles - for example HA and non HA configurations.
+                Try to keep resources and patches out of the bundle kustomization, it should contain only the composition
+                of components.
   bootstrap: This is the bootstrap component
