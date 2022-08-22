@@ -1,0 +1,33 @@
+name: CI
+on:
+  - pull_request
+jobs:
+  check-version:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+      - name: get tag
+        run: |
+          echo "NEW_VERSION=$(yq e '.configMapGenerator.0.literals.0' ${{ github.workspace }}/csdp/base/kustomization.yaml | awk '{split($0,a,"="); print a[2]}')" >> $GITHUB_ENV
+      - name: Check repo tags
+        uses: mukunku/tag-exists-action@v1.0.0
+        id: checkTag
+        with:
+          tag: "${{ env.NEW_VERSION }}"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Check if version tag already exists
+        if: ${{ steps.checkTag.outputs.exists == 'true' }}
+        run: echo "version '${{ env.NEW_VERSION }}' already exists" && exit 1
+
+  check-kustomize-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+      - name: "Kustomize Build"
+        uses: karancode/kustomize-github-action@master
+        with:
+          kustomize_version: "4.4.1"
+          kustomize_build_dir: "./csdp/base"
