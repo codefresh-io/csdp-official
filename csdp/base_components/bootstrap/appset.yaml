@@ -13,9 +13,9 @@ spec:
   generators:
     - git:
         repoURL: https://github.com/codefresh-io/csdp-official.git
-        revision: RUNTIME_VERSION
+        revision: main # replaced with RUNTIME_VERSION
         directories:
-          - path: REPLACE_ME
+          - path: REPLACE_ME # replaced by specific flavor
         requeueAfterSeconds: 15
         template:
           metadata:
@@ -26,11 +26,13 @@ spec:
             project: ""
             source:
               repoURL: ""
+              kustomize:
+                forceNamespace: true
     - git:
         repoURL: https://github.com/codefresh-io/csdp-official.git
-        revision: RUNTIME_VERSION
+        revision: main # replaced with RUNTIME_VERSION
         directories:
-          - path: REPLACE_ME
+          - path: REPLACE_ME # replaced by specific flavor
         requeueAfterSeconds: 15
         template:
           metadata: {}
@@ -39,9 +41,12 @@ spec:
             project: ""
             source:
               repoURL: ""
+              kustomize:
+                forceNamespace: true
+
     - git:
         files:
-          - path: csdp/hybrid/git-sources/**/config_dir.json
+          - path: csdp/base_components/git-sources/**/config_dir.json # replaced by specific flavor
         repoURL: https://github.com/codefresh-io/csdp-official.git
         requeueAfterSeconds: 15
         revision: RUNTIME_VERSION
@@ -70,10 +75,10 @@ spec:
         codefresh.io/entity: "component"
         codefresh.io/internal: "true"
       name: csdp-{{path.basenameNormalized}}
-      namespace: default # replace
+      namespace: default # replaced by runtime
     spec:
       destination:
-        namespace: default # replace
+        namespace: default # replaced by runtime
         server: "https://kubernetes.default.svc"
       ignoreDifferences:
         - group: argoproj.io
@@ -82,11 +87,9 @@ spec:
           kind: Application
       project: csdp
       source:
-        path: REPLACE_ME
+        path: REPLACE_ME # replaced by specific flavor
         repoURL: https://github.com/codefresh-io/csdp-official.git
-        targetRevision: RUNTIME_VERSION # replace with runtime version
-        kustomize:
-          forceNamespace: true
+        targetRevision: RUNTIME_VERSION # replaced with RUNTIME_VERSION
       syncPolicy:
         automated:
           allowEmpty: true
