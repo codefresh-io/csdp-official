@@ -13,7 +13,7 @@ configMapGenerator:
     behavior: create
     literals:
       - version=0.0.484 # Runtime version
-      - bootstrapRevision=0.0.484 # Tag to use for bootstrap
+      - bootstrapRevision=fixing-appset-kust-force-ns # Tag to use for bootstrap
       - appsetRequeueTime=15
 
 replacements:
