@@ -3,6 +3,7 @@ kind: Component
 
 resources:
   - ./project.yaml
+  - ./appset.yaml
 
 generatorOptions:
   disableNameSuffixHash: true
@@ -11,4 +12,22 @@ configMapGenerator:
   - name: codefresh-cm
     behavior: create
     literals:
-      - version=0.0.482
+      - version=0.0.484 # Runtime version
+      - bootstrapRevision=0.0.484 # Tag to use for bootstrap
+      - appsetRequeueTime=15
+
+replacements:
+  # template the version from the configmap into the applicationset generators
+  - source:
+      kind: ConfigMap
+      name: codefresh-cm
+      fieldPath: data.bootstrapRevision
+    targets:
+      - select:
+          kind: ApplicationSet
+          name: csdp
+        fieldPaths:
+          - spec.generators.0.git.revision
+          - spec.generators.1.git.revision
+          - spec.generators.2.git.revision
+          - spec.template.spec.source.targetRevision
