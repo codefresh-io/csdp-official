@@ -17,7 +17,7 @@ patches:
         value: csdp/hybrid/basic/apps/*
       - op: replace
         path: /spec/generators/1/git/directories/0/path
-        value: csdp/hybrid/basic/apps/argocd
+        value: csdp/hybrid/basic/apps/argo-cd
       - op: replace
         path: /spec/template/spec/source/path
         value: csdp/hybrid/basic/apps/{{path.basenameNormalized}}
