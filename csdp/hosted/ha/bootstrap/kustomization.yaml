@@ -17,7 +17,7 @@ patches:
         value: csdp/hosted/ha/apps/*
       - op: replace
         path: /spec/generators/1/git/directories/0/path
-        value: csdp/hosted/ha/apps/argocd
+        value: csdp/hosted/ha/apps/argo-cd
       - op: replace
         path: /spec/template/spec/source/path
         value: csdp/hosted/ha/apps/{{path.basenameNormalized}}
