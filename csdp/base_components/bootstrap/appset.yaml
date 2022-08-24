@@ -44,30 +44,6 @@ spec:
               kustomize:
                 forceNamespace: true
 
-    - git:
-        files:
-          - path: csdp/base_components/git-sources/**/config_dir.json # replaced by specific flavor
-        repoURL: https://github.com/codefresh-io/csdp-official.git
-        requeueAfterSeconds: 15
-        revision: RUNTIME_VERSION
-        template:
-          metadata:
-            labels:
-              codefresh.io/entity: "{{labels.codefresh_io_entity}}"
-              codefresh.io/internal: "{{labels.codefresh_io_internal}}"
-            finalizers:
-              - resources-finalizer.argocd.argoproj.io
-          spec:
-            destination: {}
-            project: ""
-            source:
-              repoURL: "{{srcRepoURL}}"
-              path: "{{srcPath}}"
-              targetRevision: "{{srcTargetRevision}}"
-              directory:
-                exclude: "{{exclude}}"
-                include: "{{include}}"
-                recurse: true
   template:
     metadata:
       labels:

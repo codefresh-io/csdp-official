@@ -29,5 +29,4 @@ replacements:
         fieldPaths:
           - spec.generators.0.git.revision
           - spec.generators.1.git.revision
-          - spec.generators.2.git.revision
           - spec.template.spec.source.targetRevision
