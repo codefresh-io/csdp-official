@@ -3,6 +3,16 @@ entries:
   csdp-installer:
   - apiVersion: v2
     appVersion: v0.0.13
+    created: "2022-09-04T16:40:22.402321+03:00"
+    description: A Helm chart used for installing a CSDP runtime
+    digest: b04ca2e75220aa34dd21755e96cefb0c9132c5f151913c6a3f22fc7411cfc52f
+    name: csdp-installer
+    type: application
+    urls:
+    - https://github.com/codefresh-io/csdp-official/releases/download/csdp-installer-0.1.31/csdp-installer-0.1.31.tgz
+    version: 0.1.31
+  - apiVersion: v2
+    appVersion: v0.0.13
     created: "2022-07-31T19:14:31.066739+03:00"
     description: A Helm chart used for installing a CSDP runtime
     digest: f90db16abc61453de25729970b727e7f6c5d47d297c9d691a9ea22d9fbe22108
@@ -211,4 +221,4 @@ entries:
     urls:
     - https://github.com/codefresh-io/csdp-official/releases/download/csdp-installer-0.1.10/csdp-installer-0.1.10.tgz
     version: 0.1.10
-generated: "2022-07-31T19:14:31.066886+03:00"
+generated: "2022-09-04T16:40:22.402483+03:00"
