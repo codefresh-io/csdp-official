@@ -58,3 +58,4 @@ fi
 
 echo "deleting token secret ${CSDP_TOKEN_SECRET}"
 kubectl delete secret ${CSDP_TOKEN_SECRET} -n ${NAMESPACE}
+exit $STATUS_CODE
