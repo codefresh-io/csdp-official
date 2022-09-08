@@ -3,7 +3,7 @@ kind: Component
 images:
   - name: quay.io/codefresh/cap-app-proxy
     newName: quay.io/codefresh/cap-app-proxy
-    newTag: 1.1778.0
+    newTag: 1.1783.0-CR-14304-hosted-bitbucket-ba0dcfc
 resources:
   - app-proxy.deploy.yaml
   - app-proxy.svc.yaml
