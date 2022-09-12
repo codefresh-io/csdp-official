@@ -1,0 +1,6 @@
+name,installationStatus,healthStatus,syncStatus,createdAt,finishedAt
+codefresh-hosted-0,COMPLETED,HEALTHY,HEALTHY,17:48:19,17:52:13
+codefresh-hosted-1,COMPLETED,HEALTHY,HEALTHY,17:48:28,17:52:13
+codefresh-hosted-2,COMPLETED,HEALTHY,HEALTHY,17:48:37,17:48:55
+codefresh-hosted-3,COMPLETED,HEALTHY,HEALTHY,17:48:46,17:52:25
+codefresh-hosted-4,COMPLETED,HEALTHY,HEALTHY,17:48:55,17:54:04
