@@ -34,6 +34,20 @@ patches:
           requests:
             cpu: 100m
             memory: 150Mi
+
+      # Reduce startup time
+      - op: replace
+        path: /spec/template/spec/containers/0/livenessProbe/initialDelaySeconds
+        value: 15
+      - op: replace
+        path: /spec/template/spec/containers/1/livenessProbe/initialDelaySeconds
+        value: 15
+      - op: replace
+        path: /spec/template/spec/containers/0/readinessProbe/initialDelaySeconds
+        value: 15
+      - op: replace
+        path: /spec/template/spec/containers/1/readinessProbe/initialDelaySeconds
+        value: 15
   - target:
       name: argocd-redis-ha-haproxy
       kind: StatefulSet
