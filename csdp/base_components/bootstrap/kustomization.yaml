@@ -13,7 +13,7 @@ configMapGenerator:
     behavior: create
     literals:
       - version=0.0.512 # Runtime version
-      - bootstrapRevision=0.0.512 # Tag to use for bootstrap (change this to the name of your branch if you want to test changes)
+      - bootstrapRevision=CR-14514-block-connect # Tag to use for bootstrap (change this to the name of your branch if you want to test changes)
       - appsetRequeueTime=15
 
 replacements:
