@@ -8,6 +8,32 @@
 # ANNOTATIONS (cm - optional)
 # CSDP_TOKEN_SECRET
 
+function get_service_account_token() {
+  SECRET_NAME=$(kubectl get ServiceAccount ${SERVICE_ACCOUNT_NAME} -n ${NAMESPACE} -o jsonpath='{.secrets[0].name}')
+  if [[ -z ${SECRET_NAME} ]]; then
+    echo "Creating new ServiceAccount token"
+    # create secret for service account
+    SECRET_NAME=$(kubectl create -f - <<EOF
+apiVersion: v1
+kind: Secret
+metadata:
+  generateName: ${SERVICE_ACCOUNT_NAME}-token-
+  annotations:
+    kubernetes.io/service-account.name: ${SERVICE_ACCOUNT_NAME}
+type: kubernetes.io/service-account-token
+EOF
+)
+    SECRET_NAME=$(echo ${SECRET_NAME} | sed s@secret/@@g | sed s/\ created//g)
+    kubectl patch ServiceAccount ${SERVICE_ACCOUNT_NAME} -n ${NAMESPACE} --patch "{\"secrets\": [{\"name\": \"${SECRET_NAME}\"}]}"
+    echo "Created ServiceAccount sercret ${SECRET_NAME}"
+  else
+    echo "Found ServiceAccount secret ${SECRET_NAME}"
+  fi
+
+  BEARER_TOKEN=$(kubectl get secret ${SECRET_NAME} -n ${NAMESPACE} -o jsonpath='{.data.token}' | base64 -d)
+  return BEARER_TOKEN
+}
+
 echo "ServiceAccount: ${SERVICE_ACCOUNT_NAME}"
 echo "Ingress URL: ${INGRESS_URL}"
 echo "Context Name: ${CONTEXT_NAME}"
@@ -23,9 +49,7 @@ NAMESPACE=$(cat ${SERVICEACCOUNT}/namespace)
 CACERT=${SERVICEACCOUNT}/ca.crt
 
 # get ServiceAccount token
-SECRET_NAME=$(kubectl get ServiceAccount ${SERVICE_ACCOUNT_NAME} -n ${NAMESPACE} -o jsonpath='{.secrets[0].name}')
-echo "Found ServiceAccount secret ${SECRET_NAME}"
-BEARER_TOKEN=$(kubectl get secret ${SECRET_NAME} -n ${NAMESPACE} -o jsonpath='{.data.token}' | base64 -d)
+BEARER_TOKEN=get_service_account_token()
 
 # write KUBE_COPNFIG_DATA to local file
 CLUSTER_NAME=$(echo ${SERVER} | sed s/'http[s]\?:\/\/'//)
