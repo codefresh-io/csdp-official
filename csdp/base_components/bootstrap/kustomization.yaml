@@ -12,8 +12,8 @@ configMapGenerator:
   - name: codefresh-cm
     behavior: create
     literals:
-      - version=0.0.515 # Runtime version
-      - bootstrapRevision=0.0.515 # Tag to use for bootstrap (change this to the name of your branch if you want to test changes)
+      - version=0.0.516 # Runtime version
+      - bootstrapRevision=0.0.516 # Tag to use for bootstrap (change this to the name of your branch if you want to test changes)
       - appsetRequeueTime=15
 
 replacements:

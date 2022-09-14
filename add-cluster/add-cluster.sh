@@ -8,6 +8,31 @@
 # ANNOTATIONS (cm - optional)
 # CSDP_TOKEN_SECRET
 
+SECRET_NAME=""
+
+function get_service_account_secret_name() {
+  SECRET_NAME=$(kubectl get ServiceAccount ${SERVICE_ACCOUNT_NAME} -n ${NAMESPACE} -o jsonpath='{.secrets[0].name}')
+  if [[ -z ${SECRET_NAME} ]]; then
+    echo "Creating new ServiceAccount token"
+    # create secret for service account
+    SECRET_NAME=$(kubectl create -f - <<EOF
+apiVersion: v1
+kind: Secret
+metadata:
+  generateName: ${SERVICE_ACCOUNT_NAME}-token-
+  annotations:
+    kubernetes.io/service-account.name: ${SERVICE_ACCOUNT_NAME}
+type: kubernetes.io/service-account-token
+EOF
+)
+    SECRET_NAME=$(echo ${SECRET_NAME} | sed s@secret/@@g | sed s/\ created//g)
+    kubectl patch ServiceAccount ${SERVICE_ACCOUNT_NAME} -n ${NAMESPACE} --patch "{\"secrets\": [{\"name\": \"${SECRET_NAME}\"}]}"
+    echo "Created ServiceAccount sercret ${SECRET_NAME}"
+  else
+    echo "Found ServiceAccount secret ${SECRET_NAME}"
+  fi
+}
+
 echo "ServiceAccount: ${SERVICE_ACCOUNT_NAME}"
 echo "Ingress URL: ${INGRESS_URL}"
 echo "Context Name: ${CONTEXT_NAME}"
@@ -23,8 +48,7 @@ NAMESPACE=$(cat ${SERVICEACCOUNT}/namespace)
 CACERT=${SERVICEACCOUNT}/ca.crt
 
 # get ServiceAccount token
-SECRET_NAME=$(kubectl get ServiceAccount ${SERVICE_ACCOUNT_NAME} -n ${NAMESPACE} -o jsonpath='{.secrets[0].name}')
-echo "Found ServiceAccount secret ${SECRET_NAME}"
+get_service_account_secret_name
 BEARER_TOKEN=$(kubectl get secret ${SECRET_NAME} -n ${NAMESPACE} -o jsonpath='{.data.token}' | base64 -d)
 
 # write KUBE_COPNFIG_DATA to local file
@@ -37,6 +61,7 @@ KUBE_CONFIG_B64=$(kubectl config view --minify --flatten --output json --context
 ANNOTATIONS_B64=$(cat /etc/config/annotations.yaml | base64 -w 0)
 LABELS_B64=$(cat /etc/config/labels.yaml | base64 -w 0)
 
+echo "{ \"name\": \"'${CONTEXT_NAME}'\", \"kubeConfig\": \"'${KUBE_CONFIG_B64}'\", \"annotations\": \"'${ANNOTATIONS_B64}'\", \"labels\": \"'${LABELS_B64}'\" }"
 STATUS_CODE=$(curl -X POST ${INGRESS_URL%/}/app-proxy/api/clusters \
   -H 'Content-Type: application/json' \
   -H 'Authorization: '${CSDP_TOKEN}'' \
