@@ -61,6 +61,7 @@ KUBE_CONFIG_B64=$(kubectl config view --minify --flatten --output json --context
 ANNOTATIONS_B64=$(cat /etc/config/annotations.yaml | base64 -w 0)
 LABELS_B64=$(cat /etc/config/labels.yaml | base64 -w 0)
 
+echo "{ \"name\": \"'${CONTEXT_NAME}'\", \"kubeConfig\": \"'${KUBE_CONFIG_B64}'\", \"annotations\": \"'${ANNOTATIONS_B64}'\", \"labels\": \"'${LABELS_B64}'\" }"
 STATUS_CODE=$(curl -X POST ${INGRESS_URL%/}/app-proxy/api/clusters \
   -H 'Content-Type: application/json' \
   -H 'Authorization: '${CSDP_TOKEN}'' \
