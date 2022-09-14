@@ -8,7 +8,9 @@
 # ANNOTATIONS (cm - optional)
 # CSDP_TOKEN_SECRET
 
-function get_service_account_token() {
+SECRET_NAME=""
+
+function get_service_account_secret_name() {
   SECRET_NAME=$(kubectl get ServiceAccount ${SERVICE_ACCOUNT_NAME} -n ${NAMESPACE} -o jsonpath='{.secrets[0].name}')
   if [[ -z ${SECRET_NAME} ]]; then
     echo "Creating new ServiceAccount token"
@@ -29,9 +31,6 @@ EOF
   else
     echo "Found ServiceAccount secret ${SECRET_NAME}"
   fi
-
-  BEARER_TOKEN=$(kubectl get secret ${SECRET_NAME} -n ${NAMESPACE} -o jsonpath='{.data.token}' | base64 -d)
-  return BEARER_TOKEN
 }
 
 echo "ServiceAccount: ${SERVICE_ACCOUNT_NAME}"
@@ -49,7 +48,8 @@ NAMESPACE=$(cat ${SERVICEACCOUNT}/namespace)
 CACERT=${SERVICEACCOUNT}/ca.crt
 
 # get ServiceAccount token
-BEARER_TOKEN=get_service_account_token()
+get_service_account_secret_name
+BEARER_TOKEN=$(kubectl get secret ${SECRET_NAME} -n ${NAMESPACE} -o jsonpath='{.data.token}' | base64 -d)
 
 # write KUBE_COPNFIG_DATA to local file
 CLUSTER_NAME=$(echo ${SERVER} | sed s/'http[s]\?:\/\/'//)
