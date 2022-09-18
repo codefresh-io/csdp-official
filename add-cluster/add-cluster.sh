@@ -31,7 +31,6 @@ EOF
   else
     echo "Found ServiceAccount secret ${SECRET_NAME}"
   fi
-  exit 1
 }
 
 echo "ServiceAccount: ${SERVICE_ACCOUNT_NAME}"
