@@ -56,8 +56,7 @@ CLUSTER_NAME=$(echo ${SERVER} | sed s/'http[s]\?:\/\/'//)
 kubectl config set-cluster "${CLUSTER_NAME}" --server="${SERVER}" --certificate-authority="${CACERT}" || exit 1
 kubectl config set-credentials "${SERVICE_ACCOUNT_NAME}" --token "${BEARER_TOKEN}" || exit 1
 kubectl config set-context "${CONTEXT_NAME}" --cluster="${CLUSTER_NAME}" --user="${SERVICE_ACCOUNT_NAME}" || exit 1
-KUBE_CONFIG=$(kubectl config view --minify --flatten --output json --context="${CONTEXT_NAME}") || exit 1
-KUBE_CONFIG_B64=$($KUBE_CONFIG | base64 -w 0)
+KUBE_CONFIG_B64=$(kubectl config view --minify --flatten --output json --context="${CONTEXT_NAME}" | base64 -w 0)
 
 ANNOTATIONS_B64=$(cat /etc/config/annotations.yaml | base64 -w 0)
 LABELS_B64=$(cat /etc/config/labels.yaml | base64 -w 0)
