@@ -11,7 +11,7 @@
 SECRET_NAME=""
 
 function get_service_account_secret_name() {
-  SECRET_NAME=$(kubectl get ServiceAccount ${SERVICE_ACCOUNT_NAME} -n ${NAMESPACE} -o jsonpath='{.secrets[0].name}')
+  SECRET_NAME=$(kubectl get ServiceAccount ${SERVICE_ACCOUNT_NAME} -n ${NAMESPACE} -o jsonpath='{.secrets[0].name}') || exit 1
   if [[ -z ${SECRET_NAME} ]]; then
     echo "Creating new ServiceAccount token"
     # create secret for service account
@@ -26,7 +26,7 @@ type: kubernetes.io/service-account-token
 EOF
 )
     SECRET_NAME=$(echo ${SECRET_NAME} | sed s@secret/@@g | sed s/\ created//g)
-    kubectl patch ServiceAccount ${SERVICE_ACCOUNT_NAME} -n ${NAMESPACE} --patch "{\"secrets\": [{\"name\": \"${SECRET_NAME}\"}]}"
+    kubectl patch ServiceAccount ${SERVICE_ACCOUNT_NAME} -n ${NAMESPACE} --patch "{\"secrets\": [{\"name\": \"${SECRET_NAME}\"}]}" || exit 1
     echo "Created ServiceAccount sercret ${SECRET_NAME}"
   else
     echo "Found ServiceAccount secret ${SECRET_NAME}"
@@ -48,20 +48,21 @@ NAMESPACE=$(cat ${SERVICEACCOUNT}/namespace)
 CACERT=${SERVICEACCOUNT}/ca.crt
 
 # get ServiceAccount token
-get_service_account_secret_name
+get_service_account_secret_name || exit 1
 BEARER_TOKEN=$(kubectl get secret ${SECRET_NAME} -n ${NAMESPACE} -o jsonpath='{.data.token}' | base64 -d)
 
 # write KUBE_COPNFIG_DATA to local file
 CLUSTER_NAME=$(echo ${SERVER} | sed s/'http[s]\?:\/\/'//)
-kubectl config set-cluster "${CLUSTER_NAME}" --server="${SERVER}" --certificate-authority="${CACERT}"
-kubectl config set-credentials "${SERVICE_ACCOUNT_NAME}" --token "${BEARER_TOKEN}"
-kubectl config set-context "${CONTEXT_NAME}" --cluster="${CLUSTER_NAME}" --user="${SERVICE_ACCOUNT_NAME}"
-KUBE_CONFIG_B64=$(kubectl config view --minify --flatten --output json --context="${CONTEXT_NAME}" | base64 -w 0)
+kubectl config set-cluster "${CLUSTER_NAME}" --server="${SERVER}" --certificate-authority="${CACERT}" || exit 1
+kubectl config set-credentials "${SERVICE_ACCOUNT_NAME}" --token "${BEARER_TOKEN}" || exit 1
+kubectl config set-context "${CONTEXT_NAME}" --cluster="${CLUSTER_NAME}" --user="${SERVICE_ACCOUNT_NAME}" || exit 1
+
+KUBE_CONFIG=$(kubectl config view --minify --flatten --output json --context="${CONTEXT_NAME}") || exit 1
+KUBE_CONFIG_B64=`echo -n $KUBE_CONFIG | base64 -w 0`
 
 ANNOTATIONS_B64=$(cat /etc/config/annotations.yaml | base64 -w 0)
 LABELS_B64=$(cat /etc/config/labels.yaml | base64 -w 0)
 
-echo "{ \"name\": \"'${CONTEXT_NAME}'\", \"kubeConfig\": \"'${KUBE_CONFIG_B64}'\", \"annotations\": \"'${ANNOTATIONS_B64}'\", \"labels\": \"'${LABELS_B64}'\" }"
 STATUS_CODE=$(curl -X POST ${INGRESS_URL%/}/app-proxy/api/clusters \
   -H 'Content-Type: application/json' \
   -H 'Authorization: '${CSDP_TOKEN}'' \
@@ -82,4 +83,4 @@ if [[ $STATUS_CODE -ge 300 ]]; then
 fi
 
 echo "deleting token secret ${CSDP_TOKEN_SECRET}"
-kubectl delete secret ${CSDP_TOKEN_SECRET} -n ${NAMESPACE}
+kubectl delete secret ${CSDP_TOKEN_SECRET} -n ${NAMESPACE} || echo "warning: failed deleting secret ${CSDP_TOKEN_SECRET}. you can safely delete this secret manually later with: kubectl delete secret ${CSDP_TOKEN_SECRET} -n ${NAMESPACE}"
