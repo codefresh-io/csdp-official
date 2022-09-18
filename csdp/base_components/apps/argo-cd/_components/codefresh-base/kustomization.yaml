@@ -55,3 +55,27 @@ patches:
             ephemeral-storage: 2Gi
           limits:
             ephemeral-storage: 4Gi
+
+  - target:
+      name: argocd-application-controller
+      kind: Deployment
+      group: apps
+      version: v1
+    patch: |-
+      - op: add
+        path: /spec/template/spec/containers/0/resources
+        value:
+          requests:
+            memory: 300Mi
+
+  - target:
+      name: argocd-applicationset-controller
+      kind: StatefulSet
+      group: apps
+      version: v1
+    patch: |-
+      - op: add
+        path: /spec/template/spec/containers/0/resources
+        value:
+          requests:
+            memory: 300Mi
