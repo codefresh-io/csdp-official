@@ -15,7 +15,7 @@ function get_service_account_secret_name() {
   if [[ -z ${SECRET_NAME} ]]; then
     echo "Creating new ServiceAccount token"
     # create secret for service account
-    SECRET_NAME=$(kubectl ccreate -f - <<EOF
+    SECRET_NAME=$(kubectl create -f - <<EOF
 apiVersion: v1
 kind: Secret
 metadata:
@@ -31,6 +31,7 @@ EOF
   else
     echo "Found ServiceAccount secret ${SECRET_NAME}"
   fi
+  exit 1
 }
 
 echo "ServiceAccount: ${SERVICE_ACCOUNT_NAME}"
