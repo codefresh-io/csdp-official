@@ -141,10 +141,10 @@ spec:
               containerPort: 80
           resources:
             requests:
-              memory: "256Mi"
+              memory: "512Mi"
               ephemeral-storage: "2Gi"
               cpu: "100m"
             limits:
-              memory: "1500Mi"
+              memory: "1Gi"
               ephemeral-storage: "6Gi"
               cpu: "1500m"

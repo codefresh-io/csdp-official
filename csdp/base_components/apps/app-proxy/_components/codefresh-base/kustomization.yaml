@@ -14,17 +14,16 @@ resources:
   - app-proxy.cm.yaml
   - ingress.yaml
 
-pathches:
+patches:
+  # This is a fix for ignoring invalid response header
+  # from g.codefresh caused by imperva. Need to fix this
+  # before removing this patch.
   - target:
       name: cap-app-proxy
-      kind: Deployment
       group: apps
       version: v1
-    patch: |-
+      kind: Deployment
+    patch: |
       - op: add
-        path: /spec/template/spec/containers/0/resources
-        value:
-          requests:
-            memory: 512Mi
-          limits:
-            memory: 1Gi
+        path: /spec/template/spec/containers/0/env/-
+        value: { name: NODE_ENV, value: '--insecure-http-parser' }
