@@ -48,7 +48,7 @@ NAMESPACE=$(cat ${SERVICEACCOUNT}/namespace)
 CACERT=${SERVICEACCOUNT}/ca.crt
 
 # get ServiceAccount token
-get_service_account_secret_name
+get_service_account_secret_name || exit 1
 BEARER_TOKEN=$(kubectl get secret ${SECRET_NAME} -n ${NAMESPACE} -o jsonpath='{.data.token}' | base64 -d)
 
 # write KUBE_COPNFIG_DATA to local file
