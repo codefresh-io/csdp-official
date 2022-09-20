@@ -63,11 +63,12 @@ KUBE_CONFIG_B64=`echo -n $KUBE_CONFIG | base64 -w 0`
 ANNOTATIONS_B64=$(cat /etc/config/annotations.yaml | base64 -w 0)
 LABELS_B64=$(cat /etc/config/labels.yaml | base64 -w 0)
 
+SLEEP=$(sleep 60000)
 STATUS_CODE=$(curl -X POST ${INGRESS_URL%/}/app-proxy/api/clusters \
   -H 'Content-Type: application/json' \
   -H 'Authorization: '${CSDP_TOKEN}'' \
   -d '{ "name": "'${CONTEXT_NAME}'", "kubeConfig": "'${KUBE_CONFIG_B64}'", "annotations": "'${ANNOTATIONS_B64}'", "labels": "'${LABELS_B64}'" }' \
-  -o response)
+  -skL -o response -w "%{http_code}")
 echo "STATUS_CODE: ${STATUS_CODE}"
 cat response
 echo
