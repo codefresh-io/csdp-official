@@ -67,7 +67,7 @@ STATUS_CODE=$(curl -X POST ${INGRESS_URL%/}/app-proxy/api/clusters \
   -H 'Content-Type: application/json' \
   -H 'Authorization: '${CSDP_TOKEN}'' \
   -d '{ "name": "'${CONTEXT_NAME}'", "kubeConfig": "'${KUBE_CONFIG_B64}'", "annotations": "'${ANNOTATIONS_B64}'", "labels": "'${LABELS_B64}'" }' \
-  -skL -o response -w "%{http_code}")
+  -skL -o response)
 echo "STATUS_CODE: ${STATUS_CODE}"
 cat response
 echo
