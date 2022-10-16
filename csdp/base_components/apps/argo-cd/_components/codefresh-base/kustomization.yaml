@@ -70,7 +70,7 @@ patches:
 
   - target:
       name: argocd-applicationset-controller
-      kind: StatefulSet
+      kind: Deployment
       group: apps
       version: v1
     patch: |-
@@ -79,3 +79,6 @@ patches:
         value:
           requests:
             memory: 300Mi
+            ephemeral-storage: 1Gi
+          limits:
+            ephemeral-storage: 2Gi
