@@ -1,2 +1,4 @@
 charts
 installer/helm/install-vals.yaml
+.DS_Store
+.idea

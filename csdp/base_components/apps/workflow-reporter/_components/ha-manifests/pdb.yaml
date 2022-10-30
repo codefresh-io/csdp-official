@@ -1,0 +1,19 @@
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: workflow-reporter-sensor
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      sensor-name: workflow-reporter
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: workflow-reporter-eventsource
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      eventsource-name: workflow-reporter

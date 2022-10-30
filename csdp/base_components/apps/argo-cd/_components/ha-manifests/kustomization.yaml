@@ -1,0 +1,64 @@
+apiVersion: kustomize.config.k8s.io/v1alpha1
+kind: Component
+resources:
+  - https://raw.githubusercontent.com/codefresh-io/argo-cd/release-2.3/manifests/ha/install.yaml
+  - pdb.yaml
+
+patches:
+  # ----------------HA------------------------------------------
+  # Set high availability for application controller
+  - target:
+      group: apps
+      version: v1
+      kind: StatefulSet
+      name: argocd-application-controller
+    patch: |-
+      - op: replace
+        path: /spec/replicas
+        value: 2
+      - op: add
+        path: /spec/template/spec/containers/0/env/-
+        value:
+          name: ARGOCD_CONTROLLER_REPLICAS
+          value: "2"
+  # Set requests for Redis
+  - target:
+      name: argocd-redis-ha-server
+      kind: StatefulSet
+      group: apps
+      version: v1
+    patch: |-
+      - op: add
+        path: /spec/template/spec/containers/0/resources
+        value:
+          requests:
+            cpu: 100m
+            memory: 150Mi
+
+      # Reduce startup time
+      - op: replace
+        path: /spec/template/spec/containers/0/livenessProbe/initialDelaySeconds
+        value: 15
+      - op: replace
+        path: /spec/template/spec/containers/1/livenessProbe/initialDelaySeconds
+        value: 15
+      - op: replace
+        path: /spec/template/spec/containers/0/readinessProbe/initialDelaySeconds
+        value: 15
+      - op: replace
+        path: /spec/template/spec/containers/1/readinessProbe/initialDelaySeconds
+        value: 15
+  - target:
+      name: argocd-redis-ha-haproxy
+      kind: StatefulSet
+      group: apps
+      version: v1
+    patch: |-
+      - op: add
+        path: /spec/template/spec/containers/0/resources
+        value:
+          requests:
+            cpu: 100m
+            memory: 180Mi
+
+# ------------------------------------------------------------
