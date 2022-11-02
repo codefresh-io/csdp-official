@@ -18,3 +18,5 @@ jobs:
         with:
           path: '**/*.yaml'
           cliArguments: '--only-k8s-files --ignore-missing-schemas --no-record'
+          isHelmChart: false
+          isKustomization: false
