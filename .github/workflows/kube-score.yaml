@@ -12,6 +12,7 @@ jobs:
         uses: actions/checkout@v2
       - name: Setup Kubescore
         uses: tobbbles/setup-kubescore@v1.0.3
-
+      - name: test
+        run: ls
       - name: kube-score check
-        run: 'kube-score score csdp/**/*.yaml,csdp/**/*.yml'
+        run: 'kube-score score ./csdp/**/*.yaml'
