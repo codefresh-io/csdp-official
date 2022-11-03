@@ -1,8 +1,6 @@
+name: Kubernetes Validation
 on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+  - pull_request
 jobs:
   kube-score:
     runs-on: ubuntu-latest
