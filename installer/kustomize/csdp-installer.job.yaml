@@ -16,7 +16,7 @@ spec:
       containers:
         - name: csdp-installer
           image: quay.io/codefresh/csdp-installer
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           command:
             - bash
           args:
@@ -101,7 +101,6 @@ spec:
                   name: csdp-installer
                   key: gitIntegration.token
                   optional: true
-
           resources:
             limits:
               memory: 256Mi
@@ -109,3 +108,5 @@ spec:
             requests:
               memory: 128Mi
               cpu: "0.2"
+          securityContext:
+            allowPrivilegeEscalation: false
