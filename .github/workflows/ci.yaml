@@ -19,7 +19,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Check if version tag already exists
         if: ${{ steps.checkTag.outputs.exists == 'true' }}
-        run: echo "version '${{ env.NEW_VERSION }}' already exists" && exit 1
+        run: echo "version '${{ env.NEW_VERSION }}' already exists. Update the VERSION file and run 'make bump'" && exit 1
       - name: Check if version bumped correctly
         run: make check-bump
 
