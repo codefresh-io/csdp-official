@@ -15,4 +15,4 @@ jobs:
       - name: test
         run: ls
       - name: kube-score check
-        run: find . -name '*.yaml' -not -name './**/README.yaml' -not -path '*/helm/*' -not -name 'kustomization.yaml' -not -name '*.patch.yaml' -type f -print -exec kube-score score {} -o ci --ignore-test container-security-context-privileged --ignore-test pod-networkpolicy --ignore-test container-security-context-user-group-id --ignore-test container-image-tag --ignore-test container-ephemeral-storage-request-and-limit --ignore-test container-security-context-readonlyrootfilesystem \+
+        run: find . -name '*.yaml' -not -name './**/README.yaml' -not -path '*/helm/*' -not -name 'kustomization.yaml' -not -name '*.patch.yaml' -type f -print -exec kube-score score {} -o ci --ignore-test container-security-context-privileged --ignore-test pod-networkpolicy --ignore-test container-security-context-user-group-id --ignore-test container-image-tag --ignore-test container-ephemeral-storage-request-and-limit --ignore-test container-security-context-readonlyrootfilesystem \;
