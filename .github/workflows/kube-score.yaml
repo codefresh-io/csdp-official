@@ -16,11 +16,11 @@ jobs:
         run: ls
       - name: kube-score check
         run: find . -name '*.yaml' \
-                -type f \
                 -not -name './**/README.yaml' \
                 -not -path '*/helm/*' \
                 -not -name 'kustomization.yaml' \
                 -not -name '*.patch.yaml' \
+                -type f \
                 -print \
                 -exec kube-score score {} -o ci \
                   --ignore-test container-security-context-privileged \
