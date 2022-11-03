@@ -15,4 +15,17 @@ jobs:
       - name: test
         run: ls
       - name: kube-score check
-        run: 'kube-score score ./csdp/**/*.yaml'
+        run: find . -name '*.yaml' \
+                -type f \
+                -not -name './**/README.yaml' \
+                -not -path '*/helm/*' \
+                -not -name 'kustomization.yaml' \
+                -not -name '*.patch.yaml' \
+                -print \
+                -exec kube-score score {} -o ci \
+                  --ignore-test container-security-context-privileged \
+                  --ignore-test pod-networkpolicy \
+                  --ignore-test container-security-context-user-group-id \
+                  --ignore-test container-image-tag \
+                  --ignore-test container-ephemeral-storage-request-and-limit \
+                  --ignore-test container-security-context-readonlyrootfilesystem \;
