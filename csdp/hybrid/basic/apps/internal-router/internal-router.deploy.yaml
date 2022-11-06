@@ -18,6 +18,7 @@ spec:
           # 1.23 removed support for "Transfer-Encoding: identity" header value
           # and it will break SSE from app-proxy
           image: nginx:1.22-alpine
+          imagePullPolicy: Always
           ports:
             - containerPort: 80
           volumeMounts:
@@ -39,6 +40,13 @@ spec:
             httpGet:
               port: 80
               path: /healthz
+          resources:
+            limits:
+              memory: 256Mi
+              cpu: "1"
+            requests:
+              memory: 128Mi
+              cpu: "0.2"
       volumes:
         - name: internal-router-config
           configMap:
