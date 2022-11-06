@@ -4,7 +4,6 @@ metadata:
   name: "{{ name }}"
   namespace: "{{ namespace }}"
 spec:
-  defVersion: 2.1.2
   requiredCLIVersion: ^0.1.0
   version: 0.1.0
   bootstrapSpecifier: github.com/codefresh-io/csdp-official/csdp/hybrid/basic/apps/argo-cd?ref=stable
