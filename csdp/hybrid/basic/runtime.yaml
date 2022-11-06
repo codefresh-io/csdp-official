@@ -7,29 +7,29 @@ spec:
   defVersion: 2.1.2
   requiredCLIVersion: ^0.1.0
   version: 0.1.0
-  bootstrapSpecifier: github.com/codefresh-io/csdp-official/csdp/hybrid/basic/apps/argo-cd
+  bootstrapSpecifier: github.com/codefresh-io/csdp-official/csdp/hybrid/basic/apps/argo-cd?ref=stable
   components:
     - name: events
       type: kustomize
-      url: github.com/codefresh-io/csdp-official/csdp/hybrid/basic/apps/argo-events
+      url: github.com/codefresh-io/csdp-official/csdp/hybrid/basic/apps/argo-events?ref=stable
       wait: true
     - name: rollouts
       type: kustomize
-      url: github.com/codefresh-io/csdp-official/csdp/hybrid/basic/apps/argo-rollouts
+      url: github.com/codefresh-io/csdp-official/csdp/hybrid/basic/apps/argo-rollouts?ref=stable
     - name: workflows
       type: kustomize
-      url: github.com/codefresh-io/csdp-official/csdp/hybrid/basic/apps/argo-workflows
+      url: github.com/codefresh-io/csdp-official/csdp/hybrid/basic/apps/argo-workflows?ref=stable
     - name: app-proxy
       type: kustomize
-      url: github.com/codefresh-io/csdp-official/csdp/hybrid/basic/apps/app-proxy
+      url: github.com/codefresh-io/csdp-official/csdp/hybrid/basic/apps/app-proxy?ref=stable
       syncWave: 9
     - name: internal-router
       type: kustomize
-      url: github.com/codefresh-io/csdp-official/csdp/hybrid/basic/apps/internal-router
+      url: github.com/codefresh-io/csdp-official/csdp/hybrid/basic/apps/internal-router?ref=stable
       syncWave: 10
     - name: sealed-secrets
       type: kustomize
-      url: github.com/codefresh-io/csdp-official/csdp/hybrid/basic/apps/sealed-secrets
+      url: github.com/codefresh-io/csdp-official/csdp/hybrid/basic/apps/sealed-secrets?ref=stable
     - name: codefresh-tunnel-client
       type: helm
       url: github.com/codefresh-io/codefresh-tunnel-charts/codefresh-tunnel-client?ref=0.1.8
