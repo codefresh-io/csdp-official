@@ -5,7 +5,7 @@ metadata:
   namespace: "{{ namespace }}"
 spec:
   defVersion: 2.1.2
-  version: 0.0.568
+  version: 0.0.570
   bootstrapSpecifier: github.com/codefresh-io/csdp-official/csdp/hybrid/basic/apps/argo-cd
   components:
     - name: events
