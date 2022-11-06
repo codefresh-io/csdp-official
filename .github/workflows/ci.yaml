@@ -9,7 +9,7 @@ jobs:
         uses: actions/checkout@v3
       - name: get tag
         run: |
-          echo "NEW_VERSION=$(yq e '.configMapGenerator.0.literals.0' ${{ github.workspace }}/csdp/base_components/bootstrap/kustomization.yaml | awk '{split($0,a,"="); print a[2]}')" >> $GITHUB_ENV
+          echo "NEW_VERSION=$(cat VERSION)" >> $GITHUB_ENV
       - name: Check repo tags
         uses: mukunku/tag-exists-action@v1.0.0
         id: checkTag
@@ -19,7 +19,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Check if version tag already exists
         if: ${{ steps.checkTag.outputs.exists == 'true' }}
-        run: echo "version '${{ env.NEW_VERSION }}' already exists" && exit 1
+        run: echo "version '${{ env.NEW_VERSION }}' already exists. Update the VERSION file and run 'make bump'" && exit 1
+      - name: Check if version bumped correctly
+        run: make check-bump
 
   check-kustomize-build:
     runs-on: ubuntu-latest

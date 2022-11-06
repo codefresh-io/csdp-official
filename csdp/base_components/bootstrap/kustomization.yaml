@@ -1,21 +1,17 @@
 apiVersion: kustomize.config.k8s.io/v1alpha1
 kind: Component
-
 resources:
   - ./project.yaml
   - ./appset.yaml
-
 generatorOptions:
   disableNameSuffixHash: true
-
 configMapGenerator:
   - name: codefresh-cm
     behavior: create
-    literals:
-      - version=0.0.561 # Runtime version
-      - bootstrapRevision=0.0.561 # Tag to use for bootstrap (change this to the name of your branch if you want to test changes)
+    literals: # order matters - DO NOT change
+      - version=0.0.568 # Runtime version
+      - bootstrapRevision=0.0.568 # Tag to use for bootstrap (change this to the name of your branch if you want to test changes)
       - appsetRequeueTime=15
-
 replacements:
   # template the version from the configmap into the applicationset generators
   - source:
