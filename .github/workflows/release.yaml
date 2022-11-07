@@ -70,10 +70,9 @@ jobs:
   create-release:
     runs-on: ubuntu-latest
     steps:
-      - name: Github Release
-        uses: elgohr/Github-Release-Action@v4
-        env:
-          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+      - name: Create Release
+        uses: ncipollo/release-action@v1.11.1
         with:
-          title: ${{ env.NEW_TAG }}
-            
+          token: ${{ secrets.RELEASE_TOKEN }}
+          tag: ${{ env.NEW_TAG }}
+
