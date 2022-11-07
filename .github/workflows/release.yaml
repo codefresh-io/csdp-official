@@ -23,7 +23,7 @@ jobs:
         with:
           token: ${{ secrets.RELEASE_TOKEN }}
           tag: ${{ env.NEW_TAG }}
-
+          name: "runtime-v${{ env.NEW_TAG }}"
 
   advance-latest-tag:
     runs-on: ubuntu-latest
