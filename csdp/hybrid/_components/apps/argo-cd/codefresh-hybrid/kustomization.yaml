@@ -2,4 +2,4 @@ apiVersion: kustomize.config.k8s.io/v1alpha1
 kind: Component
 images:
   - name: quay.io/codefresh/argocd
-    newTag: v2.4.15-cap-CR-14605-fix-dex
+    newTag: v2.4.15-cap-CR-14605-fix-path
