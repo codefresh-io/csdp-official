@@ -27,3 +27,11 @@ rules:
     verbs:
       - get
       - list
+  - apiGroups:
+      - argoproj.io
+    resources:
+      - applications
+    verbs:
+      - get
+      - list
+      - watch
