@@ -1,0 +1,17 @@
+name: Kubernetes Validation
+on:
+  - pull_request
+jobs:
+  kube-score:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup Kubescore
+        uses: tobbbles/setup-kubescore@v1.0.3
+      - name: test
+        run: ls
+      - name: kube-score check
+        run: |-
+          find . -name '*.yaml' -not -name 'README.yaml' -not -path '*/.github/*' -not -path '*/helm/*' -not -name 'kustomization.yaml' -not -name '*.patch.yaml' -type f -print0 | xargs -0 -I{} bash -c "echo ---\> Checking file: {}... && kube-score score {} -o ci --ignore-test pod-networkpolicy --ignore-test container-image-tag --ignore-test container-ephemeral-storage-request-and-limit --ignore-test container-security-context --ignore-test networkpolicy-targets-pod --ignore-test ingress-targets-service --ignore-test deployment-has-poddisruptionbudget --ignore-test service-targets-pod"

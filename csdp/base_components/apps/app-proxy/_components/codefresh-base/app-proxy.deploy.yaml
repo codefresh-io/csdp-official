@@ -148,3 +148,5 @@ spec:
               memory: "1Gi"
               ephemeral-storage: "6Gi"
               cpu: "1500m"
+          securityContext:
+            allowPrivilegeEscalation: false
