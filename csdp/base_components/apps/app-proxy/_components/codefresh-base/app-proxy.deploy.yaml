@@ -17,6 +17,7 @@ spec:
       initContainers:
         - name: init-certs
           image: alpine:3.16
+          imagePullPolicy: Always
           command:
             - sh
             - -c
@@ -26,6 +27,13 @@ spec:
             name: tls-certs
           - mountPath: /app/config/all
             name: all-certs
+          resources:
+            limits:
+              memory: 512Mi
+              cpu: '1'
+            requests:
+              memory: 256Mi
+              cpu: '0.2'
       containers:
         - env:
             - name: ARGO_CD_URL
