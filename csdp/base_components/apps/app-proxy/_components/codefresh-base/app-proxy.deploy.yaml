@@ -165,8 +165,6 @@ spec:
           securityContext:
             allowPrivilegeEscalation: false
           volumeMounts:
-            - mountPath: /app/config/ssh
-              name: ssh-known-hosts
             - mountPath: /app/config/tls
               name: tls-certs
             - mountPath: /app/config/all
@@ -174,10 +172,6 @@ spec:
       volumes:
         - name: all-certs
           emptyDir: {}
-        - configMap:
-            defaultMode: 420
-            name: argocd-ssh-known-hosts-cm
-          name: ssh-known-hosts
         - configMap:
             defaultMode: 420
             name: argocd-tls-certs-cm
