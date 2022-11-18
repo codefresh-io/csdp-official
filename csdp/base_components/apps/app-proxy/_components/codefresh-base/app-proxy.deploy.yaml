@@ -20,7 +20,7 @@ spec:
           command:
             - sh
             - -c
-            - '[ $(ls) ] && cat /app/config/tls/* >> /app/config/all/all.cer'
+            - '[ $(ls /app/config/tls) ] && cat /app/config/tls/* >> /app/config/all/all.cer'
           volumeMounts:
           - mountPath: /app/config/tls
             name: tls-certs
