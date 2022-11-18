@@ -165,8 +165,6 @@ spec:
           securityContext:
             allowPrivilegeEscalation: false
           volumeMounts:
-            - mountPath: /app/config/tls
-              name: tls-certs
             - mountPath: /app/config/all
               name: all-certs
       volumes:
