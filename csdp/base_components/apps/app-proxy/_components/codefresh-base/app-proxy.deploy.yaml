@@ -14,6 +14,18 @@ spec:
         app: cap-app-proxy
     spec:
       serviceAccountName: cap-app-proxy
+      initContainers:
+        - name: init-certs
+          image: alpine:3.16
+          command:
+            - sh
+            - -c
+            - cat /app/config/tls/* >> /app/config/all/all.cer
+          volumeMounts:
+          - mountPath: /app/config/tls
+            name: tls-certs
+          - mountPath: /app/config/all
+            name: all-certs
       containers:
         - env:
             - name: ARGO_CD_URL
@@ -120,6 +132,8 @@ spec:
                   name: cap-app-proxy-cm
                   key: stripPrefix
                   optional: true
+            - name: NODE_EXTRA_CA_CERTS
+              value: /app/config/all/all.cer
           image: quay.io/codefresh/cap-app-proxy
           imagePullPolicy: Always
           name: cap-app-proxy
@@ -150,3 +164,21 @@ spec:
               cpu: "1500m"
           securityContext:
             allowPrivilegeEscalation: false
+          volumeMounts:
+            - mountPath: /app/config/ssh
+              name: ssh-known-hosts
+            - mountPath: /app/config/tls
+              name: tls-certs
+            - mountPath: /app/config/all
+              name: all-certs
+      volumes:
+        - name: all-certs
+          emptyDir: {}
+        - configMap:
+            defaultMode: 420
+            name: argocd-ssh-known-hosts-cm
+          name: ssh-known-hosts
+        - configMap:
+            defaultMode: 420
+            name: argocd-tls-certs-cm
+          name: tls-certs
