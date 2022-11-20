@@ -6,7 +6,6 @@ metadata:
 spec:
   requiredCLIVersion: ^0.1.0
   version: 0.1.14
-  ref: 0.1.14-rc
   bootstrapSpecifier: github.com/codefresh-io/csdp-official/csdp/hybrid/basic/apps/argo-cd
   components:
     - name: events
