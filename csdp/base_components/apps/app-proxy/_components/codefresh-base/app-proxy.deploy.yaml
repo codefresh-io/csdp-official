@@ -33,7 +33,6 @@ spec:
           volumeMounts:
             - mountPath: /app/config/tls
               name: tls-certs
-              readOnly: true
             - mountPath: /app/config/all
               name: all-certs
           resources:
@@ -178,11 +177,10 @@ spec:
           volumeMounts:
             - mountPath: /app/config/all
               name: all-certs
-              readOnly: true
       volumes:
         - name: all-certs
           emptyDir: {}
-        - name: tls-certs
-          configMap:
+        - configMap:
             defaultMode: 420
             name: argocd-tls-certs-cm
+          name: tls-certs
