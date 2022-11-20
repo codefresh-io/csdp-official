@@ -26,7 +26,6 @@ spec:
               if [ $(ls /app/config/tls) ]; then
                 echo "concatenating certs into /app/config/all/all.cer"
                 cat /app/config/tls/* >> /app/config/all/all.cer
-                echo "done concatenating, error code: $?"
               else
                 echo "no certs to concatenate"
               fi
