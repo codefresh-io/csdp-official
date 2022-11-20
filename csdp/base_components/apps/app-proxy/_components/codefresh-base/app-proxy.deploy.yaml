@@ -21,12 +21,21 @@ spec:
           command:
             - sh
             - -c
-            - '[ $(ls /app/config/tls) ] && cat /app/config/tls/* >> /app/config/all/all.cer'
+            - |
+              /bin/sh <<'EOF'
+              if [ $(ls /app/config/tls) ]; then
+                echo "concatenating certs into /app/config/all/all.cer"
+                cat /app/config/tls/* >> /app/config/all/all.cer
+                echo "done concatenating, error code: $?"
+              else
+                echo "no certs to concatenate"
+              fi
+              EOF
           volumeMounts:
-          - mountPath: /app/config/tls
-            name: tls-certs
-          - mountPath: /app/config/all
-            name: all-certs
+            - mountPath: /app/config/tls
+              name: tls-certs
+            - mountPath: /app/config/all
+              name: all-certs
           resources:
             limits:
               memory: 512Mi
@@ -163,13 +172,13 @@ spec:
               containerPort: 80
           resources:
             requests:
-              memory: "512Mi"
-              ephemeral-storage: "2Gi"
-              cpu: "100m"
+              memory: '512Mi'
+              ephemeral-storage: '2Gi'
+              cpu: '100m'
             limits:
-              memory: "1Gi"
-              ephemeral-storage: "6Gi"
-              cpu: "1500m"
+              memory: '1Gi'
+              ephemeral-storage: '6Gi'
+              cpu: '1500m'
           securityContext:
             allowPrivilegeEscalation: false
           volumeMounts:
