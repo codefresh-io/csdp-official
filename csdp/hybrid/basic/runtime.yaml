@@ -15,16 +15,13 @@ spec:
     - name: rollouts
       type: kustomize
       url: github.com/codefresh-io/csdp-official/csdp/hybrid/basic/apps/argo-rollouts
-    - name: workflows
-      type: kustomize
-      url: github.com/codefresh-io/csdp-official/csdp/hybrid/basic/apps/argo-workflows
     - name: app-proxy
       type: kustomize
       url: github.com/codefresh-io/csdp-official/csdp/hybrid/basic/apps/app-proxy
       syncWave: 9
     - name: internal-router
       type: kustomize
-      url: github.com/codefresh-io/csdp-official/csdp/hybrid/basic/apps/internal-router
+      url: github.com/codefresh-io/csdp-official/csdp/hybrid/basic/apps/internal-router?ref=slim-runtime
       syncWave: 10
     - name: sealed-secrets
       type: kustomize
