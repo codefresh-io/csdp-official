@@ -5,7 +5,7 @@ resources:
 
 images:
   - name: quay.io/codefresh/argocd
-    newTag: v2.4.15-cap-CR-15028-last-changes
+    newTag: v2.4.15-cap-fix-kustomize
   - name: quay.io/codefresh/applicationset
     newTag: v0.4.2-CR-13254-remove-private-logs
 
