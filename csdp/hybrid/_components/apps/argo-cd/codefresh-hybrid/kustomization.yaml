@@ -3,3 +3,5 @@ kind: Component
 images:
   - name: quay.io/codefresh/argocd
     newTag: v2.4.15-cap-fix-applicationset
+  - name: quay.io/codefresh/applicationset
+    newTag: v0.4.2-CR-13254-remove-private-logs
