@@ -5,18 +5,25 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "2"
 spec:
-  nats:
-    native:
-      replicas: 3
-      auth: token
-      maxPayload: "2MB"
-      containerTemplate:
+  jetstream:
+    version: 2.8.1
+    replicas: 3
+    maxPayload: "2MB"
+    streamConfig: |
+      maxAge: 24h
+      maxBytes: 200MB
+    settings: |
+      max_file_store: 1GB
+      max_memory_store: 100MB
+    startArgs:
+      - "-D"                    # debug-level logs
+    containerTemplate:
         resources:
           limits:
-            cpu: 500m
-            memory: 4Gi
+            cpu: 200m
+            memory: 110Mi
             ephemeral-storage: 2Gi
           requests:
-            cpu: 200m
-            memory: 1Gi
+            cpu: 100m
+            memory: 50Mi
             ephemeral-storage: 2Gi
