@@ -3,5 +3,6 @@ kind: Kustomization
 namespace: argocd
 
 components:
+  - ./argocd-repo-server-sa.yaml
   - ../../../../base_components/apps/argo-cd/_bundles/basic
   - ../../../_components/apps/argo-cd/codefresh-managed
