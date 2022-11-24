@@ -67,11 +67,6 @@ patches:
         value:
           requests:
             memory: 300Mi
-      - op: add
-        path: /spec/template/spec/containers/0/env/-
-        value:
-          name: ARGOCD_CLUSTER_CACHE_LIST_SEMAPHORE
-          value: "1"
 
   - target:
       name: argocd-applicationset-controller
