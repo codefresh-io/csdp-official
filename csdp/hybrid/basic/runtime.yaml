@@ -6,7 +6,7 @@ metadata:
 spec:
   requiredCLIVersion: ^0.1.0
   version: 0.1.14
-  bootstrapSpecifier: github.com/codefresh-io/csdp-official/csdp/hybrid/basic/apps/argo-cd
+  bootstrapSpecifier: github.com/codefresh-io/csdp-official/csdp/hybrid/basic/apps/argo-cd?ref=slim-runtime
   components:
     - name: events
       type: kustomize

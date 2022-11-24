@@ -58,7 +58,7 @@ patches:
 
   - target:
       name: argocd-application-controller
-      kind: Deployment
+      kind: StatefulSet
       group: apps
       version: v1
     patch: |-
@@ -67,6 +67,11 @@ patches:
         value:
           requests:
             memory: 300Mi
+      - op: add
+        path: /spec/template/spec/containers/0/env/-
+        value:
+          name: ARGOCD_CLUSTER_CACHE_LIST_SEMAPHORE
+          value: "5"
 
   - target:
       name: argocd-applicationset-controller
