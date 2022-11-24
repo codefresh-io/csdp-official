@@ -14,6 +14,34 @@ spec:
         app: cap-app-proxy
     spec:
       serviceAccountName: cap-app-proxy
+      initContainers:
+        - name: init-certs
+          image: alpine:3.16
+          imagePullPolicy: Always
+          command:
+            - sh
+            - -c
+            - |
+              /bin/sh <<'EOF'
+              if [ $(ls /app/config/tls) ]; then
+                echo "concatenating certs into /app/config/all/all.cer"
+                cat /app/config/tls/* >> /app/config/all/all.cer
+              else
+                echo "no certs to concatenate"
+              fi
+              EOF
+          volumeMounts:
+            - mountPath: /app/config/tls
+              name: tls-certs
+            - mountPath: /app/config/all
+              name: all-certs
+          resources:
+            limits:
+              memory: 512Mi
+              cpu: '1'
+            requests:
+              memory: 256Mi
+              cpu: '0.2'
       containers:
         - env:
             - name: ARGO_CD_URL
@@ -120,6 +148,8 @@ spec:
                   name: cap-app-proxy-cm
                   key: stripPrefix
                   optional: true
+            - name: NODE_EXTRA_CA_CERTS
+              value: /app/config/all/all.cer
           image: quay.io/codefresh/cap-app-proxy
           imagePullPolicy: Always
           name: cap-app-proxy
@@ -141,12 +171,22 @@ spec:
               containerPort: 80
           resources:
             requests:
-              memory: "512Mi"
-              ephemeral-storage: "2Gi"
-              cpu: "100m"
+              memory: '512Mi'
+              ephemeral-storage: '2Gi'
+              cpu: '100m'
             limits:
-              memory: "1Gi"
-              ephemeral-storage: "6Gi"
-              cpu: "1500m"
+              memory: '1Gi'
+              ephemeral-storage: '6Gi'
+              cpu: '1500m'
           securityContext:
             allowPrivilegeEscalation: false
+          volumeMounts:
+            - mountPath: /app/config/all
+              name: all-certs
+      volumes:
+        - name: all-certs
+          emptyDir: {}
+        - configMap:
+            defaultMode: 420
+            name: argocd-tls-certs-cm
+          name: tls-certs
