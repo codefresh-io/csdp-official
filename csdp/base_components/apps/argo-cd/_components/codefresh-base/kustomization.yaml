@@ -71,7 +71,7 @@ patches:
         path: /spec/template/spec/containers/0/env/-
         value:
           name: ARGOCD_CLUSTER_CACHE_LIST_SEMAPHORE
-          value: "5"
+          value: "1"
 
   - target:
       name: argocd-applicationset-controller
