@@ -10,7 +10,7 @@ spec:
   components:
     - name: events
       type: kustomize
-      url: github.com/codefresh-io/csdp-official/csdp/hybrid/basic/apps/argo-events
+      url: github.com/codefresh-io/csdp-official/csdp/hybrid/basic/apps/argo-events?ref=slim-runtime-jetstream
       wait: true
     - name: rollouts
       type: kustomize
