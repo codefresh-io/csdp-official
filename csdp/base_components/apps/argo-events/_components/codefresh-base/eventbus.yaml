@@ -13,10 +13,9 @@ spec:
       containerTemplate:
         resources:
           limits:
-            cpu: 500m
-            memory: 4Gi
+            cpu: 128m
             ephemeral-storage: 2Gi
           requests:
-            cpu: 200m
-            memory: 1Gi
+            cpu: 64m
+            memory: 50Mi
             ephemeral-storage: 2Gi

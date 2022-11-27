@@ -52,6 +52,7 @@ patches:
         path: /spec/template/spec/containers/0/resources
         value:
           requests:
+            memory: 256Mi
             ephemeral-storage: 2Gi
           limits:
             ephemeral-storage: 4Gi
@@ -66,7 +67,7 @@ patches:
         path: /spec/template/spec/containers/0/resources
         value:
           requests:
-            memory: 300Mi
+            memory: 256Mi
       - op: add
         path: /spec/template/spec/containers/0/env/-
         value:
@@ -83,7 +84,7 @@ patches:
         path: /spec/template/spec/containers/0/resources
         value:
           requests:
-            memory: 300Mi
+            memory: 256Mi
             ephemeral-storage: 1Gi
           limits:
             ephemeral-storage: 2Gi
