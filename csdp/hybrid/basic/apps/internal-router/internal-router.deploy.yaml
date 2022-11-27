@@ -42,10 +42,10 @@ spec:
               path: /healthz
           resources:
             limits:
-              memory: 256Mi
+              memory: 128Mi
               cpu: "1"
             requests:
-              memory: 128Mi
+              memory: 32Mi
               cpu: "0.2"
       volumes:
         - name: internal-router-config
