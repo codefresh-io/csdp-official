@@ -6,26 +6,26 @@ metadata:
 spec:
   requiredCLIVersion: ^0.1.0-0
   version: 0.1.14
-  bootstrapSpecifier: github.com/codefresh-io/csdp-official/csdp/hybrid/basic/apps/argo-cd
+  bootstrapSpecifier: github.com/codefresh-io/csdp-official/csdp/hybrid/basic/apps/argo-cd?ref=quay-regitry
   components:
     - name: events
       type: kustomize
-      url: github.com/codefresh-io/csdp-official/csdp/hybrid/basic/apps/argo-events?ref=slim-runtime-jetstream
+      url: github.com/codefresh-io/csdp-official/csdp/hybrid/basic/apps/argo-events?ref=quay-regitry
       wait: true
     - name: rollouts
       type: kustomize
-      url: github.com/codefresh-io/csdp-official/csdp/hybrid/basic/apps/argo-rollouts
+      url: github.com/codefresh-io/csdp-official/csdp/hybrid/basic/apps/argo-rollouts?ref=quay-regitry
     - name: app-proxy
       type: kustomize
-      url: github.com/codefresh-io/csdp-official/csdp/hybrid/basic/apps/app-proxy
+      url: github.com/codefresh-io/csdp-official/csdp/hybrid/basic/apps/app-proxy?ref=quay-regitry
       syncWave: 9
     - name: internal-router
       type: kustomize
-      url: github.com/codefresh-io/csdp-official/csdp/hybrid/basic/apps/internal-router?ref=slim-runtime
+      url: github.com/codefresh-io/csdp-official/csdp/hybrid/basic/apps/internal-router?ref=quay-regitry
       syncWave: 10
     - name: sealed-secrets
       type: kustomize
-      url: github.com/codefresh-io/csdp-official/csdp/hybrid/basic/apps/sealed-secrets
+      url: github.com/codefresh-io/csdp-official/csdp/hybrid/basic/apps/sealed-secrets?ref=quay-regitry
     - name: codefresh-tunnel-client
       type: helm
       url: github.com/codefresh-io/codefresh-tunnel-charts/codefresh-tunnel-client?ref=0.1.8
