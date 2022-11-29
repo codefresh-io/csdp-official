@@ -10,14 +10,14 @@ spec:
   components:
     - name: events
       type: kustomize
-      url: github.com/codefresh-io/csdp-official/csdp/hybrid/basic/apps/argo-events?ref=slim-runtime-jetstream
+      url: github.com/codefresh-io/csdp-official/csdp/hybrid/basic/apps/argo-events?ref=test1-srj
       wait: true
     - name: rollouts
       type: kustomize
       url: github.com/codefresh-io/csdp-official/csdp/hybrid/basic/apps/argo-rollouts
     - name: app-proxy
       type: kustomize
-      url: github.com/codefresh-io/csdp-official/csdp/hybrid/basic/apps/app-proxy
+      url: github.com/codefresh-io/csdp-official/csdp/hybrid/basic/apps/app-proxy?ref=test1-srj
       syncWave: 9
     - name: internal-router
       type: kustomize
