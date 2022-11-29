@@ -6,3 +6,4 @@ resources:
 components:
   - ../../../../base_components/apps/argo-cd/_components/codefresh-base
   - ../../../_components/apps/argo-cd/codefresh-hybrid
+
