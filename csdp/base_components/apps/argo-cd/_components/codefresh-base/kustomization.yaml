@@ -30,6 +30,9 @@ patches:
       - op: replace
         path: /subjects/0/namespace
         value: default
+
+  # Istio protocol selection: https://istio.io/latest/docs/ops/configuration/traffic-management/protocol-selection/
+  # Ovveride the default protocol selection which is done by the port name (http), since this port is being used for both http and grpc.
   - target:
       version: v1
       kind: Service
@@ -37,10 +40,7 @@ patches:
     patch: |
       - op: add
         path: /spec/ports/0/appProtocol
-        value: grpc
-      - op: add
-        path: /spec/ports/1/appProtocol
-        value: grpc
+        value: tcp
 
   - target:
       name: argocd-repo-server
