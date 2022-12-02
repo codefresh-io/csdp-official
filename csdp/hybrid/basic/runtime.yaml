@@ -6,7 +6,7 @@ metadata:
 spec:
   requiredCLIVersion: ^0.1.0
   version: 0.1.16
-  bootstrapSpecifier: github.com/codefresh-io/csdp-official/csdp/hybrid/basic/apps/argo-cd?ref=CR-no-appset-in-argocd
+  bootstrapSpecifier: github.com/codefresh-io/csdp-official/csdp/hybrid/basic/apps/argo-cd?ref=CR-no-appset-in-argocd-2
   components:
     - name: events
       type: kustomize
