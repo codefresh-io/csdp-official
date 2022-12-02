@@ -20,7 +20,7 @@ spec:
       url: github.com/codefresh-io/csdp-official/csdp/hybrid/basic/apps/argo-workflows
     - name: app-proxy
       type: kustomize
-      url: github.com/codefresh-io/csdp-official/csdp/hybrid/basic/apps/app-proxy?ref=CR-15782-gl-uname
+      url: github.com/codefresh-io/csdp-official/csdp/hybrid/basic/apps/app-proxy
       syncWave: 9
     - name: internal-router
       type: kustomize
