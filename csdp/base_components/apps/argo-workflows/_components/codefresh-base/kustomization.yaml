@@ -1,7 +1,9 @@
 apiVersion: kustomize.config.k8s.io/v1alpha1
 kind: Component
 resources:
-- https://github.com/codefresh-io/argo-workflows/manifests/cluster-install?ref=release-3.4
+- https://github.com/codefresh-io/argo-workflows/manifests/base?ref=release-3.4
+- https://github.com/codefresh-io/argo-workflows/manifests/cluster-install/workflow-controller-rbac?ref=release-3.4
+- https://github.com/codefresh-io/argo-workflows/manifests/cluster-install/argo-server-rbac?ref=release-3.4
 patches:
   # reset the crbs to `subject.namespace: default`, so that argo-cd will later change them to the actual ns
   - target:
