@@ -27,19 +27,19 @@ patches:
         value: --auth-mode=server
 
   - target:
-    group: apps
-    version: v1
-    kind: Deployment
-    name: workflow-controller
+      group: apps
+      version: v1
+      kind: Deployment
+      name: workflow-controller
     patch: |
       - op: replace
         path: /spec/template/spec/containers/0/args/3
         value: quay.io/codefresh/argoexec:v3.4.0-cf
 
   - target:
-    version: v1
-    kind: ConfigMap
-    name: workflow-controller-configmap
+      version: v1
+      kind: ConfigMap
+      name: workflow-controller-configmap
     patch: |-
       - op: add
         path: /data
