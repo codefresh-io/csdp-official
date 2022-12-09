@@ -29,7 +29,7 @@ patchesStrategicMerge:
     kind: ConfigMap
     metadata:
       name: workflow-controller-configmap
-      namespace: argo
+      # namespace: argo
     data:
       # Fields reference can be found here: https://argoproj.github.io/argo-workflows/workflow-controller-configmap.yaml
       workflowDefaults: |
@@ -46,7 +46,7 @@ patchesStrategicMerge:
 
 configMapGenerator:
   - name: workflow-controller-configmap
-    namespace: argo
+    # namespace: argo
     behavior: merge
     literals:
       - containerRuntimeExecutor=emissary
