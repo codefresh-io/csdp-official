@@ -72,3 +72,14 @@ jobs:
               ref: "refs/tags/stable",
               sha: context.sha
             })
+
+  sync-main:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Merge release branch -> main
+        uses: devmasx/merge-branch@master
+        with:
+          type: now
+          target_branch: main
+          github_token: ${{secrets.GITHUB_TOKEN}}
