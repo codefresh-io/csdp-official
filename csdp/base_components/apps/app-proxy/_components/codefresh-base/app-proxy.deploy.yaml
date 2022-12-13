@@ -51,6 +51,11 @@ spec:
                   name: cap-app-proxy-cm
                   key: argoCdUrl
                   optional: true
+            - name: ARGO_CD_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: argocd-token
+                  key: token
             - name: ARGO_WORKFLOWS_INSECURE
               valueFrom:
                 configMapKeyRef:
@@ -174,9 +179,6 @@ spec:
             - mountPath: /app/config/all
               name: all-certs
               readOnly: true
-            - mountPath: /var/run/secrets/argocd-token
-              name: secret-argocd-token
-              readOnly: true
       volumes:
         - name: all-certs
           emptyDir: {}
@@ -184,7 +186,3 @@ spec:
           configMap:
             defaultMode: 420
             name: argocd-tls-certs-cm
-        - name: secret-argocd-token
-          secret:
-            defaultMode: 420
-            secretName: argocd-token
