@@ -33,6 +33,7 @@ spec:
           volumeMounts:
             - mountPath: /app/config/tls
               name: tls-certs
+              readOnly: true
             - mountPath: /app/config/all
               name: all-certs
           resources:
@@ -50,17 +51,6 @@ spec:
                   name: cap-app-proxy-cm
                   key: argoCdUrl
                   optional: true
-            - name: ARGO_CD_USERNAME
-              valueFrom:
-                configMapKeyRef:
-                  name: cap-app-proxy-cm
-                  key: argoCdUsername
-                  optional: true
-            - name: ARGO_CD_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: argocd-initial-admin-secret
-                  key: password
             - name: ARGO_WORKFLOWS_INSECURE
               valueFrom:
                 configMapKeyRef:
@@ -183,10 +173,18 @@ spec:
           volumeMounts:
             - mountPath: /app/config/all
               name: all-certs
+              readOnly: true
+            - mountPath: /var/run/secrets/argocd-token
+              name: secret-argocd-token
+              readOnly: true
       volumes:
         - name: all-certs
           emptyDir: {}
-        - configMap:
+        - name: tls-certs
+          configMap:
             defaultMode: 420
             name: argocd-tls-certs-cm
-          name: tls-certs
+        - name: secret-argocd-token
+          secret:
+            defaultMode: 420
+            secretName: argocd-token
