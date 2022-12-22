@@ -10100,7 +10100,7 @@ spec:
         - -n
         - /usr/local/bin/argocd
         - /shared/argocd-dex
-        image: quay.io/codefresh/argocd:v2.3.4-cap-CR-13681-fix-primitive-res-finishedat
+        image: quay.io/codefresh/argocd:v2.5.5-cap-CR-15658-sync-result-message
         imagePullPolicy: Always
         name: copyutil
         volumeMounts:
@@ -10281,7 +10281,7 @@ spec:
           value: /helm-working-dir
         - name: HELM_DATA_HOME
           value: /helm-working-dir
-        image: quay.io/codefresh/argocd:v2.3.4-cap-CR-13681-fix-primitive-res-finishedat
+        image: quay.io/codefresh/argocd:v2.5.5-cap-CR-15658-sync-result-message
         imagePullPolicy: Always
         livenessProbe:
           failureThreshold: 3
@@ -10335,7 +10335,7 @@ spec:
         - -n
         - /usr/local/bin/argocd
         - /var/run/argocd/argocd-cmp-server
-        image: quay.io/codefresh/argocd:v2.3.4-cap-CR-13681-fix-primitive-res-finishedat
+        image: quay.io/codefresh/argocd:v2.5.5-cap-CR-15658-sync-result-message
         name: copyutil
         volumeMounts:
         - mountPath: /var/run/argocd
@@ -10558,7 +10558,7 @@ spec:
               key: server.http.cookie.maxnumber
               name: argocd-cmd-params-cm
               optional: true
-        image: quay.io/codefresh/argocd:v2.3.4-cap-CR-13681-fix-primitive-res-finishedat
+        image: quay.io/codefresh/argocd:v2.5.5-cap-CR-15658-sync-result-message
         imagePullPolicy: Always
         livenessProbe:
           httpGet:
@@ -10748,7 +10748,7 @@ spec:
               key: controller.default.cache.expiration
               name: argocd-cmd-params-cm
               optional: true
-        image: quay.io/codefresh/argocd:v2.3.4-cap-CR-13681-fix-primitive-res-finishedat
+        image: quay.io/codefresh/argocd:v2.5.5-cap-CR-15658-sync-result-message
         imagePullPolicy: Always
         livenessProbe:
           httpGet:
