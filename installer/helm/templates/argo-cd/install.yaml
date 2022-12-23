@@ -9654,6 +9654,22 @@ rules:
   - list
 ---
 apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: codefresh-config-reader
+rules:
+- apiGroups:
+  - ""
+  resourceNames:
+  - codefresh-cm
+  - codefresh-token
+  resources:
+  - configmaps
+  - secrets
+  verbs:
+  - get
+---
+apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   labels:
@@ -9791,6 +9807,18 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: argocd-server
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: codefresh-config-reader
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: codefresh-config-reader
+subjects:
+- kind: ServiceAccount
+  name: default
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
@@ -10009,13 +10037,12 @@ metadata:
   name: argocd-server
 spec:
   ports:
-  - appProtocol: grpc
+  - appProtocol: tcp
     name: http
     port: 80
     protocol: TCP
     targetPort: 8080
-  - appProtocol: grpc
-    name: https
+  - name: https
     port: 443
     protocol: TCP
     targetPort: 8080
@@ -10073,15 +10100,12 @@ spec:
           name: webhook
         - containerPort: 8080
           name: metrics
-        securityContext:
-          allowPrivilegeEscalation: false
-          capabilities:
-            drop:
-            - ALL
-          readOnlyRootFilesystem: true
-          runAsNonRoot: true
-          seccompProfile:
-            type: RuntimeDefault
+        resources:
+          limits:
+            ephemeral-storage: 2Gi
+          requests:
+            ephemeral-storage: 1Gi
+            memory: 300Mi
         volumeMounts:
         - mountPath: /app/config/ssh
           name: ssh-known-hosts
@@ -10449,6 +10473,11 @@ spec:
             port: 8084
           initialDelaySeconds: 5
           periodSeconds: 10
+        resources:
+          limits:
+            ephemeral-storage: 4Gi
+          requests:
+            ephemeral-storage: 2Gi
         securityContext:
           allowPrivilegeEscalation: false
           capabilities:
