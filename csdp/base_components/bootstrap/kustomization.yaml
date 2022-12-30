@@ -10,7 +10,7 @@ configMapGenerator:
     behavior: create
     literals: # order matters - DO NOT change
       - version=0.1.17 # Runtime version
-      - bootstrapRevision=0.1.17 # Tag to use for bootstrap (change this to the name of your branch if you want to test changes)
+      - bootstrapRevision=CR-rollouts-14 # Tag to use for bootstrap (change this to the name of your branch if you want to test changes)
       - appsetRequeueTime=15
 replacements:
   # template the version from the configmap into the applicationset generators
