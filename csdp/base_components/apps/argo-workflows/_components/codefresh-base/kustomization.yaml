@@ -5,7 +5,7 @@ resources:
 images:
 - name: quay.io/codefresh/argocli
   newName: kimaharfi/argocli
-  newTag: CR-15902-test-2
+  newTag: CR-15902-test-3
 
 patches:
   - target:
