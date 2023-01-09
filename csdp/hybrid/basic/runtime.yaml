@@ -17,7 +17,7 @@ spec:
       url: github.com/codefresh-io/csdp-official/csdp/hybrid/basic/apps/argo-rollouts
     - name: workflows
       type: kustomize
-      url: github.com/codefresh-io/csdp-official/csdp/hybrid/basic/apps/argo-workflows
+      url: github.com/codefresh-io/csdp-official/csdp/hybrid/basic/apps/argo-workflows?ref=argo-workflow-3.4-upgrade
     - name: app-proxy
       type: kustomize
       url: github.com/codefresh-io/csdp-official/csdp/hybrid/basic/apps/app-proxy
