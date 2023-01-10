@@ -24,6 +24,7 @@ jobs:
           token: ${{ secrets.RELEASE_TOKEN }}
           tag: ${{ env.NEW_TAG }}
           name: "runtime-v${{ env.NEW_TAG }}"
+          bodyFile: "docs/releases/release_notes.md"
 
   advance-latest-tag:
     runs-on: ubuntu-latest
