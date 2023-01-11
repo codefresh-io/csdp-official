@@ -24,6 +24,7 @@ jobs:
           token: ${{ secrets.RELEASE_TOKEN }}
           tag: ${{ env.NEW_TAG }}
           name: "runtime-v${{ env.NEW_TAG }}"
+          bodyFile: "docs/releases/release_notes.md"
 
   advance-latest-tag:
     runs-on: ubuntu-latest
@@ -72,3 +73,15 @@ jobs:
               ref: "refs/tags/stable",
               sha: context.sha
             })
+
+  sync-main-branch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+
+      - name: Merge release branch -> main
+        uses: devmasx/merge-branch@master
+        with:
+          type: now
+          target_branch: main
+          github_token: ${{ secrets.GITHUB_TOKEN }}
