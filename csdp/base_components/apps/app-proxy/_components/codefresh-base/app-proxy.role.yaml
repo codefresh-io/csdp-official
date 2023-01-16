@@ -28,6 +28,14 @@ rules:
       - get
       - list
   - apiGroups:
+      - "apps"
+    resources:
+      - deployments
+    verbs:
+      - get
+      - list
+      - patch
+  - apiGroups:
       - argoproj.io
     resources:
       - applications
