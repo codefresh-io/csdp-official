@@ -5,7 +5,7 @@ resources:
 
 images:
   - name: quay.io/codefresh/argocd
-    newTag: v2.4.15-cap-CR-15677-rollout-rollback
+    newTag: v2.5.5-cap-CR-15658-sync-result-message
   - name: quay.io/codefresh/applicationset
     newTag: v0.4.2-CR-13254-remove-private-logs
 
