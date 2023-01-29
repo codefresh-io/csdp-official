@@ -3,3 +3,4 @@ kind: Kustomization
 
 components:
   - ../../../../base_components/apps/app-proxy/_bundles/basic
+  - ../../../_components/apps/app-proxy/codefresh-managed
