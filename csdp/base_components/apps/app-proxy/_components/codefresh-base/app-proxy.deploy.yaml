@@ -114,6 +114,18 @@ spec:
                   name: cap-app-proxy-cm
                   key: port
                   optional: true
+            - name: REPO_CREDS_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: autopilot-secret
+                  key: git_username
+                  optional: true
+            - name: REPO_CREDS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: autopilot-secret
+                  key: git_token
+                  optional: true
             - name: REPOS_DIR
               valueFrom:
                 configMapKeyRef:
