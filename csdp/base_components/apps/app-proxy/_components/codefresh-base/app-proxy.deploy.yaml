@@ -161,6 +161,12 @@ spec:
                   name: cap-app-proxy-cm
                   key: stripPrefix
                   optional: true
+            - name: SKIP_PERMISSIONS_VALIDATION
+              valueFrom:
+                configMapKeyRef:
+                  name: cap-app-proxy-cm
+                  key: skipPermissionsValidation
+                  optional: true
             - name: NODE_EXTRA_CA_CERTS
               value: /app/config/all/all.cer
           image: quay.io/codefresh/cap-app-proxy
