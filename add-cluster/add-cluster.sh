@@ -7,6 +7,7 @@
 # LABELS (cm - optional)
 # ANNOTATIONS (cm - optional)
 # CSDP_TOKEN_SECRET
+# SKIP_TLS_VALIDATION (cm - optional)
 
 SECRET_NAME=""
 
@@ -40,20 +41,20 @@ echo "Server: ${SERVER}"
 
 # Path to ServiceAccount token
 SERVICEACCOUNT=/var/run/secrets/kubernetes.io/serviceaccount
-
 # Read this Pod's namespace
 NAMESPACE=$(cat ${SERVICEACCOUNT}/namespace)
-
-# Reference the internal certificate authority (CA)
-CACERT=${SERVICEACCOUNT}/ca.crt
-
 # get ServiceAccount token
 get_service_account_secret_name || exit 1
 BEARER_TOKEN=$(kubectl get secret ${SECRET_NAME} -n ${NAMESPACE} -o jsonpath='{.data.token}' | base64 -d)
-
 # write KUBE_COPNFIG_DATA to local file
 CLUSTER_NAME=$(echo ${SERVER} | sed s/'http[s]\?:\/\/'//)
-kubectl config set-cluster "${CLUSTER_NAME}" --server="${SERVER}" --certificate-authority="${CACERT}" || exit 1
+if [[ $SKIP_TLS_VALIDATION == 'true' ]]
+then
+  kubectl config set-cluster "${CLUSTER_NAME}" --server="${SERVER}" || exit 1
+else
+  # Reference the internal certificate authority (CA)
+  kubectl config set-cluster "${CLUSTER_NAME}" --server="${SERVER}" --certificate-authority="${SERVICEACCOUNT}/ca.crt" || exit 1
+fi
 kubectl config set-credentials "${SERVICE_ACCOUNT_NAME}" --token "${BEARER_TOKEN}" || exit 1
 kubectl config set-context "${CONTEXT_NAME}" --cluster="${CLUSTER_NAME}" --user="${SERVICE_ACCOUNT_NAME}" || exit 1
 
