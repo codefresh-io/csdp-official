@@ -3,8 +3,3 @@ kind: Kustomization
 
 components:
   - ../../../../base_components/apps/app-proxy/_bundles/basic
-
-images:
-  - name: quay.io/codefresh/cap-app-proxy
-    newName: quay.io/codefresh/cap-app-proxy
-    newTag: 1.2095.0-CR-16999-f4864d6
