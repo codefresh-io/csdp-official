@@ -5,7 +5,7 @@ metadata:
   namespace: "{{ namespace }}"
 spec:
   requiredCLIVersion: ^0.1.0
-  version: 0.1.23-downgraded-AW
+  version: 0.1.23-1
   bootstrapSpecifier: github.com/codefresh-io/csdp-official/csdp/hybrid/basic/apps/argo-cd
   components:
     - name: events
