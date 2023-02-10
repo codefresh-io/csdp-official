@@ -48,7 +48,8 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   name: csdp-add-cluster-cm
-                  key: skipTLSValidation                  
+                  key: skipTLSValidation 
+                  optional: true                 
             - name: CSDP_TOKEN_SECRET
               value: $(CSDP_ADD_CLUSTER_SECRET)
           volumeMounts:
