@@ -2,7 +2,7 @@ apiVersion: kustomize.config.k8s.io/v1alpha1
 kind: Component
 namespace: default
 resources:
-  - https://github.com/codefresh-io/argo-workflows/releases/download/v3.4-cap-CR-15902/install.yaml
+  - https://github.com/codefresh-io/argo-workflows/releases/download/v3.4.4-cap-CR-16945/install.yaml
 
 patches:
   - target:
