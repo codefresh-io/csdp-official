@@ -5,7 +5,7 @@ resources:
 
 images:
   - name: quay.io/codefresh/argocd
-    newTag: v2.6.0-cap-CR-fix-eventsource
+    newTag: v2.6.0-cap-CR-fix-rollout-rollback
   - name: quay.io/codefresh/applicationset
     newTag: v0.4.2-CR-13254-remove-private-logs
 
