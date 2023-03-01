@@ -1,4 +1,4 @@
-apiVersion: codefresh.io/v1alpha1 #test
+apiVersion: codefresh.io/v1alpha1
 kind: Runtime
 metadata:
   name: "{{ name }}"
@@ -31,5 +31,5 @@ spec:
       url: github.com/codefresh-io/csdp-official/csdp/hybrid/basic/apps/sealed-secrets
     - name: codefresh-tunnel-client
       type: helm
-      url: github.com/codefresh-io/codefresh-tunnel-charts/codefresh-tunnel-client?ref=0.1.9
+      url: github.com/codefresh-io/codefresh-tunnel-charts/codefresh-tunnel-client?ref=0.1.8
       feature: ingressless
