@@ -1,4 +1,4 @@
-apiVersion: codefresh.io/v1alpha1 #test
+apiVersion: codefresh.io/v1alpha1
 kind: Runtime
 metadata:
   name: "{{ name }}"
@@ -20,7 +20,7 @@ spec:
       url: github.com/codefresh-io/csdp-official/csdp/hybrid/basic/apps/argo-workflows
     - name: app-proxy
       type: kustomize
-      url: github.com/codefresh-io/csdp-official/csdp/hybrid/basic/apps/app-proxy?ref=CR-17122
+      url: github.com/codefresh-io/csdp-official/csdp/hybrid/basic/apps/app-proxy
       syncWave: 9
     - name: internal-router
       type: kustomize
@@ -28,7 +28,7 @@ spec:
       syncWave: 10
     - name: sealed-secrets
       type: kustomize
-      url: github.com/codefresh-io/csdp-official/csdp/hybrid/basic/apps/sealed-secrets?ref=CR-17122
+      url: github.com/codefresh-io/csdp-official/csdp/hybrid/basic/apps/sealed-secrets
     - name: codefresh-tunnel-client
       type: helm
       url: github.com/codefresh-io/codefresh-tunnel-charts/codefresh-tunnel-client?ref=0.1.8
