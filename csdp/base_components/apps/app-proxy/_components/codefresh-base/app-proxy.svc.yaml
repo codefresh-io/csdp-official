@@ -8,7 +8,7 @@ spec:
   selector:
     app: cap-app-proxy
   ports:
-    - name: http
-      port: 3017
-      protocol: TCP
-      targetPort: http
+  - name: http
+    port: 3017
+    protocol: TCP
+    targetPort: http
