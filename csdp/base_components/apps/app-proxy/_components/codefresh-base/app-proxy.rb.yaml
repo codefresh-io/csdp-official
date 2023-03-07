@@ -9,5 +9,5 @@ roleRef:
   kind: Role
   name: cap-app-proxy
 subjects:
-  - kind: ServiceAccount
-    name: cap-app-proxy
+- kind: ServiceAccount
+  name: cap-app-proxy
