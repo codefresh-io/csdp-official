@@ -23,7 +23,7 @@ spec:
             - -c
             - |
               /bin/sh <<'EOF'
-              if [ $(ls /app/config/tls) ]; then
+              if [ "$(ls /app/config/tls)" ]; then
                 echo "concatenating certs into /app/config/all/all.cer"
                 cat /app/config/tls/* >> /app/config/all/all.cer
               else
