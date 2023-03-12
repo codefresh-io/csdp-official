@@ -50,11 +50,12 @@ BEARER_TOKEN=$(kubectl get secret ${SECRET_NAME} -n ${NAMESPACE} -o jsonpath='{.
 CLUSTER_NAME=$(echo ${SERVER} | sed s/'http[s]\?:\/\/'//)
 if [[ $SKIP_TLS_VALIDATION == 'true' ]]
 then
-  kubectl config set-cluster "${CLUSTER_NAME}" --server="${SERVER}" || exit 1
+  kubectl config set-cluster "${CLUSTER_NAME}" --server="${SERVER} --insecure-skip-tls-verify=true" || exit 1
 else
   # Reference the internal certificate authority (CA)
   kubectl config set-cluster "${CLUSTER_NAME}" --server="${SERVER}" --certificate-authority="${SERVICEACCOUNT}/ca.crt" || exit 1
 fi
+
 kubectl config set-credentials "${SERVICE_ACCOUNT_NAME}" --token "${BEARER_TOKEN}" || exit 1
 kubectl config set-context "${CONTEXT_NAME}" --cluster="${CLUSTER_NAME}" --user="${SERVICE_ACCOUNT_NAME}" || exit 1
 
