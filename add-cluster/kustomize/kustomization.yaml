@@ -4,7 +4,7 @@ namespace: kube-system
 
 images:
   - name: quay.io/codefresh/csdp-add-cluster
-    newTag: 0.6.0
+    newTag: 0.7.0
 
 resources:
   - configmap.yaml
