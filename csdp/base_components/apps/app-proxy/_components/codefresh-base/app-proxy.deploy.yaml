@@ -4,6 +4,7 @@ metadata:
   name: cap-app-proxy
 spec:
   template:
+    replicas: 1
     spec:
       serviceAccountName: cap-app-proxy
       initContainers:

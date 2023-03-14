@@ -4,3 +4,6 @@ metadata:
   name: cap-app-proxy
 spec:
   minAvailable: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/part-of: cap-app-proxy
