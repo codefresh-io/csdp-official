@@ -1,3 +1,4 @@
+
 All resources are defined using Kustomize components in this folder in the following structure:
 
 base_components:

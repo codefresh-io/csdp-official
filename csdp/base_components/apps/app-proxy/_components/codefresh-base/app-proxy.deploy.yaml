@@ -1,17 +1,10 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  labels:
-    app: cap-app-proxy
   name: cap-app-proxy
 spec:
-  selector:
-    matchLabels:
-      app: cap-app-proxy
+  replicas: 1
   template:
-    metadata:
-      labels:
-        app: cap-app-proxy
     spec:
       serviceAccountName: cap-app-proxy
       initContainers:
