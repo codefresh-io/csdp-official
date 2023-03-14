@@ -3,8 +3,8 @@ kind: Deployment
 metadata:
   name: cap-app-proxy
 spec:
+  replicas: 1
   template:
-    replicas: 1
     spec:
       serviceAccountName: cap-app-proxy
       initContainers:
