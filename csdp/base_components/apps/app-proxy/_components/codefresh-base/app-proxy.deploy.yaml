@@ -4,7 +4,13 @@ metadata:
   name: cap-app-proxy
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: cap-app-proxy
   template:
+    metadata:
+      labels:
+        app: cap-app-proxy
     spec:
       serviceAccountName: cap-app-proxy
       initContainers:
