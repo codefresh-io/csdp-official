@@ -1,10 +1,9 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  labels:
-    app: cap-app-proxy
   name: cap-app-proxy
 spec:
+  replicas: 1
   selector:
     matchLabels:
       app: cap-app-proxy
@@ -23,7 +22,7 @@ spec:
             - -c
             - |
               /bin/sh <<'EOF'
-              if [ $(ls /app/config/tls) ]; then
+              if [ "$(ls /app/config/tls)" ]; then
                 echo "concatenating certs into /app/config/all/all.cer"
                 cat /app/config/tls/* >> /app/config/all/all.cer
               else
@@ -45,6 +44,12 @@ spec:
               cpu: '0.2'
       containers:
         - env:
+            - name: ARGO_CD_INSECURE
+              valueFrom:
+                configMapKeyRef:
+                  name: cap-app-proxy-cm
+                  key: argoCdInsecure
+                  optional: true
             - name: ARGO_CD_URL
               valueFrom:
                 configMapKeyRef:
@@ -92,6 +97,54 @@ spec:
                   name: cap-app-proxy-cm
                   key: env
                   optional: true
+            - name: ISC_ENSURED_EVENT_EMIT_DELAY
+              valueFrom:
+                configMapKeyRef:
+                  name: cap-app-proxy-cm
+                  key: iscEnsuredEventEmitDelay
+                  optional: true
+            - name: IRW_CONCURRENCY_CM_KEY
+              valueFrom:
+                configMapKeyRef:
+                  name: cap-app-proxy-cm
+                  key: irwConcurrencyCmKey
+                  optional: true
+            - name: IRW_CONCURRENCY_CM_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: cap-app-proxy-cm
+                  key: irwConcurrentyCmName
+                  optional: true
+            - name: IRW_HEARTBEAT_INTERVAL_IN_SECONDS
+              valueFrom:
+                configMapKeyRef:
+                  name: cap-app-proxy-cm
+                  key: irwHeartbeatIntervalInSeconds
+                  optional: true
+            - name: IRW_POD_GC_STRATEGY
+              valueFrom:
+                configMapKeyRef:
+                  name: cap-app-proxy-cm
+                  key: irwPodGcStrategy
+                  optional: true
+            - name: IRW_SERVICE_ACCOUNT
+              valueFrom:
+                configMapKeyRef:
+                  name: cap-app-proxy-cm
+                  key: irwServiceAccount
+                  optional: true
+            - name: IRW_TTL_ACTIVE_IN_SECONDS
+              valueFrom:
+                configMapKeyRef:
+                  name: cap-app-proxy-cm
+                  key: irwTtlActiveInSeconds
+                  optional: true
+            - name: IRW_TTL_AFTER_COMPLETION_IN_SECONDS
+              valueFrom:
+                configMapKeyRef:
+                  name: cap-app-proxy-cm
+                  key: irwTtlAfterCompletionInSeconds
+                  optional: true
             - name: GRAPHQL_DEBUG
               valueFrom:
                 configMapKeyRef:
@@ -104,6 +157,12 @@ spec:
                   name: cap-app-proxy-cm
                   key: graphqlPlayground
                   optional: true
+            - name: LOG_LEVEL
+              valueFrom:
+                configMapKeyRef:
+                  name: cap-app-proxy-cm
+                  key: logLevel
+                  optional: true
             - name: NAMESPACE
               valueFrom:
                 fieldRef:
@@ -113,6 +172,18 @@ spec:
                 configMapKeyRef:
                   name: cap-app-proxy-cm
                   key: port
+                  optional: true
+            - name: GIT_INTEGRATION_APIURL
+              valueFrom:
+                configMapKeyRef:
+                  name: cap-app-proxy-cm
+                  key: gitIntegrationApiUrl
+                  optional: true
+            - name: GIT_INTEGRATION_PROVIDER
+              valueFrom:
+                configMapKeyRef:
+                  name: cap-app-proxy-cm
+                  key: gitIntegrationProvider
                   optional: true
             - name: GIT_USERNAME
               valueFrom:
@@ -125,6 +196,20 @@ spec:
                 secretKeyRef:
                   name: autopilot-secret
                   key: git_token
+                  optional: true
+            - name: NODE_EXTRA_CA_CERTS
+              value: /app/config/all/all.cer
+            - name: REPO_CREDS_SECRET_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: cap-app-proxy-cm
+                  key: repoCredsSecretName
+                  optional: true
+            - name: REPO_LOCK_TIMEOUT
+              valueFrom:
+                configMapKeyRef:
+                  name: cap-app-proxy-cm
+                  key: repoLockTimeout
                   optional: true
             - name: REPOS_DIR
               valueFrom:
@@ -149,6 +234,18 @@ spec:
                   name: codefresh-token
                   key: encryptionIV
                   optional: true
+            - name: SEND_HEARTBEAT_INTERVAL
+              valueFrom:
+                configMapKeyRef:
+                  name: cap-app-proxy-cm
+                  key: sendHeartbeatInterval
+                  optional: true
+            - name: SKIP_PERMISSIONS_VALIDATION
+              valueFrom:
+                configMapKeyRef:
+                  name: cap-app-proxy-cm
+                  key: skipPermissionsValidation
+                  optional: true
             - name: STORE_BACKEND
               valueFrom:
                 configMapKeyRef:
@@ -161,14 +258,18 @@ spec:
                   name: cap-app-proxy-cm
                   key: stripPrefix
                   optional: true
-            - name: SKIP_PERMISSIONS_VALIDATION
+            - name: USER_CACHE_TTL
               valueFrom:
                 configMapKeyRef:
                   name: cap-app-proxy-cm
-                  key: skipPermissionsValidation
+                  key: userCacheTtl
                   optional: true
-            - name: NODE_EXTRA_CA_CERTS
-              value: /app/config/all/all.cer
+            - name: USER_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: codefresh-user-token
+                  key: token
+                  optional: true
           image: quay.io/codefresh/cap-app-proxy
           imagePullPolicy: Always
           name: cap-app-proxy
