@@ -4,9 +4,6 @@ kind: Component
 resources:
 - pdb.yaml
 
-commonLabels:
-  app.kubernetes.io/part-of: cap-app-proxy
-
 patches:
 # increase replicas
 - target:

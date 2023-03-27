@@ -4,6 +4,9 @@ metadata:
   name: cap-app-proxy
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: cap-app-proxy
   template:
     spec:
       serviceAccountName: cap-app-proxy

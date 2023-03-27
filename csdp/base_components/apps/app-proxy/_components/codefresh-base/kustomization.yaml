@@ -5,7 +5,7 @@ commonLabels:
 images:
 - name: quay.io/codefresh/cap-app-proxy
   newName: quay.io/codefresh/cap-app-proxy
-  newTag: 1.2159.1
+  newTag: 1.2167.0
 resources:
 - app-proxy.deploy.yaml
 - app-proxy.svc.yaml
