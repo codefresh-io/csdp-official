@@ -8,6 +8,9 @@ spec:
     matchLabels:
       app: cap-app-proxy
   template:
+    metadata:
+      labels:
+        app: cap-app-proxy
     spec:
       serviceAccountName: cap-app-proxy
       initContainers:
