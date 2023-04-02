@@ -3,7 +3,7 @@ kind: Component
 images:
 - name: quay.io/codefresh/cap-app-proxy
   newName: quay.io/codefresh/cap-app-proxy
-  newTag: 1.2181.0-CR-16678-vulns-5409b68
+  newTag: CR-16678-vulns
 resources:
 - app-proxy.deploy.yaml
 - app-proxy.svc.yaml
