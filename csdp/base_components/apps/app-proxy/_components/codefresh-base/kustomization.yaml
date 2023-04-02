@@ -12,3 +12,4 @@ resources:
 - app-proxy.crb.yaml
 - app-proxy.role.yaml
 - app-proxy.cm.yaml
+
