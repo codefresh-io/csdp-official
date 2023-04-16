@@ -22,10 +22,12 @@ server: <server>
 # example
 # labels: |
 #   some.label.key/field: label_value
-labels: ''
+labels: ""
 
 # annotations for cluster secret metadata
 # example
 # annotations: |
 #   some.annotation.key/field: annotation value
-annotations: ''
+annotations: ""
+
+test: test
