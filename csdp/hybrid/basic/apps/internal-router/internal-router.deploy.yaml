@@ -17,7 +17,7 @@ spec:
           # do not upgrade to 1.23 until it's really critical
           # 1.23 removed support for "Transfer-Encoding: identity" header value
           # and it will break SSE from app-proxy
-          image: nginx:1.22-alpine
+          image: nginx:1.22-bullseye
           imagePullPolicy: Always
           ports:
             - containerPort: 80
