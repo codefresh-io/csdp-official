@@ -13,16 +13,15 @@ export PRE_RELEASE_VERSION=$TARGET_VERSION-$PRE_RELEASE_VERSION_SUFFIX
 export TAG=$PRE_RELEASE_VERSION
 export TEST_BRANCH=test-release-$TARGET_VERSION
 
-#git checkout main
-#git pull
-#git checkout -b "$TEST_BRANCH"
+git checkout main
+git pull
+git checkout -b "$TEST_BRANCH"
 
 echo "$PRE_RELEASE_VERSION" > VERSION
 make bump
 
 git add .
 git commit -m "testing release $TARGET_VERSION"
-#git push --set-upstream origin "$TEST_BRANCH"
-git push
+git push --set-upstream origin "$TEST_BRANCH"
 git tag "$TAG"
 git push origin tags/"$TAG"
