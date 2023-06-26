@@ -4,7 +4,7 @@ kind: Component
 images:
 - name: quay.io/codefresh/cap-app-proxy
   newName: quay.io/codefresh/cap-app-proxy
-  newTag: 1.2293.0
+  newTag: 1.2315.0-CR-19379-781c16c
 
 resources:
 - app-proxy.deploy.yaml
