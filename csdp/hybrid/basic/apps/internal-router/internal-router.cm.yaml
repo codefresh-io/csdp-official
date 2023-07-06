@@ -9,7 +9,7 @@ data:
       root /usr/local/app;
       access_log /dev/stdout main;
       error_log /dev/stdout;
-    
+      large_client_header_buffers 4 32k;
     
       location /app-proxy {
         # WebSocket support
