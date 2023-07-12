@@ -217,6 +217,12 @@ spec:
                   name: cap-app-proxy-cm
                   key: reposDir
                   optional: true
+            - name: REPOS_HOST_MAPPING
+              valueFrom:
+                configMapKeyRef:
+                  name: cap-app-proxy-cm
+                  key: reposHostMapping
+                  optional: true      
             - name: RUNTIME_NAME
               valueFrom:
                 configMapKeyRef:
@@ -277,14 +283,14 @@ spec:
             initialDelaySeconds: 10
             timeoutSeconds: 10
             httpGet:
-              port: http
+              port: 8080
               path: /api/readyz
           livenessProbe:
             initialDelaySeconds: 10
             timeoutSeconds: 10
             failureThreshold: 10
             httpGet:
-              port: http
+              port: 8080
               path: /api/healthz
           ports:
             - name: http
