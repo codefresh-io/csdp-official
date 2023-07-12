@@ -11,4 +11,4 @@ spec:
   - name: http
     port: 3017
     protocol: TCP
-    targetPort: http
+    targetPort: 8080
