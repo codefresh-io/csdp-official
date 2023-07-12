@@ -283,14 +283,14 @@ spec:
             initialDelaySeconds: 10
             timeoutSeconds: 10
             httpGet:
-              port: http
+              port: 8080
               path: /api/readyz
           livenessProbe:
             initialDelaySeconds: 10
             timeoutSeconds: 10
             failureThreshold: 10
             httpGet:
-              port: http
+              port: 8080
               path: /api/healthz
           ports:
             - name: http
