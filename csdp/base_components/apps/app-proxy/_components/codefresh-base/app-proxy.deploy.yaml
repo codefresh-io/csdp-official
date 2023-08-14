@@ -283,18 +283,18 @@ spec:
             initialDelaySeconds: 10
             timeoutSeconds: 10
             httpGet:
-              port: 8080
+              port: http
               path: /api/readyz
           livenessProbe:
             initialDelaySeconds: 10
             timeoutSeconds: 10
             failureThreshold: 10
             httpGet:
-              port: 8080
+              port: http
               path: /api/healthz
           ports:
             - name: http
-              containerPort: 80
+              containerPort: 8080
           resources:
             requests:
               memory: '512Mi'
