@@ -1,6 +1,6 @@
 apiVersion: kustomize.config.k8s.io/v1alpha1
 kind: Component
 resources:
-  - https://raw.githubusercontent.com/codefresh-io/argo-events/v1.7.2-cap-CR-14600/manifests/install.yaml
-  - https://raw.githubusercontent.com/codefresh-io/argo-events/v1.7.2-cap-CR-14600/manifests/install-validating-webhook.yaml
+  - https://raw.githubusercontent.com/codefresh-io/argo-events/v1.8.0-cap-CR-19893/manifests/install.yaml
+  - https://raw.githubusercontent.com/codefresh-io/argo-events/v1.8.0-cap-CR-19893/manifests/install-validating-webhook.yaml
   - eventbus.yaml
