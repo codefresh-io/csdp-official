@@ -217,6 +217,12 @@ spec:
                   name: cap-app-proxy-cm
                   key: reposDir
                   optional: true
+            - name: REPOS_HOST_MAPPING
+              valueFrom:
+                configMapKeyRef:
+                  name: cap-app-proxy-cm
+                  key: reposHostMapping
+                  optional: true      
             - name: RUNTIME_NAME
               valueFrom:
                 configMapKeyRef:
@@ -288,7 +294,7 @@ spec:
               path: /api/healthz
           ports:
             - name: http
-              containerPort: 80
+              containerPort: 8080
           resources:
             requests:
               memory: '512Mi'
