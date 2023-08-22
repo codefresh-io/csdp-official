@@ -4,3 +4,4 @@ resources:
   - https://raw.githubusercontent.com/codefresh-io/argo-events/v1.8.0-cap-CR-19893/manifests/install.yaml
   - https://raw.githubusercontent.com/codefresh-io/argo-events/v1.8.0-cap-CR-19893/manifests/install-validating-webhook.yaml
   - eventbus.yaml
+
