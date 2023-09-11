@@ -5,7 +5,7 @@ resources:
 
 images:
   - name: quay.io/codefresh/argocd
-    newTag: v2.8.1-cap-CR-20116-rollout-sync-sha
+    newTag: v2.8.1-cap-CR-player-and-vuln-fix
   - name: quay.io/codefresh/applicationset
     newTag: v0.4.2-CR-13254-remove-private-logs
 

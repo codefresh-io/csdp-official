@@ -2,4 +2,4 @@ apiVersion: kustomize.config.k8s.io/v1alpha1
 kind: Component
 images:
   - name: quay.io/codefresh/argocd
-    newTag: v2.8.1-cap-CR-20116-rollout-sync-sha
+    newTag: v2.8.1-cap-CR-player-and-vuln-fix
