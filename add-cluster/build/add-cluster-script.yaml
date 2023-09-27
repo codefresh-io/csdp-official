@@ -81,7 +81,7 @@ steps:
   publish_chart:
     stage: Release
     title: publish helm chart
-    image: quay.io/codefresh/golang-ci-helper:latest # change it
+    image: quay.io/codefresh/golang-ci-helper:1.19.3
     working_directory: add-cluster
     environment:
       - CHART_VERSION=${{CHART_VERSION}}
