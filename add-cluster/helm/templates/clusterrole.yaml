@@ -1,7 +1,8 @@
+{{- if .Values.rbac.create }}
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: {{ include "csdp-add-cluster.serviceAccount" . }}-role
+  name: {{ include "csdp-add-cluster.serviceAccountName" . }}-role
   labels:
     {{- include "csdp-add-cluster.labels" . | nindent 4 }}
 rules:
@@ -15,3 +16,4 @@ rules:
       - '*'
     verbs:
       - '*'
+{{- end }}

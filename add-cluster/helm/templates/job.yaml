@@ -1,3 +1,4 @@
+{{ $cfCommonTplSemver := printf "cf-common-%s" (index .Subcharts "cf-common").Chart.Version }}
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -6,64 +7,87 @@ metadata:
   labels:
     {{- include "csdp-add-cluster.labels" . | nindent 4 }}
 spec:
-  ttlSecondsAfterFinished: 600 # stick around for 10m
+  {{- with .Values.ttlSecondsAfterFinished }}
+  ttlSecondsAfterFinished: {{ . }}
+  {{- end }}
+  {{- with .Values.backoffLimit }}
+  backoffLimit: {{ .}}
+  {{- end }}
   template:
     metadata:
       name: {{ include "csdp-add-cluster.fullname" . }}-pod
+      labels:
+        {{- include "csdp-add-cluster.labels" . | nindent 4 }}
     spec:
-      serviceAccount: {{ include "csdp-add-cluster.serviceAccount" . }}
-      restartPolicy: Never
+      {{- include (printf "%s.image.pullSecrets" $cfCommonTplSemver ) . | nindent 8 }}
+      serviceAccount: {{ include "csdp-add-cluster.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
         - name: main
-          image: "quay.io/codefresh/csdp-add-cluster:{{ .Chart.AppVersion }}"
-          imagePullPolicy: Always
+          image: {{ include (printf "%s.image.name" $cfCommonTplSemver ) (dict "image" .Values.image "context" .) }}
+          imagePullPolicy: {{ .Values.image.pullPolicy | default "Always" }}
           command:
             - bash
           args:
             - ./add-cluster.sh
           env:
-            - name: SERVICE_ACCOUNT_NAME
-              valueFrom:
-                fieldRef:
-                  fieldPath: spec.serviceAccountName
-            - name: INGRESS_URL
-              valueFrom:
-                configMapKeyRef:
-                  name: {{ include "csdp-add-cluster.fullname" . }}-cm
-                  key: ingressUrl
-            - name: CSDP_TOKEN
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "csdp-add-cluster.fullname" . }}-secret
-                  key: csdpToken
-            - name: CONTEXT_NAME
-              valueFrom:
-                configMapKeyRef:
-                  name: {{ include "csdp-add-cluster.fullname" . }}-cm
-                  key: contextName
-            - name: SERVER
-              valueFrom:
-                configMapKeyRef:
-                  name: {{ include "csdp-add-cluster.fullname" . }}-cm
-                  key: server
-            - name: CSDP_TOKEN_SECRET
-              value: {{ include "csdp-add-cluster.fullname" . }}-secret
+          - name: SERVICE_ACCOUNT_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: spec.serviceAccountName
+          - name: INGRESS_URL
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "csdp-add-cluster.fullname" . }}-cm
+                key: ingressUrl
+          - name: CSDP_TOKEN
+            {{- include "csdp-add-cluster.token-env-var-value" . | indent 12 }}
+          - name: CONTEXT_NAME
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "csdp-add-cluster.fullname" . }}-cm
+                key: contextName
+          - name: SERVER
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "csdp-add-cluster.fullname" . }}-cm
+                key: server
+          - name: CSDP_TOKEN_SECRET
+            value: {{ include "csdp-add-cluster.fullname" . }}-secret
+          {{- include (printf "%s.env-vars" $cfCommonTplSemver) (dict "Values" .Values.env "context" .) | nindent 10 }}
           volumeMounts:
-            - name: config-volume
-              mountPath: /etc/config
+          - name: config-volume
+            mountPath: /etc/config
+          {{- with .Values.extraVolumeMounts }}
+          {{- toYaml . | nindent 10 }}
+          {{- end }}
+          {{- with .Values.resources }}
           resources:
-            limits:
-              memory: 512Mi
-              cpu: '1'
-            requests:
-              memory: 256Mi
-              cpu: '0.2'
+            {{- toYaml . | nindent 12  }}
+          {{- end }}
       volumes:
-        - name: config-volume
-          configMap:
-            name: {{ include "csdp-add-cluster.fullname" . }}-cm
-            items:
-              - key: annotations
-                path: annotations.yaml
-              - key: labels
-                path: labels.yaml
+      - name: config-volume
+        configMap:
+          name: {{ include "csdp-add-cluster.fullname" . }}-cm
+          items:
+            - key: annotations
+              path: annotations.yaml
+            - key: labels
+              path: labels.yaml
+      {{- with .Values.extraVolumes }}
+        {{- toYaml . | nindent 6 }}
+      {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 6 }}
+      {{- end }}
+      restartPolicy: OnFailure

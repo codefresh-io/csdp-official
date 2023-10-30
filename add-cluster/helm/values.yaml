@@ -1,22 +1,74 @@
-# serviceAccountName is the name of the ServiceAccount Argo-CD will use to access the cluster
-serviceAccountName: argocd-manager
+# -- String to partially override csdp-add-cluster.fullname template (will maintain the release name)
+nameOverride: ""
+# -- String to fully override csdp-add-cluster.fullname template
+fullnameOverride: ""
 
-# ingressUrl is the url used to access the CSDP runtime
-# example https://some.domain.name
+# -- Global parameters
+global:
+  # -- Global Docker image registry
+  imageRegistry: ""
+  # -- Global Docker registry secret names as array
+  imagePullSecrets: []
+
+# -- GitOps-Runtime Ingress hostname
 ingressUrl: <ingressUrl>
 
-# csdpToken is the user's Personal Access Token
-csdpToken: <csdpToken>
+# -- Codefresh platform settings
+codefresh:
+  # -- User token.
+  userToken:
+    # -- User token in plain text.
+    token: ""
+    # -- User token that references an existing secret containing the token.
+    secretKeyRef: {}
 
-# contextName is the name of the cluster in Argo-CD
+# -- contextName is the name of the cluster in Argo-CD
 contextName: <contextName>
 
-# server is the k8s cluster API endpoint url
+# -- server is the k8s cluster API endpoint url
 # can be obtained by
 #   CONTEXT_NAME=<TARGET_CONTEXT_NAME>
 #   CLUSTER_NAME=$(kubectl config view --raw --flatten -o jsonpath='{.contexts[?(@.name == "'"${CONTEXT_NAME}"'")].context.cluster}')
 #   kubectl config view --raw --flatten -o jsonpath='{.clusters[?(@.name == "'"${CLUSTER_NAME}"'")].cluster.server}'
 server: <server>
+
+# -- Create RBAC resources
+rbac:
+  create: true
+
+# -- Create ServiceAccount
+serviceAccount:
+  create: true
+  name: argocd-manager
+  annotations: {}
+
+# -- Image
+image:
+  registry: quay.io
+  repository: codefresh/csdp-add-cluster
+  tag: '{{ .Chart.AppVersion }}'
+  pullPolicy: IfNotPresent
+
+ttlSecondsAfterFinished: 600
+backoffLimit: 6
+
+podSecurityContext: {}
+env: {}
+
+nodeSelector: {}
+affinity: {}
+tolerations: []
+
+resources:
+  limits:
+    memory: 512Mi
+    cpu: '1'
+  requests:
+    memory: 256Mi
+    cpu: '0.2'
+
+extraVolumeMounts: []
+extraVolumes: []
 
 # labels for cluster secret metadata
 # example
