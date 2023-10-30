@@ -25,7 +25,7 @@ spec:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
         - name: main
-          image: {{ include (printf "%s.image.name" $cfCommonTplSemver ) (dict "image" .Values.image "context" .) }}
+          image: {{ include (printf "%v.tplrender" $cfCommonTplSemver) (dict "Values" (include (printf "%s.image.name" $cfCommonTplSemver ) (dict "image" .Values.image "context" .)) "context" .) }}
           imagePullPolicy: {{ .Values.image.pullPolicy | default "Always" }}
           command:
             - bash
