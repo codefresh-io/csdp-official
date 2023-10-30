@@ -14,4 +14,3 @@ subjects:
     name: {{ include "csdp-add-cluster.serviceAccountName" . }}
     namespace: {{ .Release.Namespace | default "kube-system" }}
 {{- end }}
-W
