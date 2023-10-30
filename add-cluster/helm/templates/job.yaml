@@ -17,7 +17,7 @@ spec:
     metadata:
       name: {{ include "csdp-add-cluster.fullname" . }}-pod
       labels:
-        {{- include "csdp-add-cluster.labels" . | nindent 4 }}
+        {{- include "csdp-add-cluster.labels" . | nindent 8 }}
     spec:
       {{- include (printf "%s.image.pullSecrets" $cfCommonTplSemver ) . | nindent 8 }}
       serviceAccount: {{ include "csdp-add-cluster.serviceAccountName" . }}

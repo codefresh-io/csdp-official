@@ -11,7 +11,7 @@ global:
   imagePullSecrets: []
 
 # -- GitOps-Runtime Ingress hostname
-ingressUrl: <ingressUrl>
+ingressUrl: ""
 
 # -- Codefresh platform settings
 codefresh:
@@ -23,14 +23,14 @@ codefresh:
     secretKeyRef: {}
 
 # -- contextName is the name of the cluster in Argo-CD
-contextName: <contextName>
+contextName: ""
 
 # -- server is the k8s cluster API endpoint url
 # can be obtained by
 #   CONTEXT_NAME=<TARGET_CONTEXT_NAME>
 #   CLUSTER_NAME=$(kubectl config view --raw --flatten -o jsonpath='{.contexts[?(@.name == "'"${CONTEXT_NAME}"'")].context.cluster}')
 #   kubectl config view --raw --flatten -o jsonpath='{.clusters[?(@.name == "'"${CLUSTER_NAME}"'")].cluster.server}'
-server: <server>
+server: ""
 
 # -- Create RBAC resources
 rbac:

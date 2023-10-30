@@ -57,7 +57,7 @@ Based on the "argocd-manager" unless explicitly set
 Environment variable value of Codefresh installation token
 */}}
 {{- define "csdp-add-cluster.token-env-var-value" -}}
-  {{- if .Values.codefresh.userToken }}
+  {{- if .Values.codefresh.userToken.token }}
 valueFrom:
   secretKeyRef:
     name: {{ include "csdp-add-cluster.fullname" . }}-secret
@@ -66,5 +66,7 @@ valueFrom:
 valueFrom:
   secretKeyRef:
   {{- .Values.codefresh.userToken.secretKeyRef | toYaml | nindent 4 }}
+  {{- else }}
+{{ fail ".Values.codefresh.userToken OR .Values.codefresh.userToken.secretKeyRef is required!" }}
   {{- end }}
 {{- end }}
