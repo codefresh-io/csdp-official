@@ -49,16 +49,28 @@ image:
   tag: '{{ .Chart.AppVersion }}'
   pullPolicy: IfNotPresent
 
+# -- Set ttlSecondsAfterFinished for the Job
 ttlSecondsAfterFinished: 600
-backoffLimit: 6
+# -- Set backoffLimit for the Job
+backoffLimit: 0
 
+# -- Set pod security context
 podSecurityContext: {}
+# -- Set extra env vars
 env: {}
+# e.g.
+# env:
+#   SKIP_TLS_VALIDATION: true
+#   DEBUG: true
 
+# -- Set nodeSelector
 nodeSelector: {}
+# -- Set affinity
 affinity: {}
+# -- Set tolerations
 tolerations: []
 
+# -- Set resources
 resources:
   limits:
     memory: 512Mi
@@ -67,17 +79,19 @@ resources:
     memory: 256Mi
     cpu: '0.2'
 
+# -- Set extra volume mounts for the Job
 extraVolumeMounts: []
+# -- Set extra volumes for the Job
 extraVolumes: []
 
-# labels for cluster secret metadata
-# example
+# -- labels for cluster secret metadata
+# e.g.
 # labels: |
 #   some.label.key/field: label_value
 labels: ''
 
 # annotations for cluster secret metadata
-# example
+# e.g.
 # annotations: |
 #   some.annotation.key/field: annotation value
 annotations: ''
