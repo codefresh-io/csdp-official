@@ -12,5 +12,5 @@ roleRef:
 subjects:
   - kind: ServiceAccount
     name: {{ include "csdp-add-cluster.serviceAccountName" . }}
-    namespace: {{ .Release.Namespace }}
+    namespace: {{ .Values.systemNamespace | default "kube-system" }}
 {{- end }}
