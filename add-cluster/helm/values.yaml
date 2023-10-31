@@ -25,7 +25,7 @@ codefresh:
 # -- contextName is the name of the cluster in Argo-CD
 contextName: ""
 
-# -- namespace to deploy rbac resources
+# -- namespace to deploy helm chart
 systemNamespace: kube-system
 
 # -- server is the k8s cluster API endpoint url
