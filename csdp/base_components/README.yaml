@@ -1,8 +1,7 @@
-
 All resources are defined using Kustomize components in this folder in the following structure:
 
 base_components:
-  apps: 
+  apps:
     <runtime application>: For example app-proxy, argo-cd, etc.
       _components: Abstract building blocks of the applcation Kustomization. Should contain patches and manifests.
                    Try to keep `images` patches in `codefresh-base` kustomization, unless you need one `bundle` to have
