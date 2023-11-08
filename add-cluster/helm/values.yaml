@@ -42,6 +42,9 @@ rbac:
 # -- Create ServiceAccount
 serviceAccount:
   create: true
+  # -- Create ServiceAccount secret
+  secret:
+    create: true
   name: argocd-manager
   annotations: {}
 
