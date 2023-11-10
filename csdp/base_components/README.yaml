@@ -11,3 +11,4 @@ base_components:
                 Try to keep resources and patches out of the bundle kustomization, it should contain only the composition
                 of components.
   bootstrap: This is the bootstrap component
+
