@@ -1,5 +1,8 @@
 #!/bin/bash
 
+set -o pipefail
+set -e
+
 if [ $# -ne 2 ]; then
   echo "Please provide exactly two arguments."
   echo "Usage: ./checkout-test-branch.sh \$target_version \$prerelease_version_suffix"

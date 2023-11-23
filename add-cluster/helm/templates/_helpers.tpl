@@ -45,14 +45,28 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 Creates the ServiceAccount name (used for the *Role and *RoleBinding as well)
 Based on the "argocd-manager" unless explicitly set
 */}}
-{{- define "csdp-add-cluster.serviceAccount" -}}
-{{- if .Values.serviceAccount }}
-{{- .Values.serviceAccount | trunc 63 | trimSuffix "-" }}
-{{- else }}
-{{- if contains "argocd-manager" .Release.Name }}
-{{- .Release.Name | trunc 63 | trimSuffix "-" }}
-{{- else }}
-{{- printf "%s-%s" .Release.Name "argocd-manager" | trunc 63 | trimSuffix "-" }}
+{{- define "csdp-add-cluster.serviceAccountName" -}}
+  {{- if .Values.serviceAccount.create }}
+    {{- default (include "csdp-add-cluster.fullname" .) .Values.serviceAccount.name }}
+  {{- else }}
+    {{- default "default" .Values.serviceAccount.name }}
+  {{- end }}
 {{- end }}
-{{- end }}
+
+{{/*
+Environment variable value of Codefresh installation token
+*/}}
+{{- define "csdp-add-cluster.token-env-var-value" -}}
+  {{- if .Values.codefresh.userToken.token }}
+valueFrom:
+  secretKeyRef:
+    name: {{ include "csdp-add-cluster.fullname" . }}-secret
+    key: codefresh-api-token
+  {{- else if .Values.codefresh.userToken.secretKeyRef  }}
+valueFrom:
+  secretKeyRef:
+  {{- .Values.codefresh.userToken.secretKeyRef | toYaml | nindent 4 }}
+  {{- else }}
+{{ fail ".Values.codefresh.userToken OR .Values.codefresh.userToken.secretKeyRef is required!" }}
+  {{- end }}
 {{- end }}

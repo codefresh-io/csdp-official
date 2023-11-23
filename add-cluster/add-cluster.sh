@@ -9,6 +9,10 @@
 # CSDP_TOKEN_SECRET
 # SKIP_TLS_VALIDATION (cm - optional)
 
+if $DEBUG; then
+  set -eou xtrace
+fi
+
 SECRET_NAME=""
 
 function get_service_account_secret_name() {
