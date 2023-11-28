@@ -2,7 +2,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: argocd
 resources:
-  - https://raw.githubusercontent.com/codefresh-io/argo-cd/release-2.7-with-appset/manifests/install.yaml
+  - https://raw.githubusercontent.com/codefresh-io/argo-cd/release-2.8-with-appset/manifests/install.yaml
 components:
   - ../../../../base_components/apps/argo-cd/_components/codefresh-base
   - ../../../_components/apps/argo-cd/codefresh-hybrid

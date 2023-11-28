@@ -2,12 +2,12 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: {{ include "csdp-add-cluster.fullname" . }}-cm
-  namespace: kube-system
+  namespace: {{ .Values.systemNamespace | default "kube-system" }}
   labels:
     {{- include "csdp-add-cluster.labels" . | nindent 4 }}
 data:
-  ingressUrl: {{ .Values.ingressUrl | quote }}
-  contextName: {{ .Values.contextName | quote }}
-  server: {{ .Values.server | quote }}
+  ingressUrl: {{ required ".Values.ingressUrl is required!" .Values.ingressUrl | quote }}
+  contextName: {{ required ".Values.contextName is required!" .Values.contextName | quote }}
+  server: {{ required ".Values.server is required!" .Values.server | quote }}
   labels: {{ .Values.labels | quote }}
   annotations: {{ .Values.annotations | quote }}
