@@ -27,6 +27,8 @@ spec:
         env:
         - name: EVENT_REPORTER_REPLICAS
           value: "5"
+        - name: EVENT_REPORTER_APPLICATION_SERVER
+          value: "argocd-server:80"
         - name: ARGOCD_TOKEN
           valueFrom:
              secretKeyRef:
