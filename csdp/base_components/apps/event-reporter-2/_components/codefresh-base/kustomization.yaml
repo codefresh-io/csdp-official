@@ -5,9 +5,9 @@ images:
     newName: quay.io/codefresh/argocd
     newTag: v2.8.1-cap-CR-21281-priority-queue
 resources:
-  - event-reporter-metrics.yaml
-  - event-reporter-rolebinding.yaml
-  - event-reporter-sa.yaml
-  - event-reporter-role.yaml
-  - event-reporter-service.yaml
-  - event-reporter-statefulset.yaml
+  - event-reporter.metrics-svc.yaml
+  - event-reporter.rb.yaml
+  - event-reporter.sa.yaml
+  - event-reporter.role.yaml
+  - event-reporter.svc.yaml
+  - event-reporter.statefulset.yaml
