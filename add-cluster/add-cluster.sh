@@ -9,7 +9,7 @@
 # CSDP_TOKEN_SECRET
 # SKIP_TLS_VALIDATION (cm - optional)
 
-if $DEBUG; then
+if [ "$DEBUG" = true ]; then
   set -x
 fi
 
