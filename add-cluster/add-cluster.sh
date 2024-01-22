@@ -10,7 +10,7 @@
 # SKIP_TLS_VALIDATION (cm - optional)
 
 if $DEBUG; then
-  set -eou xtrace
+  set -x
 fi
 
 SECRET_NAME=""
