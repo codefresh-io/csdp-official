@@ -1,4 +1,4 @@
-FROM alpine:3.15 as base
+FROM alpine:3.24 as base
 
 WORKDIR /go/src/github.com/codefresh-io/cli-v2
 
